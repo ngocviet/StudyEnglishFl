@@ -11,7 +11,7 @@ class CustomTabar extends StatelessWidget {
   Widget build(BuildContext context) {
     return TabBar(
       indicatorPadding: EdgeInsets.zero,
-      indicator: BoxDecoration(border:Border(
+      indicator: const BoxDecoration(border:Border(
           top: BorderSide(
             color:  Colors.blue,
             width: 3,
