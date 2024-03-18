@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project4/screen/home_screen.dart';
+import 'package:project4/screen/statistical_screen.dart';
 import 'package:project4/wiget/CustomTabbar.dart';
 
 class NavScreen extends StatefulWidget {
@@ -12,7 +13,7 @@ class NavScreen extends StatefulWidget {
 class _NavScreenState extends State<NavScreen> {
   final List<Widget> _screens = [
     HomeScreen(),
-    Scaffold(body: Container(child: Text('hi',style: TextStyle(color: Colors.black),),),),
+    StatisticalScreen(),
     Scaffold(),
   ];
 
@@ -36,7 +37,6 @@ class _NavScreenState extends State<NavScreen> {
           // ),
           body: _screens[_selectedIndex],
           bottomNavigationBar: Container(
-            padding: const EdgeInsets.only(top: 10),
             decoration: const BoxDecoration(
               color: Colors.black,
             ),

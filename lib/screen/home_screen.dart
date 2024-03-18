@@ -1,31 +1,30 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:project4/controllers/home_controller.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
 
-  //note tách Appbar và bottomNavigationBar thành 1 class chung
+  //variable
+  int totalDay = HomeController.getDay();
+  int level = HomeController.getLevel();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.more_horiz,
-                    size: 30, color: Colors.white)),
-            const Text(
-              'Home',
-              style: TextStyle(
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white),
+            Container(
+              width: 70,
+              height: 50,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage('htv_preview_rev_1.png'),
+                    fit: BoxFit.contain),
+              ),
             ),
-            IconButton(
-                onPressed: () {},
-                icon:
-                    const Icon(Icons.more_horiz, size: 30, color: Colors.white))
           ],
         ),
         flexibleSpace: Container(
@@ -34,7 +33,7 @@ class HomeScreen extends StatelessWidget {
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [
-                Color.fromRGBO(58, 58, 58, 54),
+                Color.fromRGBO(30, 30, 30, 54),
                 Colors.black87
               ], // Màu sắc cho gradient
             ),
@@ -57,7 +56,7 @@ class HomeScreen extends StatelessWidget {
           children: [
             Expanded(
                 flex: 3,
-                child: Container(
+                child: SizedBox(
                     width: double.infinity,
                     height: 100,
                     child: Center(
@@ -78,11 +77,11 @@ class HomeScreen extends StatelessWidget {
                               width: 150,
                               height: 50,
                               // color: Colors.blue,
-                              child: const Row(
+                              child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  IconButton(
+                                  const IconButton(
                                     onPressed: null,
                                     padding: EdgeInsets.all(0),
                                     icon: Icon(
@@ -91,13 +90,31 @@ class HomeScreen extends StatelessWidget {
                                       size: 50,
                                     ),
                                   ),
-                                  Text(
-                                    '1',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 35,
-                                        fontWeight: FontWeight.bold),
-                                  )
+                                  Center(
+                                    child: Stack(
+                                      children: [
+                                        Text(
+                                          '$totalDay',
+                                          style: TextStyle(
+                                            fontSize: 35,
+                                            fontWeight: FontWeight.bold,
+                                            foreground: Paint()
+                                              ..style = PaintingStyle.stroke
+                                              ..strokeWidth = 6 // Độ dày của border
+                                              ..color = Colors.orangeAccent, // Màu của border
+                                          ),
+                                        ),
+                                        Text(
+                                          '$totalDay',
+                                          style: const TextStyle(
+                                            fontSize: 35,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white, // Màu của chữ
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
@@ -115,11 +132,11 @@ class HomeScreen extends StatelessWidget {
                               padding: const EdgeInsets.only(top: 12.0),
                               child: ElevatedButton(
                                   onPressed: () {},
-                                  child: const Padding(
-                                    padding: EdgeInsets.all(10.0),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(10.0),
                                     child: Text(
-                                      'Cấp độ 1',
-                                      style: TextStyle(
+                                      'Cấp độ $level',
+                                      style: const TextStyle(
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold,
                                           fontSize: 18),
@@ -130,11 +147,6 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ),
                     )))),
-            // Container(
-            //   width: double.infinity,
-            //   height: 1,
-            //   color: Colors.red,
-            // ),
             Expanded(
                 flex: 5,
                 child: Container(
