@@ -1,13 +1,20 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:project4/controllers/home_controller.dart';
+import 'package:project4/model_views/model_home.dart';
 
-class HomeScreen extends StatelessWidget {
-  HomeScreen({super.key});
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
 
   //variable
   int totalDay = HomeController.getDay();
-  int level = HomeController.getLevel();
+  String topic = HomeController.getTopic();
+  List<modelLesonHom> listLesson = HomeController.getListLesson(1, 1);
 
   @override
   Widget build(BuildContext context) {
@@ -61,102 +68,109 @@ class HomeScreen extends StatelessWidget {
                     height: 100,
                     child: Center(
                         child: Container(
-                      width: 260,
-                      height: 260,
-                      decoration: const BoxDecoration(
-                          // color: Colors.red,
-                          image: DecorationImage(
-                        image: AssetImage('header.png'),
-                        fit: BoxFit.contain,
-                      )),
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 120),
-                        child: Column(
-                          children: [
-                            Container(
-                              width: 150,
-                              height: 50,
-                              // color: Colors.blue,
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const IconButton(
-                                    onPressed: null,
-                                    padding: EdgeInsets.all(0),
-                                    icon: Icon(
-                                      Icons.local_fire_department_rounded,
-                                      color: Colors.orangeAccent,
-                                      size: 50,
-                                    ),
-                                  ),
-                                  Center(
-                                    child: Stack(
-                                      children: [
-                                        Text(
-                                          '$totalDay',
-                                          style: TextStyle(
-                                            fontSize: 35,
-                                            fontWeight: FontWeight.bold,
-                                            foreground: Paint()
-                                              ..style = PaintingStyle.stroke
-                                              ..strokeWidth = 6 // Độ dày của border
-                                              ..color = Colors.orangeAccent, // Màu của border
-                                          ),
+                          width: 260,
+                          height: 260,
+                          decoration: const BoxDecoration(
+                            // color: Colors.red,
+                              image: DecorationImage(
+                                image: AssetImage('header.png'),
+                                fit: BoxFit.contain,
+                              )),
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 120),
+                            child: Column(
+                              children: [
+                                Container(
+                                  width: 150,
+                                  height: 50,
+                                  // color: Colors.blue,
+                                  child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const IconButton(
+                                        onPressed: null,
+                                        padding: EdgeInsets.all(0),
+                                        icon: Icon(
+                                          Icons.local_fire_department_rounded,
+                                          color: Colors.orangeAccent,
+                                          size: 50,
                                         ),
-                                        Text(
-                                          '$totalDay',
+                                      ),
+                                      Center(
+                                        child: Stack(
+                                          children: [
+                                            Text(
+                                              '$totalDay',
+                                              style: TextStyle(
+                                                fontSize: 35,
+                                                fontWeight: FontWeight.bold,
+                                                foreground: Paint()
+                                                  ..style = PaintingStyle.stroke
+                                                  ..strokeWidth = 6 // Độ dày của border
+                                                  ..color = Colors.orangeAccent, // Màu của border
+                                              ),
+                                            ),
+                                            Text(
+                                              '$totalDay',
+                                              style: const TextStyle(
+                                                fontSize: 35,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white, // Màu của chữ
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                const Padding(
+                                  padding: EdgeInsets.only(top: 8.0, right: 2),
+                                  child: Text(
+                                    'Chuỗi ngày',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 12.0),
+                                  child: ElevatedButton(
+                                      onPressed: () {},
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(9),
+                                        child: Text(
+                                          topic,
                                           style: const TextStyle(
-                                            fontSize: 35,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white, // Màu của chữ
-                                          ),
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 18),
                                         ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
+                                      )),
+                                )
+                              ],
                             ),
-                            const Padding(
-                              padding: EdgeInsets.only(top: 8.0, right: 2),
-                              child: Text(
-                                'Chuỗi ngày',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 12.0),
-                              child: ElevatedButton(
-                                  onPressed: () {},
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(10.0),
-                                    child: Text(
-                                      'Cấp độ $level',
-                                      style: const TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 18),
-                                    ),
-                                  )),
-                            )
-                          ],
-                        ),
-                      ),
-                    )))),
+                          ),
+                        )))),
             Expanded(
                 flex: 5,
-                child: Container(
-                    width: double.infinity,
-                    // color: Colors.blue,
-                    child: Center(
-                      child: Container(
-                        width: 300,
-                        height: 300,
-                        decoration: BoxDecoration(
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: listLesson.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    var lesson = listLesson[index];
+                    double leftPadding = index == 0 ? 80 : 40;
+                    double rightPadding = index == listLesson.length - 1 ? 60 : 0;
+                    return Padding(
+                      padding: EdgeInsets.only(left: leftPadding, right: rightPadding),
+                      child: Center(
+                        child: Container(
+                          width: 300,
+                          height: 300,
+                          decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(150),
                             color: Colors.greenAccent,
                             border: Border.all(
@@ -164,117 +178,125 @@ class HomeScreen extends StatelessWidget {
                               width: 8,
                             ),
                             image: DecorationImage(
-                                image: const AssetImage('cartoon.jpg'),
-                                fit: BoxFit.cover,
-                                colorFilter: ColorFilter.mode(
-                                  Colors.black.withOpacity(0.3),
-                                  BlendMode.darken,
-                                ))),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Padding(
-                              padding: EdgeInsets.only(top: 8.0),
-                              child: Text(
-                                'Bài học 43',
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    color: Color.fromRGBO(205, 205, 205, 1)),
+                              image: AssetImage(lesson.lesson.img),
+                              fit: BoxFit.cover,
+                              colorFilter: ColorFilter.mode(
+                                Colors.black.withOpacity(0.3),
+                                BlendMode.darken,
                               ),
                             ),
-                            Container(
-                              width: 160,
-                              // color: Colors.greenAccent,
-                              child: const Text('Cái gì có sãn - some và any',
-                                  style: TextStyle(
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(top: 8.0),
+                                child: Text(
+                                  lesson.sttLesson,
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Color.fromRGBO(205, 205, 205, 1),
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                width: 160,
+                                child: Text(
+                                  lesson.lesson.title,
+                                  style: const TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white,
                                   ),
                                   textAlign: TextAlign.center,
                                   maxLines: 2,
-                                  overflow: TextOverflow.ellipsis),
-                            ),
-                            Container(
-                              padding: const EdgeInsets.only(right: 40),
-                              width: 220,
-                              height: 70,
-                              // color: Colors.red,
-                              child: Stack(
-                                children: [
-                                  Align(
-                                    alignment: Alignment.bottomLeft,
-                                    child: Container(
-                                      width: 50,
-                                      height: 50,
-                                      // color: Colors.blue,
-                                      child: const IconButton(
-                                        onPressed: null,
-                                        icon: Icon(
-                                          Icons.star_border_rounded,
-                                          size: 75,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Align(
-                                    alignment: Alignment.topCenter,
-                                    child: Container(
-                                      width: 50,
-                                      height: 50,
-                                      // color: Colors.blue,
-                                      child: const IconButton(
-                                        onPressed: null,
-                                        icon: Icon(
-                                          Icons.star_border_rounded,
-                                          size: 75,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Align(
-                                    alignment: Alignment.bottomRight,
-                                    child: Container(
-                                      width: 50,
-                                      height: 50,
-                                      // color: Colors.blue,
-                                      child: const IconButton(
-                                        onPressed: null,
-                                        icon: Icon(
-                                          Icons.star_border_rounded,
-                                          size: 75,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                ],
+                                  overflow: TextOverflow.ellipsis,
+                                ),
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(20),
-                              child: ElevatedButton(
+                              Container(
+                                padding: const EdgeInsets.only(right: 40),
+                                width: 220,
+                                height: 70,
+                                child: Stack(
+                                  children: [
+                                    Align(
+                                      alignment: Alignment.bottomLeft,
+                                      child: Container(
+                                        width: 50,
+                                        height: 50,
+                                        child: const IconButton(
+                                          onPressed: null,
+                                          icon: Icon(
+                                            Icons.star_border_rounded,
+                                            size: 75,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Align(
+                                      alignment: Alignment.topCenter,
+                                      child: Container(
+                                        width: 50,
+                                        height: 50,
+                                        child: const IconButton(
+                                          onPressed: null,
+                                          icon: Icon(
+                                            Icons.star_border_rounded,
+                                            size: 75,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Align(
+                                      alignment: Alignment.bottomRight,
+                                      child: Container(
+                                        width: 50,
+                                        height: 50,
+                                        child: const IconButton(
+                                          onPressed: null,
+                                          icon: Icon(
+                                            Icons.star_border_rounded,
+                                            size: 75,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(20),
+                                child: ElevatedButton(
                                   onPressed: () {},
                                   style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.white),
+                                    backgroundColor: Colors.white,
+                                  ),
                                   child: const Padding(
                                     padding: EdgeInsets.all(13.0),
                                     child: Text(
                                       'Bắt đầu',
                                       style: TextStyle(
-                                          fontSize: 22,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black),
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                      ),
                                     ),
-                                  )),
-                            )
-                          ],
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       ),
-                    )))
+                    );
+                  },
+                )
+
+            )
           ],
         ),
       ),
