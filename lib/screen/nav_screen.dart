@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:project4/screen/home_screen.dart';
 import 'package:project4/wiget/CustomTabbar.dart';
-
-
 
 class NavScreen extends StatefulWidget {
   const NavScreen({super.key});
@@ -11,23 +10,16 @@ class NavScreen extends StatefulWidget {
 }
 
 class _NavScreenState extends State<NavScreen> {
-
   final List<Widget> _screens = [
+    HomeScreen(),
+    Scaffold(body: Container(child: Text('hi',style: TextStyle(color: Colors.black),),),),
     Scaffold(),
-    Scaffold(),
-    Scaffold(),
-    Scaffold(),
-    Scaffold(),
-
   ];
 
   final List<IconData> _icons = const [
     Icons.home,
-    Icons.menu,
-    Icons.home,
-    Icons.home,
-    Icons.home,
-
+    Icons.handyman,
+    Icons.perm_contact_cal_outlined,
   ];
 
   int _selectedIndex = 0;
@@ -37,12 +29,17 @@ class _NavScreenState extends State<NavScreen> {
     return DefaultTabController(
         length: _icons.length,
         child: Scaffold(
-          body: IndexedStack(
-            index: _selectedIndex,
-            children: _screens,
-          ),
-          bottomNavigationBar: Padding(
-            padding: const EdgeInsets.only(bottom: 12),
+          // appBar: ,
+          // body: IndexedStack(
+          //   index: _selectedIndex,
+          //   children: _screens,
+          // ),
+          body: _screens[_selectedIndex],
+          bottomNavigationBar: Container(
+            padding: const EdgeInsets.only(top: 10),
+            decoration: const BoxDecoration(
+              color: Colors.black,
+            ),
             child: CustomTabar(
               icons: _icons,
               selectedIndex : _selectedIndex,
