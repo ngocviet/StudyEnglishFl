@@ -3,6 +3,8 @@ import 'package:project4/screen/home_screen.dart';
 import 'package:project4/screen/statistical_screen.dart';
 import 'package:project4/wiget/CustomTabbar.dart';
 
+import 'list_vocabulary_screen.dart';
+
 class NavScreen extends StatefulWidget {
   const NavScreen({super.key});
 
@@ -14,7 +16,8 @@ class _NavScreenState extends State<NavScreen> {
   final List<Widget> _screens = [
     HomeScreen(),
     StatisticalScreen(),
-    Scaffold(),
+    ListVocabularyScreen(),
+    // Scaffold(),
   ];
 
   final List<IconData> _icons = const [

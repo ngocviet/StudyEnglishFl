@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ListVocabularyScreen extends StatelessWidget {
@@ -112,6 +111,7 @@ class ListVocabularyScreen extends StatelessWidget {
                   children: [
                     SizedBox(
                       width: 200,
+                      height: 40,
                       child: ElevatedButton(
                         onPressed: () {},
                         child: Text('Tôi đang học 30 từ',style: TextStyle(fontSize: 17),),
@@ -122,6 +122,7 @@ class ListVocabularyScreen extends StatelessWidget {
                     ),
                     SizedBox(
                       width: 200,
+                      height: 40,
                       child: ElevatedButton(
                           onPressed: () {}, child: Text('Đã học 12 từ',style: TextStyle(fontSize: 17),)),
                     ),
