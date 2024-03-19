@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project4/controllers/home_controller.dart';
-import 'package:project4/model_views/model_home.dart';
+import 'package:project4/models/lesson.dart';
+import 'package:project4/screen/choose_title_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -14,7 +15,7 @@ class _HomeScreenState extends State<HomeScreen> {
   //variable
   int totalDay = HomeController.getDay();
   String topic = HomeController.getTopic();
-  List<modelLesonHom> listLesson = HomeController.getListLesson(1, 1);
+  List<Lesson> listLesson = HomeController.getListLesson(1, 1);
 
   @override
   Widget build(BuildContext context) {
@@ -162,8 +163,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   itemCount: listLesson.length,
                   itemBuilder: (BuildContext context, int index) {
                     var lesson = listLesson[index];
-                    double leftPadding = index == 0 ? 80 : 40;
-                    double rightPadding = index == listLesson.length - 1 ? 60 : 0;
+                    double leftPadding = index == 0 ? 70 : 40;
+                    double rightPadding = index == listLesson.length - 1 ? 65 : 0;
                     return Padding(
                       padding: EdgeInsets.only(left: leftPadding, right: rightPadding),
                       child: Center(
@@ -172,16 +173,15 @@ class _HomeScreenState extends State<HomeScreen> {
                           height: 300,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(150),
-                            color: Colors.greenAccent,
                             border: Border.all(
                               color: Colors.grey,
                               width: 8,
                             ),
                             image: DecorationImage(
-                              image: AssetImage(lesson.lesson.img),
+                              image: AssetImage(lesson.img),
                               fit: BoxFit.cover,
                               colorFilter: ColorFilter.mode(
-                                Colors.black.withOpacity(0.3),
+                                Colors.black.withOpacity(0.4),
                                 BlendMode.darken,
                               ),
                             ),
@@ -203,7 +203,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               Container(
                                 width: 160,
                                 child: Text(
-                                  lesson.lesson.title,
+                                  lesson.title,
                                   style: const TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
@@ -271,7 +271,12 @@ class _HomeScreenState extends State<HomeScreen> {
                               Padding(
                                 padding: const EdgeInsets.all(20),
                                 child: ElevatedButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => ChooseTitleScreen(model: listLesson[index])),
+                                    );
+                                  },
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: Colors.white,
                                   ),

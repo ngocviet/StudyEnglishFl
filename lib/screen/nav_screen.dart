@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:project4/models/lesson.dart';
+import 'package:project4/screen/choose_title_screen.dart';
 import 'package:project4/screen/home_screen.dart';
 import 'package:project4/screen/statistical_screen.dart';
 import 'package:project4/wiget/CustomTabbar.dart';
@@ -14,6 +16,7 @@ class NavScreen extends StatefulWidget {
 
 class _NavScreenState extends State<NavScreen> {
   final List<Widget> _screens = [
+    // ChooseTitleScreen(model: Lesson(title: 'title', img: 'img', sttLesson: 'sttLesson', totalStar: 3, id: 2)),
     HomeScreen(),
     StatisticalScreen(),
     ListVocabularyScreen(),
