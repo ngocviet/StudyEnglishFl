@@ -55,7 +55,9 @@ class ChooseTitleScreen extends StatelessWidget {
             image: const AssetImage('giaodien2.jpg'),
             fit: BoxFit.cover,
             colorFilter: ColorFilter.mode(
-                Colors.black.withOpacity(0.4), BlendMode.darken),
+              Colors.black.withOpacity(0.4),
+              BlendMode.darken,
+            ),
           ),
         ),
         child: Column(
@@ -68,8 +70,7 @@ class ChooseTitleScreen extends StatelessWidget {
                     children: [
                       Text(
                         model.sttLesson,
-                        style:
-                            const TextStyle(color: Colors.amber, fontSize: 20),
+                        style: const TextStyle(color: Colors.amber, fontSize: 20),
                       )
                     ],
                   ),
@@ -79,8 +80,7 @@ class ChooseTitleScreen extends StatelessWidget {
                         padding: const EdgeInsets.only(top: 10),
                         child: Text(
                           model.title,
-                          style: const TextStyle(
-                              color: Colors.white, fontSize: 20),
+                          style: const TextStyle(color: Colors.white, fontSize: 20),
                         ),
                       )
                     ],
@@ -88,124 +88,112 @@ class ChooseTitleScreen extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(
-              height: 50,
+            const SizedBox(height: 50),
+            Item(
+              imageUrl: 'abc1.jpg',
+              title: 'Học từ vựng',
+              total: item.total_word,
             ),
-            Container(
-              width: 370,
-              height: 150,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20), color: Colors.grey),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 8, 0, 8),
-                    child: Row(
-                      // mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          height: 130,
-                          width: 120,
-                          decoration: const BoxDecoration(
-                              shape: BoxShape.circle, // Sử dụng hình tròn
-                              color: Colors.white,
-                              image: DecorationImage(
-                                  image: AssetImage('abc1.jpg'),
-                                  fit: BoxFit.cover)),
-                        ),
-                        const SizedBox(width: 30),
-                        const Text(
-                          "Học từ vựng",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold),
-                        )
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+            const SizedBox(height: 50),
+            Item(
+              imageUrl: 'hoicham2.png',
+              title: 'Trả lời câu hỏi',
+              total: item.total_question,
             ),
-            const SizedBox(
-              height: 50,
-            ),
-            Container(
-              width: 370,
-              height: 150,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20), color: Colors.grey),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 8, 0, 8),
-                    child: Row(
-                      children: [
-                        Container(
-                          height: 130,
-                          width: 120,
-                          decoration: const BoxDecoration(
-                              shape: BoxShape.circle, // Sử dụng hình tròn
-                              color: Colors.white,
-                              image: DecorationImage(
-                                  image: AssetImage('hoicham2.png'),
-                                  fit: BoxFit.cover)),
-                        ),
-                        const SizedBox(width: 20),
-                        const Text(
-                          "Trả lời câu hỏi",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold),
-                        )
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: 50,
-            ),
-            Container(
-              width: 370,
-              height: 150,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20), color: Colors.grey),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 8, 0, 8),
-                    child: Row(
-                      children: [
-                        Container(
-                          height: 130,
-                          width: 120,
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle, // Sử dụng hình tròn
-                            color: Colors.white,
-                            image: DecorationImage(
-                                image: AssetImage('ghepcau1.jpg'),
-                                fit: BoxFit.cover),
-                          ),
-                        ),
-                        const SizedBox(width: 20),
-                        const Text(
-                          "Ghép câu có ý nghĩa",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold),
-                        )
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+            const SizedBox(height: 50),
+            Item(
+              imageUrl: 'ghepcau1.jpg',
+              title: 'Ghép câu có ý nghĩa',
+              total: item.total_puzzle,
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class Item extends StatelessWidget {
+  final String imageUrl;
+  final String title;
+  final int total;
+
+  const Item({
+    Key? key,
+    required this.imageUrl,
+    required this.title,
+    required this.total,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 370,
+      height: 150,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        color: Colors.grey,
+      ),
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 8, 0, 8),
+            child: Stack(
+              clipBehavior: Clip.none,
+              children: [
+                Align(
+                  alignment: Alignment.center,
+                  child: Row(
+                    children: [
+                      Container(
+                        height: 130,
+                        width: 120,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.white,
+                          image: DecorationImage(
+                            image: AssetImage(imageUrl),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 30),
+                      Text(
+                        title,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                Positioned(
+                  top: -20,
+                  right: -5,
+                  child: Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: Colors.red,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Center(
+                      child: Text(
+                        '$total',
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

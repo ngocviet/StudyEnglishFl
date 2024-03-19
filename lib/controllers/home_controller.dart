@@ -1,4 +1,3 @@
-import 'package:project4/model_views/model_home.dart';
 import 'package:project4/models/lesson.dart';
 
 class HomeController {

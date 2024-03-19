@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:project4/controllers/home_controller.dart';
-import 'package:project4/model_views/model_home.dart';
 import 'package:project4/models/lesson.dart';
 import 'package:project4/screen/choose_title_screen.dart';
 
