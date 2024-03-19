@@ -7,7 +7,7 @@ class HomeController {
   }
 
   static String getTopic(){
-    return "Hoa quả";
+    return "Chủ để 1";
   }
 
   static List<Lesson> getListLesson(int id_user, int id_topic){

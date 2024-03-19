@@ -13,6 +13,13 @@ class ChooseTitleScreen extends StatelessWidget {
     modelChooseTile item = ChooseTileController.getDetail(model.id);
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          color: Colors.white,
+        ),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
