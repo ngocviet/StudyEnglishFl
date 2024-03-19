@@ -15,10 +15,9 @@ class NavScreen extends StatefulWidget {
 
 class _NavScreenState extends State<NavScreen> {
   final List<Widget> _screens = [
-    ChooseTopicScreen(),
     HomeScreen(),
     StatisticalScreen(),
-    // Scaffold(),
+    Scaffold(),
   ];
 
   final List<IconData> _icons = const [

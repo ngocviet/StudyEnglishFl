@@ -3,12 +3,13 @@ import 'package:project4/controllers/choose_topic_controller.dart';
 import 'package:project4/models/topic.dart';
 
 class ChooseTopicScreen extends StatelessWidget {
-  const ChooseTopicScreen({super.key});
+  final int idUser;
+  const ChooseTopicScreen({super.key, required this.idUser});
 
   @override
   Widget build(BuildContext context) {
     //variable
-    List<Topic> listItem = ChooseTopicController.getListTopic();
+    List<Topic> listItem = ChooseTopicController.getListTopic(idUser);
     TextStyle styleL2_3 = const TextStyle(
       color: Colors.black,
       fontSize: 18,
