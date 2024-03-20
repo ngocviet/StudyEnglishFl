@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tts/flutter_tts.dart';
+import 'package:project4/model_views/model_list_vocabulary.dart';
+import 'package:project4/models/word.dart';
+import '../controllers/list_vocabulary_controller.dart';
 
 class ListVocabularyScreen extends StatelessWidget {
-  const ListVocabularyScreen({super.key});
+  FlutterTts flutterTts = FlutterTts();
+   ListVocabularyScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    modelListVocabulary data = ListVocabularyScreenController.getData();
+    // List<modelListVocabulary> item = ListVocabularyScreenController.getDisplay();
     return Scaffold(
         appBar: AppBar(
-          title: const Row(
+          title:
+          const Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
@@ -33,7 +41,7 @@ class ListVocabularyScreen extends StatelessWidget {
             ),
           ),
         ),
-        body: Container(
+        body:  Container(
           width: double.infinity,
           height: double.infinity,
           decoration: BoxDecoration(
@@ -68,7 +76,7 @@ class ListVocabularyScreen extends StatelessWidget {
                             children: [
                               // Border
                               Text(
-                                "42",
+                                '${data.totalNumber}',
                                 style: TextStyle(
                                   fontSize: 70,
                                   fontWeight: FontWeight.bold,
@@ -79,9 +87,9 @@ class ListVocabularyScreen extends StatelessWidget {
                                 ),
                               ),
                               // Text
-                              const Text(
-                                "42",
-                                style: TextStyle(
+                              Text(
+                                '${data.totalNumber}',
+                                style: const TextStyle(
                                   fontSize: 70,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white, // Màu của chữ
@@ -114,17 +122,17 @@ class ListVocabularyScreen extends StatelessWidget {
                       height: 40,
                       child: ElevatedButton(
                         onPressed: () {},
-                        child: Text('Tôi đang học 30 từ',style: TextStyle(fontSize: 17),),
                         style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all<Color>(Colors.yellow),
                         ),
+                        child: Text('Tôi đang học ${data.wordsLearned} từ',style: const TextStyle(fontSize: 17),),
                       ),
                     ),
                     SizedBox(
                       width: 200,
                       height: 40,
                       child: ElevatedButton(
-                          onPressed: () {}, child: Text('Đã học 12 từ',style: TextStyle(fontSize: 17),)),
+                          onPressed: () {}, child: Text('Đã học ${data.wordsBeingStudied} từ',style: TextStyle(fontSize: 17),)),
                     ),
                   ],
                 ),
@@ -134,42 +142,58 @@ class ListVocabularyScreen extends StatelessWidget {
                 child: const Text('Đã đến lúc để ôn lại',style: TextStyle(color: Colors.white,fontSize: 20),),
               ),
               const SizedBox(height: 30,),
-              Container(
-                  width: 400,
-                  height: 70,
-                  decoration: BoxDecoration(
-                      color: Colors.grey,
-                      borderRadius: BorderRadius.circular(20)
-                  ),
-                  child:Row(
-                    children: [
-                      const Padding(
-                        padding: EdgeInsets.only(left: 15.0),
-                        child: Text(
-                          'Coffee',
-                          style: TextStyle(fontSize: 20),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: data.listWord.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    Word word = data.listWord[index];
+                    return Column(
+                      children: [
+                        Container(
+                          width: 400,
+                          height: 70,
+                          decoration: BoxDecoration(
+                            color: Colors.grey,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Row(
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(left: 15.0),
+                                child: Text(
+                                  word.nameEn,
+                                  style: const TextStyle(fontSize: 20),
+                                ),
+                              ),
+                              Spacer(), // Khoảng trống linh hoạt
+                              const Icon(
+                                Icons.check,
+                                size: 20,
+                              ),
+                              ElevatedButton(
+                                onPressed: () async {
+                                  await flutterTts.setLanguage("en-US");
+                                  await flutterTts.setPitch(5);
+                                  await flutterTts.speak(word.nameEn);
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  padding: EdgeInsets.zero, // Xóa padding mặc định của ElevatedButton
+                                  shape: CircleBorder(), // Đặt hình dạng của ElevatedButton thành hình tròn
+                                ),
+                                child: const Icon(
+                                  Icons.volume_up,
+                                  size: 24,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                      Spacer(), // Khoảng trống linh hoạt
-                      Icon(
-                        Icons.check,
-                        size: 20,
-                      ),
-                      ElevatedButton(
-                        onPressed: () {},
-                        child: Icon(
-                          Icons.volume_up,
-                          size: 24,
-                          color: Colors.black,
-                        ),
-                        style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.zero, // Xóa padding mặc định của ElevatedButton
-                          shape: CircleBorder(), // Đặt hình dạng của ElevatedButton thành hình tròn
-                        ),
-                      ),
-                    ],
-                  )
-
+                        SizedBox(height: 10), // Khoảng cách giữa các container
+                      ],
+                    );
+                  },
+                ),
               )
             ],
           ),
