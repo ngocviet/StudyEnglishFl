@@ -4,13 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:project4/screen/list_vocabulary_screen.dart';
 
+import 'learn_word_screen.dart';
+
 
 class huong extends StatelessWidget {
   const huong({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ListVocabularyScreen();
+    return LearnWordScreen();
   }
 }
 
