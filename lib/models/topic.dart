@@ -1,28 +1,15 @@
 class Topic{
-  late int Id;
-  late int UserId;
-  late String Name;
-  late String Description;
-  late String Avata;
-  late String CreateBy;
-  late String UpdateBy;
-  late String DeleteBy;
-  late DateTime CreateTime;
-  late DateTime UpdateTime;
-  late DateTime DeleteTime;
-  late bool IsDeleted;
+  final String title;
+  final String img;
+  final String comboColor; //(3-3-3)
+  final int comple_lesson;
+  final int total_lesson;
 
   Topic({
-   required this.Id,
-   required this.UserId,
-    required this.Name,
-    required this.Description,
-    required this.Avata,
-    required this.CreateBy,
-    required this.UpdateBy,
-    required this.DeleteBy,
-    required this.DeleteTime,
-    required this.UpdateTime,
-    required this.CreateTime,
-    required this.IsDeleted,});
+    required this.title,
+    required this.img,
+    required this.comboColor,
+    required this.comple_lesson,
+    required this.total_lesson,
+  });
 }
