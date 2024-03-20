@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:project4/screen/list_vocabulary_screen.dart';
 
 
 class huong extends StatelessWidget {
@@ -9,14 +10,7 @@ class huong extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
-        ),
-        home:  MyHomePage(title: 'Flutter Demo Home Page'),
-    );
+    return ListVocabularyScreen();
   }
 }
 
@@ -88,4 +82,14 @@ Future<List<String>> listDogs() async {
     throw Exception('Failed to fetch dog breeds');
   }
 }
+
+class tesHuong extends StatelessWidget {
+  const tesHuong({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold();
+  }
+}
+
 
