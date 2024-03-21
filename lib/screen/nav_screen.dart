@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:project4/screen/home_screen.dart';
 import 'package:project4/screen/list_vocabulary_screen.dart';
 import 'package:project4/screen/statistical_screen.dart';
+import 'package:project4/screen/thuong.dart';
 import 'package:project4/wiget/CustomTabbar.dart';
 
 import 'huongtestapi.dart';
@@ -19,12 +20,14 @@ class _NavScreenState extends State<NavScreen> {
     StatisticalScreen(),
     Scaffold(),
     huong(),
+    Thuong(),
   ];
 
   final List<IconData> _icons = const [
     Icons.home,
     Icons.handyman,
     Icons.perm_contact_cal_outlined,
+    Icons.add,
     Icons.add
   ];
 
