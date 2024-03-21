@@ -12,7 +12,8 @@ class Account {
   late DateTime DeleteTime;
   late bool IsDeleted;
 
-  Account({required this.ID,
+  Account({
+    required this.ID,
     required this.UserName,
     required this.PassWord,
     required this.Name,
@@ -23,5 +24,24 @@ class Account {
     required this.DeleteTime,
     required this.UpdateTime,
     required this.CreateTime,
-    required this.IsDeleted,});
+    required this.IsDeleted,
+  });
+
+  factory Account.fromJson(Map<String, dynamic> json) {
+    return Account(
+      ID: json['ID'] ?? 0, // Giá trị mặc định là 0 nếu không có giá trị ID
+      UserName: json['UserName'] ?? '',
+      PassWord: json['PassWord'] ?? '',
+      Name: json['Name'] ?? '',
+      Avata: json['Avata'] ?? '',
+      CreateBy: json['CreateBy'] ?? '',
+      UpdateBy: json['UpdateBy'] ?? '',
+      DeleteBy: json['DeleteBy'] ?? '',
+      CreateTime: json['CreateTime'] != null ? DateTime.parse(json['CreateTime']) : DateTime.now(),
+      UpdateTime: json['UpdateTime'] != null ? DateTime.parse(json['UpdateTime']) : DateTime.now(),
+      DeleteTime: json['DeleteTime'] != null ? DateTime.parse(json['DeleteTime']) : DateTime.now(),
+      IsDeleted: json['IsDeleted'] ?? false, // Giá trị mặc định là false nếu không có giá trị IsDeleted
+    );
+  }
+
 }
