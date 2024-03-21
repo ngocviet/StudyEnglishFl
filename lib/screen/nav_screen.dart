@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project4/screen/home_screen.dart';
+import 'package:project4/screen/list_vocabulary_screen.dart';
 import 'package:project4/screen/statistical_screen.dart';
 import 'package:project4/wiget/CustomTabbar.dart';
 

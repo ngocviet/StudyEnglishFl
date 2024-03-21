@@ -1,12 +1,17 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:project4/controllers/home_controller.dart';
+import 'package:flutter/widgets.dart';
+import 'package:project4/controllers/statistical_controller.dart';
+import 'package:project4/screen/list_vocabulary_screen.dart';
+import '../model_views/model_statistical.dart';
 
 class StatisticalScreen extends StatelessWidget {
   StatisticalScreen({super.key});
 
-
   @override
   Widget build(BuildContext context) {
+    modelStatistical data = StatisticalController.getData(1);
+
     return Scaffold(
       appBar: AppBar(
         title: const Row(
@@ -26,7 +31,7 @@ class StatisticalScreen extends StatelessWidget {
         ),
         flexibleSpace: Container(
           decoration:
-          const BoxDecoration(color: Color.fromRGBO(50, 50, 50, 1.0)),
+              const BoxDecoration(color: Color.fromRGBO(50, 50, 50, 1.0)),
         ),
       ),
       body: Column(
@@ -40,152 +45,33 @@ class StatisticalScreen extends StatelessWidget {
               child: Column(
                 children: [
                   Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.all(15),
-                      child: Container(
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
-                          color: const Color.fromRGBO(85, 85, 85, 1.0),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(20, 15, 0, 20),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                flex: 2,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Padding(
-                                      padding: EdgeInsets.only(bottom: 8),
-                                      child: Text(
-                                        'Ôn lại các từ',
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                    Container(
-                                        padding:
-                                        const EdgeInsets.fromLTRB(8, 2, 8, 2),
-                                        width: 200,
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(10),
-                                          color: const Color.fromRGBO(
-                                              119, 0, 192, 1.0),
-                                        ),
-                                        child: const Text(
-                                          'coffee, like, work, study',
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 19,
-                                              fontWeight: FontWeight.bold,
-                                              fontStyle: FontStyle.italic),
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                        )),
-                                  ],
-                                ),
-                              ),
-                              Expanded(
-                                flex: 1,
-                                child: Column(
-                                  children: [
-                                    Expanded(
-                                      child: Container(
-                                        width: 150,
-                                        height: 150,
-                                        decoration: const BoxDecoration(
-                                            image: DecorationImage(
-                                                image: AssetImage('handle.png'),
-                                                fit: BoxFit.cover)),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => ListVocabularyScreen()),
+                        );
+                      },
+                      child: Item1(
+                        title: 'Ôn lại các từ',
+                        content: data.listWord,
+                        img: 'handle.png',
                       ),
                     ),
                   ),
                   const SizedBox(height: 10),
                   Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.all(15),
-                      child: Container(
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
-                          color: const Color.fromRGBO(85, 85, 85, 1.0),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(20, 15, 0, 20),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                flex: 2,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Padding(
-                                      padding: EdgeInsets.only(bottom: 8),
-                                      child: Text(
-                                        'Bài tập trắc nghiệm',
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                    Container(
-                                        padding:
-                                        const EdgeInsets.fromLTRB(8, 2, 8, 2),
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(10),
-                                          color: const Color.fromRGBO(
-                                              119, 0, 192, 1.0),
-                                        ),
-                                        child: const Text(
-                                          'coffee, like, work',
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 19,
-                                              fontWeight: FontWeight.bold,
-                                              fontStyle: FontStyle.italic),
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                        )),
-                                  ],
-                                ),
-                              ),
-                              Expanded(
-                                flex: 1,
-                                child: Column(
-                                  children: [
-                                    Expanded(
-                                      child: Container(
-                                        width: 150,
-                                        height: 150,
-                                        decoration: const BoxDecoration(
-                                            image: DecorationImage(
-                                                image: AssetImage('book.png'),
-                                                fit: BoxFit.cover)),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => ListVocabularyScreen()),
+                        );
+                      },
+                      child: Item1(
+                        title: 'Bài tập trắc nghiệm',
+                        content: data.listWord,
+                        img: 'book.png',
                       ),
                     ),
                   ),
@@ -221,48 +107,48 @@ class StatisticalScreen extends StatelessWidget {
                                 flex: 3,
                                 child: Padding(
                                   padding:
-                                  const EdgeInsets.fromLTRB(0, 20, 00, 10),
+                                      const EdgeInsets.fromLTRB(0, 20, 00, 10),
                                   child: Row(
                                     children: [
                                       Expanded(
                                           child: Container(
-                                            height: double.infinity,
-                                            decoration: BoxDecoration(
-                                                color: const Color.fromRGBO(
-                                                    45, 45, 45, 1.0),
-                                                borderRadius:
+                                        height: double.infinity,
+                                        decoration: BoxDecoration(
+                                            color: const Color.fromRGBO(
+                                                45, 45, 45, 1.0),
+                                            borderRadius:
                                                 BorderRadius.circular(30)),
-                                            child: const Center(
-                                              child: Text(
-                                                '29 từ',
-                                                style: TextStyle(
-                                                    fontSize: 18,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.white,
-                                                    fontStyle: FontStyle.italic),
-                                              ),
-                                            ),
-                                          )),
+                                        child: Center(
+                                          child: Text(
+                                            '${data.totalWord} từ',
+                                            style: const TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white,
+                                                fontStyle: FontStyle.italic),
+                                          ),
+                                        ),
+                                      )),
                                       const SizedBox(width: 20),
                                       Expanded(
                                           child: Container(
-                                            height: double.infinity,
-                                            decoration: BoxDecoration(
-                                                color: const Color.fromRGBO(
-                                                    45, 45, 45, 1.0),
-                                                borderRadius:
+                                        height: double.infinity,
+                                        decoration: BoxDecoration(
+                                            color: const Color.fromRGBO(
+                                                45, 45, 45, 1.0),
+                                            borderRadius:
                                                 BorderRadius.circular(30)),
-                                            child: const Center(
-                                              child: Text(
-                                                '10 bài tập',
-                                                style: TextStyle(
-                                                    fontSize: 18,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.white,
-                                                    fontStyle: FontStyle.italic),
-                                              ),
-                                            ),
-                                          ))
+                                        child: Center(
+                                          child: Text(
+                                            '${data.totalQues} bài tập',
+                                            style: const TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white,
+                                                fontStyle: FontStyle.italic),
+                                          ),
+                                        ),
+                                      ))
                                     ],
                                   ),
                                 ))
@@ -273,12 +159,12 @@ class StatisticalScreen extends StatelessWidget {
                     flex: 5,
                     child: Column(
                       children: [
-                        const Padding(
-                          padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text('Hôm nay',
+                              const Text('Hôm nay',
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.w800,
@@ -286,15 +172,15 @@ class StatisticalScreen extends StatelessWidget {
                                       fontStyle: FontStyle.normal)),
                               Row(
                                 children: [
-                                  Icon(
+                                  const Icon(
                                     Icons.lock_clock,
                                     color: Colors.orange,
                                     size: 30,
                                   ),
                                   Padding(
-                                    padding: EdgeInsets.only(left: 8),
-                                    child: Text('2 tiếng',
-                                        style: TextStyle(
+                                    padding: const EdgeInsets.only(left: 8),
+                                    child: Text(data.time,
+                                        style: const TextStyle(
                                             color: Colors.orange,
                                             fontWeight: FontWeight.w800,
                                             fontSize: 20,
@@ -315,138 +201,18 @@ class StatisticalScreen extends StatelessWidget {
                               children: [
                                 Row(
                                   children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(10),
-                                      child: Container(
-                                        width: 180,
-                                        height: 220,
-                                        decoration: BoxDecoration(
-                                            color: const Color.fromRGBO(
-                                                45, 45, 45, 1.0),
-                                            borderRadius:
-                                            BorderRadius.circular(30)),
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(top:38.0),
-                                          child: Column(
-                                            children: [
-                                              const Text('Tốt',style: TextStyle(
-                                                  color: Color.fromRGBO(
-                                                      160, 100, 255, 1.0),
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 22,
-                                                  fontStyle: FontStyle.italic)),
-                                              const Text('6',style: TextStyle(
-                                                  color: Color.fromRGBO(
-                                                      160, 100, 255, 1.0),
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 22,
-                                                  fontStyle: FontStyle.italic)),
-                                              const Text('Từ mới',style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.w600,
-                                                  fontSize: 20,
-                                                  fontStyle: FontStyle.italic)),
-                                              Padding(
-                                                padding: const EdgeInsets.only(top: 35, right: 10, left: 10),
-                                                child: Container(
-                                                  width: double.infinity,
-                                                  height: 2,
-                                                  color: Colors.orange,
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(10),
-                                      child: Container(
-                                        width: 180,
-                                        height: 220,
-                                        decoration: BoxDecoration(
-                                            color: const Color.fromRGBO(
-                                                45, 45, 45, 1.0),
-                                            borderRadius:
-                                            BorderRadius.circular(30)),
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(top:38.0),
-                                          child: Column(
-                                            children: [
-                                              const Text('Tuyệt vời',style: TextStyle(
-                                                  color: Color.fromRGBO(
-                                                      160, 100, 255, 1.0),
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 22,
-                                                  fontStyle: FontStyle.italic)),
-                                              const Text('2',style: TextStyle(
-                                                  color: Color.fromRGBO(
-                                                      160, 100, 255, 1.0),
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 22,
-                                                  fontStyle: FontStyle.italic)),
-                                              const Text('Bài tập đã làm',style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.w600,
-                                                  fontSize: 20,
-                                                  fontStyle: FontStyle.italic)),
-                                              Padding(
-                                                padding: const EdgeInsets.only(top: 35, right: 10, left: 10),
-                                                child: Container(
-                                                  width: double.infinity,
-                                                  height: 2,
-                                                  color: Colors.orange,
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(10),
-                                      child: Container(
-                                        width: 180,
-                                        height: 220,
-                                        decoration: BoxDecoration(
-                                            color: const Color.fromRGBO(
-                                                45, 45, 45, 1.0),
-                                            borderRadius:
-                                            BorderRadius.circular(30)),
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(top:38.0),
-                                          child: Column(
-                                            children: [
-                                              const Text('Tốt',style: TextStyle(
-                                                  color: Color.fromRGBO(
-                                                      160, 100, 255, 1.0),
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 22,
-                                                  fontStyle: FontStyle.italic)),
-                                              const Text('3',style: TextStyle(
-                                                  color: Color.fromRGBO(
-                                                      160, 100, 255, 1.0),
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 22,
-                                                  fontStyle: FontStyle.italic)),
-                                              const Text('Từ đã ôn tập',style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.w600,
-                                                  fontSize: 20,
-                                                  fontStyle: FontStyle.italic)),
-                                              Padding(
-                                                padding: const EdgeInsets.only(top: 35, right: 10, left: 10),
-                                                child: Container(
-                                                  width: double.infinity,
-                                                  height: 2,
-                                                  color: Colors.orange,
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
+                                    Item3(
+                                        total: data.totalNewWord,
+                                        status: 'Tốt',
+                                        title: 'Từ mới đã học'),
+                                    Item3(
+                                        total: data.totalNewQues,
+                                        status: 'Tuyệt',
+                                        title: 'Bài tập đã làm'),
+                                    Item3(
+                                        total: data.totalOldWord,
+                                        status: 'Tốt',
+                                        title: 'Từ đã ôn'),
                                   ],
                                 ),
                               ],
@@ -461,6 +227,158 @@ class StatisticalScreen extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class Item1 extends StatelessWidget {
+  final String title;
+  final String content;
+  final String img;
+
+  const Item1({
+    Key? key,
+    required this.title,
+    required this.content,
+    required this.img,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Padding(
+        padding: const EdgeInsets.all(15),
+        child: Container(
+          width: double.infinity,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(30),
+            color: const Color.fromRGBO(85, 85, 85, 1.0),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(20, 15, 0, 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 8),
+                        child: Text(
+                          title,
+                          style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.fromLTRB(8, 2, 8, 2),
+                        width: 200,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: const Color.fromRGBO(119, 0, 192, 1.0),
+                        ),
+                        child: Text(
+                          content,
+                          style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 19,
+                              fontWeight: FontWeight.bold,
+                              fontStyle: FontStyle.italic),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          width: 150,
+                          height: 150,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage(img),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class Item3 extends StatelessWidget {
+  final int total;
+  final String status;
+  final String title;
+
+  const Item3(
+      {super.key,
+      required this.total,
+      required this.status,
+      required this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: Container(
+        width: 180,
+        height: 220,
+        decoration: BoxDecoration(
+            color: const Color.fromRGBO(45, 45, 45, 1.0),
+            borderRadius: BorderRadius.circular(30)),
+        child: Padding(
+          padding: const EdgeInsets.only(top: 38.0),
+          child: Column(
+            children: [
+              Text(status,
+                  style: const TextStyle(
+                      color: Color.fromRGBO(160, 100, 255, 1.0),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 22,
+                      fontStyle: FontStyle.italic)),
+              Text('$total',
+                  style: const TextStyle(
+                      color: Color.fromRGBO(160, 100, 255, 1.0),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 22,
+                      fontStyle: FontStyle.italic)),
+              Text(title,
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 20,
+                      fontStyle: FontStyle.italic)),
+              Padding(
+                padding: const EdgeInsets.only(top: 35, right: 10, left: 10),
+                child: Container(
+                  width: double.infinity,
+                  height: 2,
+                  color: Colors.orange,
+                ),
+              )
+            ],
+          ),
+        ),
       ),
     );
   }
