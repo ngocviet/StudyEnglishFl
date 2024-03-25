@@ -66,7 +66,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-const String baseUrl = 'https://localhost:7296/api/Accounts';
+const String baseUrl = 'https://localhost:7296/api/Values';
 
 Future<List<Account>> getAllAccounts() async {
   final response = await http.get(Uri.parse('$baseUrl'));
