@@ -4,6 +4,7 @@ import 'package:project4/models/account.dart';
 import 'package:project4/models/lesson.dart';
 import 'package:http/http.dart' as http;
 import 'package:project4/models/test.dart';
+import 'package:project4/config/localhost.dart';
 
 class HomeController {
   static int getDay() {
@@ -28,10 +29,11 @@ class HomeController {
     ];
   }
   static Future<List<dynamic>> getDataFromApi() async {
-    // final response = await http.get(Uri.parse('https://localhost:7296/api/Values?param1=val1'));
+    String local = Localhost.getLocal();
+    // final response = await http.get(Uri.parse('http://localhost:7296/api/Values?param1=val1'));
 
     final response = await http.post(
-      Uri.parse('https://localhost:7296/api/Values/TestCallPost1'),
+      Uri.parse('http://localhost:$local/api/Values/TestCallPost1'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
