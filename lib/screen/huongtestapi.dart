@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:project4/controllers/home_controller.dart';
+import 'package:project4/controllers/list_vocabulary_controller.dart';
 import 'package:project4/models/account.dart';
 import 'package:project4/screen/list_vocabulary_screen.dart';
 
@@ -13,7 +15,8 @@ class huong extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MyHomePage(title: "huong");
+     return CombineSentencesScreen();
+    // return const MyHomePage(title: 'huong',);
   }
 }
 
@@ -26,12 +29,24 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  late Future<List<Account>> accounts;
+  late List<dynamic> accounts = [];
 
   @override
   void initState() {
     super.initState();
-    accounts = getAllAccounts();
+    fetchData();
+  }
+
+  void fetchData() async{
+    try {
+      final data = await ListVocabularyScreenController.getDataFromApi();
+      setState(() {
+        accounts = data;
+      });
+    } catch (e) {
+      // Handle errors
+      print('Error: $e');
+    }
   }
 
   @override
@@ -42,56 +57,13 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        child: FutureBuilder<List<Account>>(
-          future: accounts,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator();
-            } else if (snapshot.hasError) {
-              return Text('Error: ${snapshot.error}');
-            } else {
-              List<Account> accountList = snapshot.data!;
-              return GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  crossAxisSpacing: 4.0,
-                  mainAxisSpacing: 4.0,
-                ),
-                itemCount: accountList.length,
-                itemBuilder: (context, index) {
-                  return Text(accountList[index].Name);
-                },
-              );
+        child: ListView.builder(
+          itemCount: accounts.length,
+            itemBuilder: (context, index){
+              return ListTile(title: Text(accounts[index]['userName']),);
             }
-          },
         ),
       ),
     );
-  }
-}
-
-const String baseUrl = 'https://localhost:7183/api/Accounts';
-
-Future<List<Account>> getAllAccounts() async {
-  final response = await http.get(Uri.parse('$baseUrl'));
-
-  if (response.statusCode == 200) {
-    List<Account> accounts =
-        (json.decode(response.body)['data'] as List<dynamic>? ?? [])
-            .map((json) => Account.fromJson(json))
-            .toList();
-
-    return accounts;
-  } else {
-    throw Exception('Failed to load accounts');
-  }
-}
-
-class TesHuong extends StatelessWidget {
-  const TesHuong({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold();
   }
 }
