@@ -19,8 +19,11 @@ class ScreenState extends State<CombineSentencesScreen> {
   List<Word> listWordAdd = [];
   @override
   Widget build(BuildContext context) {
+    modelCombineSentences data = CombineSentencesController.getData();
+    listWord = data.listWord;
     List<Widget> buttonWidgets = listWord.map((word) {
       return ElevatedButton(
+        key: UniqueKey(), // Đặt UniqueKey ở đây
         onPressed: () {
           setState(() {
             Word newWord = Word(
@@ -30,6 +33,7 @@ class ScreenState extends State<CombineSentencesScreen> {
             );
             listWordAdd.add(newWord);
             listWord.remove(word);
+            data.listWord = listWord;
           });
         },
         style: ButtonStyle(
@@ -49,8 +53,6 @@ class ScreenState extends State<CombineSentencesScreen> {
       );
     }).toList();
 
-    modelCombineSentences data = CombineSentencesController.getData();
-    listWord = data.listWord;
     return Scaffold(
       body: Container(
         width: double.infinity,
