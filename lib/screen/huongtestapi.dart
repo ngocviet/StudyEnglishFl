@@ -39,7 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void fetchData() async{
     try {
-      final data = await ListVocabularyScreenController.getDataFromApi();
+      final data = await ListVocabularyScreenController.getListWord();
       setState(() {
         accounts = data;
       });
