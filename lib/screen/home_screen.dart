@@ -19,9 +19,9 @@ class _HomeScreenState extends State<HomeScreen> {
 // Variables
   int totalDay = 0;
   String topic = "";
+  int idTopic = 1;
   List<Lesson> listLesson = [];
   List<Account> accounts = [];
-  List<dynamic> tests = [];
 
   @override
   void initState() {
@@ -33,13 +33,11 @@ class _HomeScreenState extends State<HomeScreen> {
     totalDay = await HomeController.getDay();
     listLesson = await HomeController.getListLesson(1, 1);
     try {
-      final data = await HomeController.getDataFromApi();
+      final data = await HomeController.getDataTopic(idTopic);
       setState(() {
-        tests = data;
-        topic = data[0]['name'];
+        topic = 'Chủ đề ${data['stt']}';
       });
     } catch (e) {
-      // Handle errors
       print('Error: $e');
     }
   }
