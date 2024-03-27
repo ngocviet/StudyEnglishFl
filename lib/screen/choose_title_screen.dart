@@ -1,16 +1,49 @@
+import 'dart:js_util';
+
 import 'package:flutter/material.dart';
 import 'package:project4/controllers/choose_title_controller.dart';
 import 'package:project4/model_views/model_choose_title.dart';
-import 'package:project4/models/lesson.dart';
+import 'package:project4/screen/learn_word_screen.dart';
 
-class ChooseTitleScreen extends StatelessWidget {
-  final Lesson model;
+class ChooseTitleScreen extends StatefulWidget {
+  final int idLesson;
+  final String sttLesson;
+  final String title;
+  const ChooseTitleScreen({super.key, required this.idLesson, required this.sttLesson, required this.title});
 
-  const ChooseTitleScreen({super.key, required this.model});
+  @override
+  State<ChooseTitleScreen> createState() => _ChooseTitleScreenState();
+}
+
+class _ChooseTitleScreenState extends State<ChooseTitleScreen> {
+  int totalWord = 0;
+  int totalQuestion = 0;
+  int totalPuzzle = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
+  void fetchData() async{
+    try {
+      final rs = await ChooseTileController.getDataFromApi(widget.idLesson);
+
+      setState(() {
+        totalWord = rs['totalWord'];
+        totalQuestion = rs['totalQuestion'];
+        totalPuzzle = rs['totalPuzzle'];
+      });
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
-    modelChooseTile item = ChooseTileController.getDetail(model.id);
+    // modelChooseTile item = ChooseTileController.getDetail(widget.idLesson);
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -76,7 +109,7 @@ class ChooseTitleScreen extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        model.sttLesson,
+                        widget.sttLesson,
                         style: const TextStyle(color: Colors.amber, fontSize: 20),
                       )
                     ],
@@ -86,7 +119,7 @@ class ChooseTitleScreen extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(top: 10),
                         child: Text(
-                          model.title,
+                          widget.title,
                           style: const TextStyle(color: Colors.white, fontSize: 20),
                         ),
                       )
@@ -96,22 +129,30 @@ class ChooseTitleScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 50),
-            Item(
-              imageUrl: 'abc1.jpg',
-              title: 'Học từ vựng',
-              total: item.total_word,
+            GestureDetector(
+              onTap: (){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const LearnWordScreen()),
+                );
+              },
+              child: Item(
+                imageUrl: 'abc1.jpg',
+                title: 'Học từ vựng',
+                total: totalWord,
+              ),
             ),
             const SizedBox(height: 50),
             Item(
               imageUrl: 'hoicham2.png',
               title: 'Trả lời câu hỏi',
-              total: item.total_question,
+              total: totalQuestion,
             ),
             const SizedBox(height: 50),
             Item(
               imageUrl: 'ghepcau1.jpg',
               title: 'Ghép câu có ý nghĩa',
-              total: item.total_puzzle,
+              total: totalPuzzle,
             ),
           ],
         ),
@@ -120,17 +161,18 @@ class ChooseTitleScreen extends StatelessWidget {
   }
 }
 
+
 class Item extends StatelessWidget {
   final String imageUrl;
   final String title;
   final int total;
 
   const Item({
-    Key? key,
+    super.key,
     required this.imageUrl,
     required this.title,
     required this.total,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

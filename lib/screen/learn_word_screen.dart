@@ -6,6 +6,48 @@ class LearnWordScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          color: Colors.white,
+        ),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text(
+              'Học Tập',
+              style: TextStyle(
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white),
+            ),
+            Container(
+              width: 70,
+              height: 50,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage('htv_preview_rev_1.png'),
+                    fit: BoxFit.contain),
+              ),
+            ),
+          ],
+        ),
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Color.fromRGBO(30, 30, 30, 54),
+                Colors.black87
+              ], // Màu sắc cho gradient
+            ),
+          ),
+        ),
+      ),
       body: Container(
         width: double.infinity,
         height: double.infinity,

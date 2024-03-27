@@ -1,12 +1,8 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:project4/controllers/home_controller.dart';
 import 'package:project4/models/account.dart';
-import 'package:project4/models/lesson.dart';
 import 'package:project4/screen/choose_title_screen.dart';
 import 'package:project4/screen/choose_topic_screen.dart';
-import 'package:http/http.dart' as http;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -17,10 +13,11 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 // Variables
-  int totalDay = 0;
+  String totalDay = "0";
   String topic = "";
   int idTopic = 1;
-  List<Lesson> listLesson = [];
+  int idUser = 1;
+  List<dynamic> listLesson = [];
   List<Account> accounts = [];
 
   @override
@@ -30,12 +27,16 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void fetchData() async{
-    totalDay = await HomeController.getDay();
-    listLesson = await HomeController.getListLesson(1, 1);
     try {
       final data = await HomeController.getDataTopic(idTopic);
+
+      final data1 = await HomeController.getListLesson(idUser,idTopic);
+
+      final data2 = await HomeController.getDay(idUser);
       setState(() {
         topic = 'Chủ đề ${data['stt']}';
+        listLesson = data1;
+        totalDay = data2['totalDay'];
       });
     } catch (e) {
       print('Error: $e');
@@ -196,6 +197,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         var lesson = listLesson[index];
                         double leftPadding = index == 0 ? 70 : 40;
                         double rightPadding = index == listLesson.length - 1 ? 65 : 0;
+                        var statusStar = List<bool>.filled(3, false);
+                        for (int i = 0; i < lesson['totalStar']; i++) {
+                          statusStar[i] = true;
+                        }
                         return Padding(
                           padding: EdgeInsets.only(left: leftPadding, right: rightPadding),
                           child: Center(
@@ -209,7 +214,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   width: 8,
                                 ),
                                 image: DecorationImage(
-                                  image: AssetImage(lesson.img),
+                                  image: AssetImage(lesson['img']),
                                   fit: BoxFit.cover,
                                   colorFilter: ColorFilter.mode(
                                     Colors.black.withOpacity(0.4),
@@ -223,7 +228,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   Padding(
                                     padding: const EdgeInsets.only(top: 8.0),
                                     child: Text(
-                                      lesson.sttLesson,
+                                      lesson['sttLesson'],
                                       style: const TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.bold,
@@ -234,7 +239,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   Container(
                                     width: 160,
                                     child: Text(
-                                      lesson.title,
+                                      lesson['title'],
                                       style: const TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold,
@@ -256,12 +261,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                           child: Container(
                                             width: 50,
                                             height: 50,
-                                            child: const IconButton(
+                                            child: IconButton(
                                               onPressed: null,
                                               icon: Icon(
-                                                Icons.star_border_rounded,
+                                                statusStar[0] ? Icons.star_purple500_sharp : Icons.star_border_rounded,
                                                 size: 75,
-                                                color: Colors.white,
+                                                color:statusStar[0] ? Colors.yellow : Colors.white,
                                               ),
                                             ),
                                           ),
@@ -271,12 +276,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                           child: Container(
                                             width: 50,
                                             height: 50,
-                                            child: const IconButton(
+                                            child: IconButton(
                                               onPressed: null,
                                               icon: Icon(
-                                                Icons.star_border_rounded,
+                                                statusStar[1] ? Icons.star_purple500_sharp : Icons.star_border_rounded,
                                                 size: 75,
-                                                color: Colors.white,
+                                                color:statusStar[1] ? Colors.yellow : Colors.white,
                                               ),
                                             ),
                                           ),
@@ -286,12 +291,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                           child: Container(
                                             width: 50,
                                             height: 50,
-                                            child: const IconButton(
+                                            child: IconButton(
                                               onPressed: null,
                                               icon: Icon(
-                                                Icons.star_border_rounded,
+                                                statusStar[2] ? Icons.star_purple500_sharp : Icons.star_outline,
                                                 size: 75,
-                                                color: Colors.white,
+                                                color:statusStar[2] ? Colors.yellow : Colors.white,
                                               ),
                                             ),
                                           ),
@@ -306,7 +311,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(builder: (context) =>
-                                              ChooseTitleScreen(model: listLesson[index])
+                                              ChooseTitleScreen(idLesson: lesson['id'],title: lesson['title'],sttLesson: lesson['sttLesson'],)
                                             // ListVocabularyScreen()
                                           ),
                                         );
