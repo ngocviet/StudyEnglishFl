@@ -3,6 +3,7 @@ import 'package:project4/screen/home_screen.dart';
 import 'package:project4/screen/list_vocabulary_screen.dart';
 import 'package:project4/screen/statistical_screen.dart';
 import 'package:project4/screen/thuong.dart';
+import 'package:project4/screen_admin/answer_admin.dart';
 import 'package:project4/wiget/CustomTabbar.dart';
 
 import '../screen_admin/account_admin.dart';
@@ -23,6 +24,7 @@ class _NavScreenState extends State<NavScreen> {
     huong(),
     Thuong(),
     AccountAdmin(),
+    AnswerAdmin()
   ];
 
   final List<IconData> _icons = const [
@@ -31,7 +33,8 @@ class _NavScreenState extends State<NavScreen> {
     Icons.perm_contact_cal_outlined,
     Icons.add,
     Icons.add,
-    Icons.abc
+    Icons.abc,
+    Icons.abc_outlined
   ];
 
   int _selectedIndex = 0;

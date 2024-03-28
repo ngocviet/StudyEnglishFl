@@ -1,17 +1,21 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:project4/controllers/answer_admin_controller.dart';
 import 'package:project4/models/account.dart';
+import 'package:project4/models/answer.dart';
 
 import '../controllers/account_admin_controller.dart';
 
-class DetailAccountAdmin extends StatelessWidget {
+class DetailAnswerAdmin extends StatelessWidget {
+  final int id_answer;
   final int id_user;
 
-  const DetailAccountAdmin({super.key, required this.id_user, });
+  const DetailAnswerAdmin({super.key, required this.id_answer, required this.id_user, });
 
   @override
   Widget build(BuildContext context) {
     Account acc = AccountController.getAccountId(id_user);
+    Answer ans = AnswerAdminController.getDetailById(id_answer);
     return Scaffold(
       appBar: AppBar(
           backgroundColor: Colors.white,
@@ -21,13 +25,12 @@ class DetailAccountAdmin extends StatelessWidget {
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
                       children: [
                         Container(
                           padding: EdgeInsets.all(10),
-                          child: Text('Account Manager'),
+                          child: Text('Answer Manager'),
                         ),
-                        Container(child: CachedNetworkImage(imageUrl: 'assets/${acc.Avata}',height: 50,width: 50,fit: BoxFit.cover,),)
+                        Container(child: ClipRRect(borderRadius: BorderRadius.circular(50),child: CachedNetworkImage(imageUrl: 'assets/${acc.Avata}',height: 50,width: 50,fit: BoxFit.cover,)),)
                       ],),
 
                   ],
@@ -41,26 +44,10 @@ class DetailAccountAdmin extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                  ),
-                  child: ClipRRect(
-                      borderRadius: BorderRadius.circular(150),
-                      child: ClipRRect(borderRadius: BorderRadius.circular(50),child: CachedNetworkImage(imageUrl: 'assets/${acc.Avata}',height: 80,width: 80,fit: BoxFit.cover,))),
-
-                ),
-                SizedBox(width: 20,),
-                Column(
-                  children: [
                     Container(
-                      width: MediaQuery.of(context).size.width * 0.6,
+                      width: MediaQuery.of(context).size.width ,
                       child: Text(
-                        'ID: ${acc.ID}',
+                        'ID: ${ans.Id}',
                         style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,color: Colors.black),
                         softWrap: true,
                       ),
@@ -69,7 +56,7 @@ class DetailAccountAdmin extends StatelessWidget {
                     Container(
                       width: MediaQuery.of(context).size.width * 0.6,
                       child: Text(
-                        'Name: ${acc.Name}',
+                        'QuesionId: ${ans.QuestionId}',
                         style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,color: Colors.black),
                         softWrap: true,
                       ),
@@ -78,7 +65,7 @@ class DetailAccountAdmin extends StatelessWidget {
                     Container(
                       width: MediaQuery.of(context).size.width * 0.6,
                       child: Text(
-                        'UserName: ${acc.UserName}',
+                        'Name: ${ans.Name}',
                         style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,color: Colors.black),
                         softWrap: true,
 
@@ -88,7 +75,7 @@ class DetailAccountAdmin extends StatelessWidget {
                     Container(
                       width: MediaQuery.of(context).size.width * 0.6,
                       child: Text(
-                        'CreateBy: ${acc.CreateBy}',
+                        'Is True: ${ans.IsTrue}',
                         style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,color: Colors.black),
                         softWrap: true,
 
@@ -98,25 +85,7 @@ class DetailAccountAdmin extends StatelessWidget {
                     Container(
                       width: MediaQuery.of(context).size.width * 0.6,
                       child: Text(
-                        'UpdateBy: ${acc.UpdateBy}',
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,color: Colors.black),
-                        softWrap: true,
-                      ),
-                    ),
-                    SizedBox(height: 5,),
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.6,
-                      child: Text(
-                        'DeleteBy: ${acc.DeleteBy}',
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,color: Colors.black),
-                        softWrap: true,
-                      ),
-                    ),
-                    SizedBox(height: 5,),
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.6,
-                      child: Text(
-                        'CreateTime: ${acc.CreateTime}',
+                        'Created By: ${ans.CreatedBy}',
                         style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,color: Colors.black),
                         softWrap: true,
 
@@ -126,7 +95,25 @@ class DetailAccountAdmin extends StatelessWidget {
                     Container(
                       width: MediaQuery.of(context).size.width * 0.6,
                       child: Text(
-                        'UpdateTime: ${acc.UpdateTime}',
+                        'Updated By: ${ans.UpdatedBy}',
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,color: Colors.black),
+                        softWrap: true,
+                      ),
+                    ),
+                    SizedBox(height: 5,),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.6,
+                      child: Text(
+                        'Deleted By: ${ans.DeletedBy}',
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,color: Colors.black),
+                        softWrap: true,
+                      ),
+                    ),
+                    SizedBox(height: 5,),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.6,
+                      child: Text(
+                        'Created Time: ${ans.CreatedTime}',
                         style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,color: Colors.black),
                         softWrap: true,
 
@@ -136,7 +123,7 @@ class DetailAccountAdmin extends StatelessWidget {
                     Container(
                       width: MediaQuery.of(context).size.width * 0.6,
                       child: Text(
-                        'DeleteTime: ${acc.DeleteTime}',
+                        'Updated Time: ${ans.UpdatedTime}',
                         style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,color: Colors.black),
                         softWrap: true,
 
@@ -146,15 +133,26 @@ class DetailAccountAdmin extends StatelessWidget {
                     Container(
                       width: MediaQuery.of(context).size.width * 0.6,
                       child: Text(
-                        'IsDeleted: ${acc.IsDeleted}',
+                        'Deleted Time: ${ans.DeletedTime}',
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,color: Colors.black),
+                        softWrap: true,
+
+                      ),
+                    ),
+                    SizedBox(height: 5,),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.6,
+                      child: Text(
+                        'Is Deleted: ${ans.IsDeleted}',
                         style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,color: Colors.black),
                         softWrap: true,
 
                       ),
                     ),
                     SizedBox(height: 10,),
-
                     Container(
+                      alignment: Alignment.center,
+
                       child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.white,
@@ -169,11 +167,6 @@ class DetailAccountAdmin extends StatelessWidget {
                           fontWeight: FontWeight.bold
                       ),)),
                     )
-                  ],
-                ),
-
-              ],
-            )
 
           ],
         ),
