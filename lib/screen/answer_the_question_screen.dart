@@ -356,18 +356,19 @@ class ScreenState extends State<AnswerTheQuestionScreen> {
                           ],
                         ),
                       ),
-                      const Padding(
-                        padding: EdgeInsets.only(top: 5, left: 20),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 5, left: 20),
                         child: Row(
-                          children: [
-                            SizedBox(
-                                width: 5), // Khoảng cách giữa icon và text
-                            Text('4 people',
-                                style: TextStyle(
-                                    color: Color.fromRGBO(243, 10, 10, 1),
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold)),
-                          ],
+                          children: listAnswer.where((answer) => answer['isTrue']).map((answer) {
+                            return Text(
+                              answer['answer'],
+                              style: const TextStyle(
+                                color: Color.fromRGBO(243, 10, 10, 1),
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            );
+                          }).toList(),
                         ),
                       ),
                       Padding(
@@ -375,25 +376,24 @@ class ScreenState extends State<AnswerTheQuestionScreen> {
                         child: Container(
                           width: double.infinity,
                           child: ElevatedButton(
-                              style: ButtonStyle(
-                                fixedSize: MaterialStateProperty.all<Size>(Size(200,60)),
-                                backgroundColor: MaterialStateProperty.all<Color>(const Color.fromRGBO(243, 10, 10, 1)), // Màu nền của button
-                                shape: MaterialStateProperty.all<OutlinedBorder>(
-                                  RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20), // Đặt bo góc thành 0 để tạo thành hình vuông
-                                  ),
-                                ),
-                              ),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color.fromRGBO(243, 10, 10, 1),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              )
+                            ),
                               onPressed: () {
                                 setState(() {
                                   showSuccessMessage =0;
                                 });
                               },
-                              child: const Text('Đã hiểu',style: TextStyle(color: Color.fromRGBO(9, 21, 9, 1),fontSize: 24),)
+                              child: const Padding(
+                                padding: EdgeInsets.all(10),
+                                child: Text('Đã hiểu',style: TextStyle(color: Color.fromRGBO(9, 21, 9, 1),fontSize: 24),),
+                              )
                           ),
                         ),
                       ),
-
                     ],
                   ),
                 ),
