@@ -7,6 +7,7 @@ import 'package:project4/controllers/list_vocabulary_controller.dart';
 import 'package:project4/models/account.dart';
 import 'package:project4/screen/list_vocabulary_screen.dart';
 
+import 'answer_the_question_screen.dart';
 import 'combine_sentences_screen.dart';
 import 'learn_word_screen.dart';
 
@@ -15,7 +16,8 @@ class huong extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-     return CombineSentencesScreen();
+     return AnswerTheQuestionScreen();
+    // return CombineSentencesScreen();
     // return const MyHomePage(title: 'huong',);
   }
 }
