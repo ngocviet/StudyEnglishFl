@@ -19,12 +19,36 @@ class _ListVocabularyScreenState extends State<ListVocabularyScreen> {
   FlutterTts flutterTts = FlutterTts();
   int indexSelected = 0;
   bool status = false;
-  List<Word> listWord = [];
+  int totalNumber= 0;
+  int wordsBeingStudied= 0;
+  int wordsLearned= 0;
+  List<dynamic> listWord = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
+  void fetchData() async{
+    try {
+      final data = await ListVocabularyScreenController.getListWord();
+
+       final data1  = await ListVocabularyScreenController.totalNumber();
+      setState(() {
+        listWord = data;
+        totalNumber = data1['totalNumber'];
+        wordsLearned = data1['wordsLearned'];
+        wordsBeingStudied = data1['wordsBeingStudied'];
+      });
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
-    modelListVocabulary data = ListVocabularyScreenController.getData(status);
-    listWord = data.listWord;
     return Scaffold(
         appBar: AppBar(
           leading: IconButton(
@@ -99,7 +123,7 @@ class _ListVocabularyScreenState extends State<ListVocabularyScreen> {
                       children: [
                         // Border
                         Text(
-                          '${data.totalNumber}',
+                          '$totalNumber',
                           style: TextStyle(
                             fontSize: 80,
                             fontWeight: FontWeight.bold,
@@ -112,7 +136,7 @@ class _ListVocabularyScreenState extends State<ListVocabularyScreen> {
                         ),
                         // Text
                         Text(
-                          '${data.totalNumber}',
+                          '$totalNumber',
                           style: const TextStyle(
                             fontSize: 80,
                             fontWeight: FontWeight.bold,
@@ -151,7 +175,7 @@ class _ListVocabularyScreenState extends State<ListVocabularyScreen> {
                                 status = false;
                               });
                             },
-                            child: Item(title: 'Tôi đang học ${data.wordsLearned} từ', index: 0, indexSelected: indexSelected)
+                            child: Item(title: 'Tôi đang học $wordsLearned từ', index: 0, indexSelected: indexSelected)
                         ),
                       ),
                       Expanded(
@@ -162,7 +186,7 @@ class _ListVocabularyScreenState extends State<ListVocabularyScreen> {
                                 status = true;
                               });
                             },
-                            child: Item(title: 'Đã học ${data.wordsBeingStudied} từ', index: 1, indexSelected: indexSelected)),
+                            child: Item(title: 'Đã học $wordsBeingStudied từ', index: 1, indexSelected: indexSelected)),
                       ),
                     ],
                   ),
@@ -187,7 +211,7 @@ class _ListVocabularyScreenState extends State<ListVocabularyScreen> {
                       physics: const BouncingScrollPhysics(),
                       itemCount: listWord.length,
                       itemBuilder: (BuildContext context, int index) {
-                        Word word = listWord[index];
+                        var word = listWord[index];
                         return Column(
                           children: [
                             Padding(
@@ -204,7 +228,7 @@ class _ListVocabularyScreenState extends State<ListVocabularyScreen> {
                                     Padding(
                                       padding: const EdgeInsets.only(left: 20),
                                       child: Text(
-                                        word.nameEn,
+                                        word['nameEN'],
                                         style: const TextStyle(
                                             fontSize: 20, color: Colors.white),
                                       ),
@@ -227,7 +251,7 @@ class _ListVocabularyScreenState extends State<ListVocabularyScreen> {
                                               child: Icon(
                                                 Icons.check,
                                                 size: 22,
-                                                color: word.wordCount != word.wordTotalCount ? const Color.fromRGBO(119, 119, 119, 1.0) : Colors.blue,
+                                                 color: word['wordCount'] != word['wordTotalCount'] ? const Color.fromRGBO(119, 119, 119, 1.0) : Colors.blue,
                                               ),
                                             ),
                                           ),
@@ -238,7 +262,7 @@ class _ListVocabularyScreenState extends State<ListVocabularyScreen> {
                                               height: 39,
                                               child: CustomPaint(
                                                 painter:
-                                                HalfRedHalfBlueBorderCirclePainter(wordCount: word.wordCount,wordTotalCount: word.wordTotalCount),
+                                                 HalfRedHalfBlueBorderCirclePainter(wordCount: word['wordCount'],wordTotalCount: word['wordTotalCount']),
                                               ),
                                             ),
                                           ),
@@ -251,7 +275,7 @@ class _ListVocabularyScreenState extends State<ListVocabularyScreen> {
                                           onPressed: () async {
                                             await flutterTts.setLanguage("en-US");
                                             await flutterTts.setPitch(5);
-                                            await flutterTts.speak(word.nameEn);
+                                            await flutterTts.speak(word['nameEN']);
                                           },
                                           icon: const Icon(
                                             Icons.volume_up_rounded,

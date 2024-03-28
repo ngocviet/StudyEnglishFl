@@ -2,19 +2,38 @@ import 'package:flutter/material.dart';
 import 'package:project4/controllers/choose_topic_controller.dart';
 import 'package:project4/models/topic.dart';
 
-class ChooseTopicScreen extends StatelessWidget {
+class ChooseTopicScreen extends StatefulWidget {
+
   final int idUser;
   const ChooseTopicScreen({super.key, required this.idUser});
 
   @override
+  State<ChooseTopicScreen> createState() => _ChooseTopicScreenState();
+}
+
+class _ChooseTopicScreenState extends State<ChooseTopicScreen> {
+
+  List<dynamic> listData = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
+  void fetchData() async{
+    try {
+      final rp = await ChooseTopicController.getListTopic(widget.idUser);
+      setState(() {
+        listData = rp;
+      });
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    //variable
-    List<Topic> listItem = ChooseTopicController.getListTopic(idUser);
-    TextStyle styleL2_3 = const TextStyle(
-      color: Colors.black,
-      fontSize: 18,
-      fontWeight: FontWeight.bold,
-    );
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -75,16 +94,17 @@ class ChooseTopicScreen extends StatelessWidget {
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   physics: const BouncingScrollPhysics(),
-                  itemCount: listItem.length,
+                  itemCount: listData.length,
                   itemBuilder: (context, index) {
                     //variable detail
-                    var item = listItem[index];
-                    var colors = item.comboColor.split("-").map(int.parse).toList();
+                    var item = listData[index];
+                    var colors = item['comboColor'].split("-").map(int.parse).toList();
                     double wPercent = 150;
-                    double sPercent = item.comple_lesson / item.total_lesson * wPercent;
+                    double sPercent = item['compleLesson'] / item['totalLesson'] * wPercent;
                     sPercent = sPercent < 18 ? 18 : sPercent;
                     double leftPadding = index == 0 ? 70 : 40;
-                    double rightPadding = index == listItem.length - 1 ? 65 : 0;
+                    double rightPadding = index == listData.length - 1 ? 65 : 0;
+
                     return Row(
                       children: [
                         Padding(
@@ -104,17 +124,17 @@ class ChooseTopicScreen extends StatelessWidget {
                                       flex: 3,
                                       child: Padding(
                                         padding:
-                                            const EdgeInsets.only(bottom: 10),
+                                        const EdgeInsets.only(bottom: 10),
                                         child: Container(
                                           width: double.infinity,
                                           height: 200,
                                           decoration: BoxDecoration(
                                               image: DecorationImage(
-                                                image: AssetImage(item.img),
+                                                image: AssetImage(item['img']),
                                                 fit: BoxFit.cover,
                                               ),
                                               borderRadius:
-                                                  BorderRadius.circular(40)),
+                                              BorderRadius.circular(40)),
                                         ),
                                       )),
                                   Expanded(
@@ -124,24 +144,24 @@ class ChooseTopicScreen extends StatelessWidget {
                                         Expanded(
                                           child: Column(
                                             mainAxisAlignment:
-                                                MainAxisAlignment.center,
+                                            MainAxisAlignment.center,
                                             children: [
                                               Padding(
                                                 padding:
-                                                    const EdgeInsets.only(
-                                                        bottom: 8),
+                                                const EdgeInsets.only(
+                                                    bottom: 8),
                                                 child: Text(
                                                   'CHỦ ĐỀ ${index + 1}',
                                                   style: const TextStyle(
                                                     color: Colors.black,
                                                     fontSize: 18,
                                                     fontWeight:
-                                                        FontWeight.bold,
+                                                    FontWeight.bold,
                                                   ),
                                                 ),
                                               ),
                                               Text(
-                                                item.title,
+                                                item['title'],
                                                 style: const TextStyle(
                                                   color: Colors.black,
                                                   fontSize: 25,
@@ -154,12 +174,12 @@ class ChooseTopicScreen extends StatelessWidget {
                                         Expanded(
                                           child: Column(
                                             mainAxisAlignment:
-                                                MainAxisAlignment.center,
+                                            MainAxisAlignment.center,
                                             children: [
                                               Padding(
                                                 padding:
-                                                    const EdgeInsets.only(
-                                                        bottom: 20),
+                                                const EdgeInsets.only(
+                                                    bottom: 20),
                                                 child: Container(
                                                   width: wPercent,
                                                   height: 16,
@@ -168,8 +188,8 @@ class ChooseTopicScreen extends StatelessWidget {
                                                           .fromRGBO(
                                                           49, 45, 45, 0.3),
                                                       borderRadius:
-                                                          BorderRadius
-                                                              .circular(8)),
+                                                      BorderRadius
+                                                          .circular(8)),
                                                   child: Stack(
                                                     children: [
                                                       Container(
@@ -179,13 +199,13 @@ class ChooseTopicScreen extends StatelessWidget {
                                                             color: Colors
                                                                 .yellowAccent,
                                                             borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        8)),
+                                                            BorderRadius
+                                                                .circular(
+                                                                8)),
                                                         child: Row(
                                                           mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .end,
+                                                          MainAxisAlignment
+                                                              .end,
                                                           children: [
                                                             Container(
                                                               width: 18,
@@ -198,8 +218,8 @@ class ChooseTopicScreen extends StatelessWidget {
                                                                       69,
                                                                       1.0),
                                                                   borderRadius:
-                                                                      BorderRadius.circular(
-                                                                          8)),
+                                                                  BorderRadius.circular(
+                                                                      8)),
                                                             )
                                                           ],
                                                         ),
@@ -209,13 +229,13 @@ class ChooseTopicScreen extends StatelessWidget {
                                                 ),
                                               ),
                                               Text(
-                                                '${item.comple_lesson} trên ${item.total_lesson} baì học đã hoàn thành',
+                                                '${item['compleLesson']} trên ${item['totalLesson']} baì học đã hoàn thành',
                                                 style: const TextStyle(
                                                     fontSize: 16,
                                                     fontWeight:
-                                                        FontWeight.bold,
+                                                    FontWeight.bold,
                                                     fontStyle:
-                                                        FontStyle.italic),
+                                                    FontStyle.italic),
                                               )
                                             ],
                                           ),
@@ -223,7 +243,7 @@ class ChooseTopicScreen extends StatelessWidget {
                                         Expanded(
                                           child: Column(
                                             mainAxisAlignment:
-                                                MainAxisAlignment.center,
+                                            MainAxisAlignment.center,
                                             children: [
                                               ElevatedButton(
                                                   onPressed: () {},
@@ -232,13 +252,13 @@ class ChooseTopicScreen extends StatelessWidget {
                                                     height: 70,
                                                     child: const Center(
                                                         child: Text(
-                                                      'Đến đây',
-                                                      style: TextStyle(
-                                                          color: Colors.black,
-                                                          fontWeight:
+                                                          'Đến đây',
+                                                          style: TextStyle(
+                                                              color: Colors.black,
+                                                              fontWeight:
                                                               FontWeight.w600,
-                                                          fontSize: 20),
-                                                    )),
+                                                              fontSize: 20),
+                                                        )),
                                                   ))
                                             ],
                                           ),

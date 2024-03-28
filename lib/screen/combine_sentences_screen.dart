@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:project4/model_views/model_combine_sentences.dart';
+import 'package:project4/models/account.dart';
 
 import '../controllers/combine_sentences_controller.dart';
 import '../models/word.dart';
@@ -14,14 +15,44 @@ class CombineSentencesScreen extends StatefulWidget {
 }
 
 class ScreenState extends State<CombineSentencesScreen> {
-
-  String _selectedButtonText = '';
   List<Word> listWord = [];
   List<Word> listWordAdd = [];
   @override
   Widget build(BuildContext context) {
     modelCombineSentences data = CombineSentencesController.getData();
     listWord = data.listWord;
+    List<Widget> buttonWidgets = listWord.map((word) {
+      return ElevatedButton(
+        key: UniqueKey(), // Đặt UniqueKey ở đây
+        onPressed: () {
+          setState(() {
+            Word newWord = Word(
+              nameEn: word.nameEn,
+              nameVn: '',
+              isShowText: false,
+            );
+            listWordAdd.add(newWord);
+            listWord.remove(word);
+            data.listWord = listWord;
+          });
+        },
+        style: ButtonStyle(
+          shape: MaterialStateProperty.all<OutlinedBorder>(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+          ),
+          backgroundColor: MaterialStateProperty.all<Color>(
+            const Color.fromRGBO(75, 75, 75, 1),
+          ),
+        ),
+        child: Text(
+          word.nameEn,
+          style: const TextStyle(color: Colors.white, fontSize: 20),
+        ),
+      );
+    }).toList();
+
     return Scaffold(
       body: Container(
         width: double.infinity,
@@ -92,99 +123,105 @@ class ScreenState extends State<CombineSentencesScreen> {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 30, 20, 30),
                     child: Container(
-                        width: double.infinity,
-                        height: 300,
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.white, width: 1)),
-                        child: Column(
-                          children: [
-                            Row(
-                              children: List.generate(listWordAdd.length, (index) {
+                      width: double.infinity,
+                      height: 300,
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.white, width: 1)),
+                      child: Column(
+                        children: [
+                          Wrap(
+                            children: List.generate(
+                              listWordAdd.length,
+                              (index) {
                                 Word word = listWordAdd[index];
-                                return Padding(
-                                  padding: const EdgeInsets.only(right: 5), // Khoảng cách 20px giữa mỗi Text
-                                  child: DecoratedBox(
-                                    decoration: const BoxDecoration(
-                                      border: Border(
-                                        bottom: BorderSide(
-                                          color: Colors.white, // Màu sắc của gạch chân
-                                          width: 1.0, // Độ dày của gạch chân
+                                return Visibility(
+                                  visible: !word.isShowText,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        right: 0,
+                                        bottom:
+                                            0), // Khoảng cách giữa mỗi TextButton
+                                    child: TextButton(
+                                      style: ButtonStyle(
+                                        foregroundColor:
+                                            MaterialStateProperty.all<Color>(
+                                                Colors.white), // Màu chữ
+                                      ),
+                                      onPressed: () {
+                                        setState(() {
+                                          // Tìm vị trí của từ được nhấn
+                                          int currentIndex =
+                                              listWordAdd.indexOf(word);
+                                          // Đảo ngược trạng thái của word.isShowText
+                                          word.isShowText = !word.isShowText;
+                                          if (word.isShowText) {
+                                            // Nếu word.isShowText là true, di chuyển từ này lên trên cùng của danh sách
+                                            Word removedWord = listWordAdd
+                                                .removeAt(currentIndex);
+                                            listWordAdd.insert(0, removedWord);
+                                          } else {
+                                            // Nếu word.isShowText là false, di chuyển từ này xuống cuối danh sách
+                                            Word removedWord = listWordAdd
+                                                .removeAt(currentIndex);
+                                            listWordAdd.add(removedWord);
+                                          }
+                                        });
+                                      },
+                                      child: Text(
+                                        word.nameEn,
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 20,
+                                          decoration: TextDecoration
+                                              .underline, // Thêm gạch chân cho văn bản
+                                          decorationColor: Colors.white,
                                         ),
                                       ),
                                     ),
-                                    child: Text(
-                                      word.nameEn, // Hiển thị dữ liệu của ElevatedButton được click
-                                      style: const TextStyle(color: Colors.white, fontSize: 20),
-                                    ),
                                   ),
                                 );
-                              }),
-                            )
-                          ],
-                        )),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        left: 0, top: 100, bottom: 0, right: 20),
-                    child: Wrap(
-                      spacing: 10,
-                      runSpacing: 20,
-                      children: List.generate(
-                        listWord.length,
-                        (index) {
-                          Word word = listWord[index];
-                          return
-                            SizedBox(
-                              child: word.isShowText
-                                  ? ElevatedButton(
-                                onPressed: () {
-                                  setState(() {
-                                    word.isShowText = false;
-                                    _selectedButtonText = word.nameEn;
-                                    Word newWord = Word(
-                                      nameEn: word.nameEn,
-                                      nameVn: '',
-                                      isShowText: false,
-                                    );
-                                    listWordAdd.add(newWord);
-                                  });
-                                },
-                                style: ButtonStyle(
-                                  shape: MaterialStateProperty.all<OutlinedBorder>(
-                                    RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
-                                  ),
-                                  backgroundColor: MaterialStateProperty.all<Color>(
-                                    const Color.fromRGBO(75, 75, 75, 1),
-                                  ),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(10),
-                                  child: Text(
-                                    word.nameEn,
-                                    style: const TextStyle(color: Colors.white, fontSize: 20),
-                                  ),
-                                ),
-                              )
-                                  : SizedBox(), // Ẩn ElevatedButton nếu word.isShowText là false
-                            );
-
-                        },
+                              },
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
+                  ConstrainedBox(
+                    constraints: const BoxConstraints(
+                      maxHeight: 200,
+                    ),
+                    child: Wrap(
+                      spacing: 10,
+                      runSpacing: 10,
+                      children: buttonWidgets,
+                    ),
+                  )
                 ],
               ),
             ),
+            const SizedBox(
+              height: 80,
+            ),
             ElevatedButton(
-              // style: ButtonStyle(backgroundColor: ),
-                onPressed: () {
-
-                }, child: const Text('Kiểm tra',style: TextStyle(color: Colors.white),))
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                    const Color.fromRGBO(75, 75, 75, 1),
+                  ),
+                  fixedSize: MaterialStateProperty.all<Size>(
+                    const Size(200,
+                        70), // Đặt chiều rộng và chiều cao cho ElevatedButton
+                  ),
+                ),
+                onPressed: () {},
+                child: const Text(
+                  'Kiểm tra',
+                  style: TextStyle(color: Colors.white, fontSize: 20),
+                ))
           ],
         ),
       ),
     );
   }
 }
+
