@@ -6,6 +6,7 @@ import 'package:project4/screen/choose_topic_screen.dart';
 
 import 'answer_the_question_screen.dart';
 import 'huongtestapi.dart';
+import 'learn_word_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -314,9 +315,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(builder: (context) =>
-                                              // ChooseTitleScreen(idLesson: lesson['id'],title: lesson['title'],sttLesson: lesson['sttLesson'],)
-                                            // ListVocabularyScreen()
-                                          huong()
+                                              ChooseTitleScreen(idLesson: lesson['id'],title: lesson['title'],sttLesson: lesson['sttLesson'],)
+                                            // LearnWordScreen()
                                           ),
                                         );
                                       },

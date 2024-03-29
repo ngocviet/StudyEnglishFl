@@ -49,8 +49,57 @@ class _CombineSentencesScreenState extends State<CombineSentencesScreen> {
       );
 
     }).toList();
-
     return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          color: Colors.white,
+        ),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: const Color.fromRGBO(75, 75, 75, 1),
+              ),
+              height: 15,
+              width: 250,
+            ),
+            const SizedBox(
+              width: 15,
+            ),
+            Container(
+              decoration: const BoxDecoration(
+                color: Color.fromRGBO(75, 75, 75, 1),
+                shape: BoxShape.circle,
+              ),
+              height: 40,
+              width: 40,
+              child: const Center(
+                  child: Text(
+                    '0',
+                    style: TextStyle(color: Colors.white),
+                  )),
+            )
+          ],
+        ),
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Color.fromRGBO(30, 30, 30, 54),
+                Colors.black87
+              ], // Màu sắc cho gradient
+            ),
+          ),
+        ),
+      ),
       body: Container(
         width: double.infinity,
         height: double.infinity,
@@ -66,18 +115,6 @@ class _CombineSentencesScreenState extends State<CombineSentencesScreen> {
         ),
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(30, 10, 30, 0),
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: const Color.fromRGBO(75, 75, 75, 1),
-                ),
-                height: 15,
-                width: double.infinity,
-              ),
-            ),
-            const SizedBox(height: 30),
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 0, 200, 0),
               child: Container(

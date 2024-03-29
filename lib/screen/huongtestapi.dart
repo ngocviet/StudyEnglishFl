@@ -16,8 +16,8 @@ class huong extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-     return AnswerTheQuestionScreen();
-    // return CombineSentencesScreen();
+      // return AnswerTheQuestionScreen();
+      return CombineSentencesScreen();
     // return const MyHomePage(title: 'huong',);
   }
 }
