@@ -3,6 +3,8 @@ import 'dart:js_util';
 import 'package:flutter/material.dart';
 import 'package:project4/controllers/choose_title_controller.dart';
 import 'package:project4/model_views/model_choose_title.dart';
+import 'package:project4/screen/answer_the_question_screen.dart';
+import 'package:project4/screen/combine_sentences_screen.dart';
 import 'package:project4/screen/learn_word_screen.dart';
 
 class ChooseTitleScreen extends StatefulWidget {
@@ -144,16 +146,32 @@ class _ChooseTitleScreenState extends State<ChooseTitleScreen> {
               ),
             ),
             const SizedBox(height: 50),
-            Item(
-              imageUrl: 'hoicham2.png',
-              title: 'Trả lời câu hỏi',
-              total: totalQuestion,
+            GestureDetector(
+              onTap: (){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const AnswerTheQuestionScreen()),
+                );
+              },
+              child: Item(
+                imageUrl: 'hoicham2.png',
+                title: 'Trả lời câu hỏi',
+                total: totalQuestion,
+              ),
             ),
             const SizedBox(height: 50),
-            Item(
-              imageUrl: 'ghepcau1.jpg',
-              title: 'Ghép câu có ý nghĩa',
-              total: totalPuzzle,
+            GestureDetector(
+              onTap: (){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => CombineSentencesScreen()),
+                );
+              },
+              child: Item(
+                imageUrl: 'ghepcau1.jpg',
+                title: 'Ghép câu có ý nghĩa',
+                total: totalPuzzle,
+              ),
             ),
           ],
         ),

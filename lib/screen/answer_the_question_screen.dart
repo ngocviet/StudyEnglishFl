@@ -110,13 +110,11 @@ class ScreenState extends State<AnswerTheQuestionScreen> {
           children: [
             Column(
               children: [
-                Container(
-                  child: const Padding(
-                    padding: EdgeInsets.fromLTRB(0, 0, 230, 0),
-                    child: Text(
-                      'Trả lời câu hỏi',
-                      style: TextStyle(fontSize: 25, color: Colors.white),
-                    ),
+                const Padding(
+                  padding: EdgeInsets.fromLTRB(0, 0, 230, 0),
+                  child: Text(
+                    'Trả lời câu hỏi',
+                    style: TextStyle(fontSize: 25, color: Colors.white),
                   ),
                 ),
                 Padding(
@@ -136,28 +134,30 @@ class ScreenState extends State<AnswerTheQuestionScreen> {
                             ),
                           ),
                           Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.fromLTRB(0, 5, 20,
-                                  50), // Điều chỉnh padding cho phù hợp
-                              child: Container(
-                                constraints: const BoxConstraints(
-                                    maxWidth: double.infinity),
-                                decoration: const BoxDecoration(
-                                  border: Border(
-                                    bottom: BorderSide(
-                                      color: Colors.white,
-                                      width: 2,
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(0, 5, 20,50),
+                                  child: Container(
+                                    width: double.infinity,
+                                    decoration: const BoxDecoration(
+                                      border: Border(
+                                        bottom: BorderSide(
+                                          color: Colors.white,
+                                          width: 2,
+                                        ),
+                                      ),
+                                    ),
+                                    child: Text(
+                                      question,
+                                      overflow: TextOverflow.visible,
+                                      maxLines: 3,
+                                      style: const TextStyle(
+                                          color: Colors.white, fontSize: 20),
                                     ),
                                   ),
                                 ),
-                                child: Text(
-                                  question,
-                                  overflow: TextOverflow.visible,
-                                  maxLines: 3,
-                                  style: const TextStyle(
-                                      color: Colors.white, fontSize: 20),
-                                ),
-                              ),
+                              ],
                             ),
                           ),
                         ],
