@@ -69,7 +69,8 @@ class _ChooseTitleScreenState extends State<ChooseTitleScreen> {
               decoration: const BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage('htv_preview_rev_1.png'),
-                    fit: BoxFit.contain),
+                    fit: BoxFit.contain,
+                ),
               ),
             ),
           ],
@@ -95,7 +96,7 @@ class _ChooseTitleScreenState extends State<ChooseTitleScreen> {
             image: const AssetImage('giaodien2.jpg'),
             fit: BoxFit.cover,
             colorFilter: ColorFilter.mode(
-              Colors.black.withOpacity(0.4),
+              Colors.black.withOpacity(0.5),
               BlendMode.darken,
             ),
           ),

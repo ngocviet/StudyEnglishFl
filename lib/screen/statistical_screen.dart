@@ -31,7 +31,7 @@ class StatisticalScreen extends StatelessWidget {
         ),
         flexibleSpace: Container(
           decoration:
-              const BoxDecoration(color: Color.fromRGBO(50, 50, 50, 1.0)),
+          const BoxDecoration(color: Color.fromRGBO(50, 50, 50, 1.0)),
         ),
       ),
       body: Column(
@@ -52,10 +52,14 @@ class StatisticalScreen extends StatelessWidget {
                           MaterialPageRoute(builder: (context) => ListVocabularyScreen()),
                         );
                       },
-                      child: Item1(
-                        title: 'Ôn lại các từ',
-                        content: data.listWord,
-                        img: 'handle.png',
+                      child: Row(
+                        children: [
+                          Item1(
+                            title: 'Ôn lại các từ',
+                            content: data.listWord,
+                            img: 'handle.png',
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -68,10 +72,14 @@ class StatisticalScreen extends StatelessWidget {
                           MaterialPageRoute(builder: (context) => ListVocabularyScreen()),
                         );
                       },
-                      child: Item1(
-                        title: 'Bài tập trắc nghiệm',
-                        content: data.listWord,
-                        img: 'book.png',
+                      child: Row(
+                        children: [
+                          Item1(
+                            title: 'Bài tập trắc nghiệm',
+                            content: data.listWord,
+                            img: 'book.png',
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -107,48 +115,48 @@ class StatisticalScreen extends StatelessWidget {
                                 flex: 3,
                                 child: Padding(
                                   padding:
-                                      const EdgeInsets.fromLTRB(0, 20, 00, 10),
+                                  const EdgeInsets.fromLTRB(0, 20, 00, 10),
                                   child: Row(
                                     children: [
                                       Expanded(
                                           child: Container(
-                                        height: double.infinity,
-                                        decoration: BoxDecoration(
-                                            color: const Color.fromRGBO(
-                                                45, 45, 45, 1.0),
-                                            borderRadius:
+                                            height: double.infinity,
+                                            decoration: BoxDecoration(
+                                                color: const Color.fromRGBO(
+                                                    45, 45, 45, 1.0),
+                                                borderRadius:
                                                 BorderRadius.circular(30)),
-                                        child: Center(
-                                          child: Text(
-                                            '${data.totalWord} từ',
-                                            style: const TextStyle(
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.white,
-                                                fontStyle: FontStyle.italic),
-                                          ),
-                                        ),
-                                      )),
+                                            child: Center(
+                                              child: Text(
+                                                '${data.totalWord} từ',
+                                                style: const TextStyle(
+                                                    fontSize: 18,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.white,
+                                                    fontStyle: FontStyle.italic),
+                                              ),
+                                            ),
+                                          )),
                                       const SizedBox(width: 20),
                                       Expanded(
                                           child: Container(
-                                        height: double.infinity,
-                                        decoration: BoxDecoration(
-                                            color: const Color.fromRGBO(
-                                                45, 45, 45, 1.0),
-                                            borderRadius:
+                                            height: double.infinity,
+                                            decoration: BoxDecoration(
+                                                color: const Color.fromRGBO(
+                                                    45, 45, 45, 1.0),
+                                                borderRadius:
                                                 BorderRadius.circular(30)),
-                                        child: Center(
-                                          child: Text(
-                                            '${data.totalQues} bài tập',
-                                            style: const TextStyle(
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.white,
-                                                fontStyle: FontStyle.italic),
-                                          ),
-                                        ),
-                                      ))
+                                            child: Center(
+                                              child: Text(
+                                                '${data.totalQues} bài tập',
+                                                style: const TextStyle(
+                                                    fontSize: 18,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.white,
+                                                    fontStyle: FontStyle.italic),
+                                              ),
+                                            ),
+                                          ))
                                     ],
                                   ),
                                 ))
@@ -332,9 +340,9 @@ class Item3 extends StatelessWidget {
 
   const Item3(
       {super.key,
-      required this.total,
-      required this.status,
-      required this.title});
+        required this.total,
+        required this.status,
+        required this.title});
 
   @override
   Widget build(BuildContext context) {
