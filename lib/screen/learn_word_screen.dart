@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class LearnWordScreen extends StatelessWidget {
   const LearnWordScreen({super.key});
@@ -56,79 +58,74 @@ class LearnWordScreen extends StatelessWidget {
               image: const AssetImage('giaodien3.jpg'),
               fit: BoxFit.cover,
               colorFilter: ColorFilter.mode(
-                Colors.black.withOpacity(0.4),
+                Colors.black.withOpacity(0.5),
                 BlendMode.darken,
               )),
         ),
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: const Color.fromRGBO(75, 75, 75, 1),
-                    ),
-                    height: 15,
-                    width: 350,
+            // Padding(
+            //   padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.center,
+            //     children: [
+            //       Container(
+            //         decoration: BoxDecoration(
+            //           borderRadius: BorderRadius.circular(20),
+            //           color: const Color.fromRGBO(75, 75, 75, 1),
+            //         ),
+            //         height: 15,
+            //         width: 350,
+            //       ),
+            //       const SizedBox(
+            //         width: 15,
+            //       ),
+            //       Container(
+            //         decoration: const BoxDecoration(
+            //           color: Color.fromRGBO(75, 75, 75, 1),
+            //           shape: BoxShape.circle,
+            //         ),
+            //         height: 40,
+            //         width: 40,
+            //         child: const Center(
+            //             child: Text(
+            //           '0',
+            //           style: TextStyle(color: Colors.white),
+            //         )),
+            //       )
+            //     ],
+            //   ),
+            // ),
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(left: 20, top: 10),
+                  child: Text(
+                    'Chọn bản dịch',
+                    style: TextStyle(fontSize: 20, color: Colors.grey,),
                   ),
-                  const SizedBox(
-                    width: 15,
-                  ),
-                  Container(
-                    decoration: const BoxDecoration(
-                      color: Color.fromRGBO(75, 75, 75, 1),
-                      shape: BoxShape.circle,
-                    ),
-                    height: 40,
-                    width: 40,
-                    child: const Center(
-                        child: Text(
-                      '0',
-                      style: TextStyle(color: Colors.white),
-                    )),
-                  )
-                ],
-              ),
-            ),
-            Container(
-              child: const Padding(
-                padding: EdgeInsets.fromLTRB(0, 0, 230, 0),
-                child: Text(
-                  'Chọn bản dịch',
-                  style: TextStyle(fontSize: 25, color: Colors.white),
                 ),
-              ),
+              ],
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(10, 20, 0, 0),
+              padding: const EdgeInsets.fromLTRB(20, 10, 0, 0),
               child: Column(
                 children: [
                   Row(
                     children: [
                       Container(
-                        padding: const EdgeInsets.all(8),
+                        padding: const EdgeInsets.only(right: 10),
                         child: const Icon(
-                          Icons.message,
-                          color: Colors.white,
-                          size: 24,
+                          Icons.messenger_rounded,
+                          color: Color.fromRGBO(208, 197, 100, 1.0),
+                          size: 28,
                         ),
                       ),
                        Container(
-                         decoration: const BoxDecoration(
-                             border: Border(
-                                 bottom: BorderSide(
-                                     color: Colors.white,
-                                     width: 2
-                                 )
-                             )
-                         ),
                          child: const Text(
-                          'Xem TV',
-                          style: TextStyle(color: Colors.white, fontSize: 20)
+                          'Watch',
+                          style: TextStyle(color: Colors.white, fontSize: 22)
                          ),
                        ),
                     ],
@@ -138,50 +135,81 @@ class LearnWordScreen extends StatelessWidget {
             ),
             Padding(
               padding:
-                  const EdgeInsets.only(left: 20, top: 0, bottom: 0, right: 20),
+                  const EdgeInsets.only(left: 20, top: 30, bottom: 0, right: 20),
               child: Container(
-                height: 300,
+                height: 200,
                 width: double.infinity,
-                decoration: const BoxDecoration(
-                    image: DecorationImage(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(40),
+                    image: const DecorationImage(
                   image: AssetImage('Xem-phim.jpg'),
-                )),
+                      fit: BoxFit.cover
+                ),
+                ),
               ),
             ),
-            const SizedBox(
-              height: 20,
-            ),
-            Container(
+            Expanded(
+              flex: 1,
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: Padding(
-                            padding: const EdgeInsets.only(
-                                left: 20, top: 0, bottom: 0, right: 20),
-                            child: ElevatedButton(
-                                style: ButtonStyle(
-                                  backgroundColor:
-                                      MaterialStateProperty.all<Color>(
-                                    const Color.fromRGBO(75, 75, 75, 1),
-                                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: ElevatedButton(
+                              style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                  const Color.fromRGBO(75, 75, 75, 1),
                                 ),
-                                onPressed: () {
-                                  // xu ly logic
-                                },
-                                child: const Padding(
-                                  padding: EdgeInsets.all(10),
-                                  child: Text(
-                                    'Watch TV',
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 24),
-                                  ),
-                                ))),
-                      ),
-                    ],
+                              ),
+                              onPressed: () {
+                                // xu ly logic
+                              },
+                              child: const Padding(
+                                padding: EdgeInsets.all(10),
+                                child: Text(
+                                  'Xem',
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 22),
+                                ),
+                              )),
+                        ),
+                      ],
+                    ),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: ElevatedButton(
+                              style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                  const Color.fromRGBO(75, 75, 75, 1),
+                                ),
+                              ),
+                              onPressed: () {
+                                // xu ly logic
+                              },
+                              child: const Padding(
+                                padding: EdgeInsets.all(10),
+                                child: Text(
+                                  'Ăn',
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 22),
+                                ),
+                              )),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 20,)
                 ],
               ),
             )
