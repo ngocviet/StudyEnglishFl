@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'screen/nav_screen.dart';
+import 'screen/nav_screen_admin.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      home: const NavScreen(),
+      home: const NavScreenAdmin(),//NavScreen(),
     );
   }
 }

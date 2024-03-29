@@ -24,7 +24,7 @@ class _NavScreenState extends State<NavScreen> {
     huong(),
     Thuong(),
     AccountAdmin(),
-    AnswerAdmin()
+    // AnswerAdmin()
   ];
 
   final List<IconData> _icons = const [

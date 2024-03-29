@@ -23,4 +23,34 @@ class ChooseTopicController{
       throw Exception('Failed to load data');
     }
   }
+
+  static Future<List<dynamic>> getTopic() async{
+    final response = await http.get(
+      Uri.parse('http://localhost:7183/api/ChooseTopics/GetTopic'),
+
+    );
+    if (response.statusCode == 200) {
+      return json.decode(response.body) as List<dynamic>;
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
+
+  static Future<List<dynamic>> getTopicById(int id_topic) async {
+    final response = await http.post(
+      Uri.parse('http://localhost:7183/api/ChooseTopics/GetTopicById'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, dynamic>{
+        'Id': id_topic,
+      }),
+    );
+    if (response.statusCode == 200) {
+      return json.decode(response.body) as List<dynamic>;
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
+
 }

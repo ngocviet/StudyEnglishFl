@@ -2,20 +2,24 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:project4/models/account.dart';
+import 'package:project4/models/topic.dart';
 
 import '../controllers/account_admin_controller.dart';
+import '../controllers/choose_topic_controller.dart';
 
-class DetailAccountAdmin extends StatefulWidget {
+class DetailTopicAdmin extends StatefulWidget {
   final int id_user;
+  final int id_topic;
 
-  const DetailAccountAdmin({Key? key, required this.id_user}) : super(key: key);
+  const DetailTopicAdmin({Key? key, required this.id_user, required this.id_topic}) : super(key: key);
 
   @override
-  State<DetailAccountAdmin> createState() => _DetailAccountAdminState();
+  State<DetailTopicAdmin> createState() => _DetailTopicAdmin();
 }
 
-class _DetailAccountAdminState extends State<DetailAccountAdmin> {
+class _DetailTopicAdmin extends State<DetailTopicAdmin> {
   List<dynamic> accounts = [];
+  List<dynamic> topics = [];
 
   @override
   void initState() {
@@ -27,8 +31,11 @@ class _DetailAccountAdminState extends State<DetailAccountAdmin> {
     try {
       final data = await AccountController.getAccountId(widget.id_user);
 
+      final data1 = await ChooseTopicController.getTopicById(widget.id_topic);
+
       setState(() {
         accounts = data ;
+        topics = data1;
       });
     } catch (e) {
       print('Error: $e');
@@ -52,8 +59,8 @@ class _DetailAccountAdminState extends State<DetailAccountAdmin> {
                       children: [
                         Container(
                           padding: EdgeInsets.all(10),
-                          child: Text('Account Manager',
-                          style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                          child: Text('Topic Manager',
+                            style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
                         ),
                         Container(child:ClipRRect(borderRadius: BorderRadius.circular(50),child: CachedNetworkImage(imageUrl: 'assets/abc1.jpg',height: 50,width: 50,fit: BoxFit.cover,)),)
                       ],),
@@ -65,10 +72,9 @@ class _DetailAccountAdminState extends State<DetailAccountAdmin> {
       ),
 
       body: ListView.builder(
-        itemCount: accounts.length,
+        itemCount: topics.length,
         itemBuilder: (context, index) {
-
-          var account = accounts[index];
+          var topic = topics[index];
           return Container(
             color: Colors.white,
             padding: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
@@ -85,7 +91,7 @@ class _DetailAccountAdminState extends State<DetailAccountAdmin> {
                       ),
                       child: ClipRRect(
                           borderRadius: BorderRadius.circular(150),
-                          child: ClipRRect(borderRadius: BorderRadius.circular(50),child: CachedNetworkImage(imageUrl: 'assets/${account['avatar']}',height: 80,width: 80,fit: BoxFit.cover,))),
+                          child: ClipRRect(borderRadius: BorderRadius.circular(50),child: CachedNetworkImage(imageUrl: 'assets/${topic['avatar']}',height: 80,width: 80,fit: BoxFit.cover,))),
 
                     ),
                     SizedBox(width: 20,),
@@ -94,7 +100,7 @@ class _DetailAccountAdminState extends State<DetailAccountAdmin> {
                         Container(
                           width: MediaQuery.of(context).size.width * 0.6,
                           child: Text(
-                            'ID: ${account['id']}',
+                            'ID: ${topic['id']}',
                             style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,color: Colors.black),
                             softWrap: true,
                           ),
@@ -103,7 +109,7 @@ class _DetailAccountAdminState extends State<DetailAccountAdmin> {
                         Container(
                           width: MediaQuery.of(context).size.width * 0.6,
                           child: Text(
-                            'Name: ${account['name']}',
+                            'Name: ${topic['name']}',
                             style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,color: Colors.black),
                             softWrap: true,
                           ),
@@ -112,28 +118,28 @@ class _DetailAccountAdminState extends State<DetailAccountAdmin> {
                         Container(
                           width: MediaQuery.of(context).size.width * 0.6,
                           child: Text(
-                            'UserName: ${account['userName']}',
-                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,color: Colors.black),
-                            softWrap: true,
-
-                          ),
-                        ),
-                        SizedBox(height: 5,),
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.6,
-                          child: Text(
-                            'Password: ${account['password']}',
+                            'code: ${topic['code']}',
                             style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,color: Colors.black),
                             softWrap: true,
 
                           ),
                         ),
                         SizedBox(height: 5,),
+                        Container(
+                          width: MediaQuery.of(context).size.width * 0.6,
+                          child: Text(
+                            'comboColor: ${topic['comboColor']}',
+                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,color: Colors.black),
+                            softWrap: true,
+
+                          ),
+                        ),
+                        SizedBox(height: 5,),
 
                         Container(
                           width: MediaQuery.of(context).size.width * 0.6,
                           child: Text(
-                            'CreateTime: ${account['createdTime'].toString().substring(0, 10)}',
+                            'CreateTime: ${topic['createTime'].toString().substring(0, 10)}',
                             style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                             softWrap: true,
 

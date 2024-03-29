@@ -25,15 +25,8 @@ class _AccountAdminState extends State<AccountAdmin> {
   void fetchData() async{
     try {
       final acc = await AccountController.getAccountInfo();
-
-      // final data1 = await HomeController.getListLesson(idUser,idTopic);
-      //
-      // final data2 = await HomeController.getDay(idUser);
       setState(() {
         accounts = acc;
-        // topic = 'Chủ đề ${data['stt']}';
-        // listLesson = data1;
-        // totalDay = data2['totalDay'];
       });
     } catch (e) {
       print('Error: $e');
@@ -43,28 +36,32 @@ class _AccountAdminState extends State<AccountAdmin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //     backgroundColor: Colors.white,
-      //     title: Title(color: Colors.blue,
-      //         child: Container(
-      //           child: Column(
-      //             children: [
-      //               Row(
-      //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //
-      //                 children: [
-      //                   Container(
-      //                     padding: EdgeInsets.all(10),
-      //                     child: Text('Account Manager'),
-      //                   ),
-      //                   Container(child: ClipRRect(borderRadius: BorderRadius.circular(50),child: CachedNetworkImage(imageUrl: 'assets/${acc.Avata}',height: 50,width: 50,fit: BoxFit.cover,)),)
-      //                 ],),
-      //
-      //             ],
-      //           ),
-      //         )
-      //     )
-      // ),
+      backgroundColor: Colors.lightBlue[100]!.withOpacity(0.3),
+      appBar: AppBar(
+          backgroundColor: Colors.white,
+          title: Title(color: Colors.blue,
+              child: Container(
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+                      children: [
+                        Container(
+                          padding: EdgeInsets.all(10),
+                          child: Text('Account Manager',style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold
+                          ),),
+                        ),
+                        Container(child: ClipRRect(borderRadius: BorderRadius.circular(50),child: CachedNetworkImage(imageUrl: 'assets/abc1.jpg',height: 50,width: 50,fit: BoxFit.cover,)),)
+                      ],),
+
+                  ],
+                ),
+              )
+          )
+      ),
 
       body: ListView.builder(
         itemCount: accounts.length,
@@ -76,10 +73,12 @@ class _AccountAdminState extends State<AccountAdmin> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Divider(thickness: 3,color: Colors.grey,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+
                     Container(
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
@@ -95,32 +94,24 @@ class _AccountAdminState extends State<AccountAdmin> {
                         Container(
                           width: MediaQuery.of(context).size.width * 0.6,
                           child: Text(
-                            'Name: ${acc['Name']}',
+                            'Name: ${acc['name']}',
                             style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                             softWrap: true,
 
                           ),
                         ),
                         SizedBox(width: 20,),
-                        // Container(
-                        //   width: MediaQuery.of(context).size.width * 0.6,
-                        //   child: Text(
-                        //     'UserName: ${acc.UserName}',
-                        //     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                        //     softWrap: true,
-                        //
-                        //   ),
-                        // ),
-                        // SizedBox(width: 20,),
-                        // Container(
-                        //   width: MediaQuery.of(context).size.width * 0.6,
-                        //   child: Text(
-                        //     'CreateTime: ${acc.CreateTime}',
-                        //     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                        //     softWrap: true,
-                        //
-                        //   ),
-                        // ),
+                        Container(
+                          width: MediaQuery.of(context).size.width * 0.6,
+                          child: Text(
+                            'UserName: ${acc['userName']}',
+                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                            softWrap: true,
+
+                          ),
+                        ),
+                        SizedBox(width: 20,),
+
 
                         Container(
                           child: Row(
