@@ -19,6 +19,7 @@ class ViewScreen extends State<LearnWordScreen> {
   late String nameEN = "";
   late String nameVN = "";
   late String avatar = "default.jpg";
+  List<dynamic> listAnswer = [];
   @override
   void initState() {
     super.initState();
@@ -27,14 +28,15 @@ class ViewScreen extends State<LearnWordScreen> {
 
   void fetchData() async {
     try {
-      final data = await learnWordController.getDataQuestion(widget.codeLesson, 1);
-      // final data = await learnWordController.getDataQuestion(widget.codeLesson, widget.stt);
+      final data = await learnWordController.getDataQuestion(
+          widget.codeLesson, widget.stt);
 
       setState(() {
         nameEN = data['nameEN'];
-        nameVN = data['nameVN'];
+        // nameVN = data['nameVN'];
+        listAnswer = data['listAnswer'];
       });
-      bool isExists = await doesAssetExist('assets/fish.jpg');
+      bool isExists = await doesAssetExist('assets/${data['avatar']}');
       if (isExists) {
         setState(() {
           avatar = data['avatar'];
@@ -50,57 +52,47 @@ class ViewScreen extends State<LearnWordScreen> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: const Icon(Icons.close),
           onPressed: () {
             Navigator.pop(context);
           },
-          color: Colors.white,
+          color: const Color.fromRGBO(158, 182, 203, 1.0),
+          iconSize: 40,
         ),
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Text(
-              'Học Tập',
-              style: TextStyle(
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white),
-            ),
-            Container(
-              width: 70,
-              height: 50,
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage('htv_preview_rev_1.png'),
-                    fit: BoxFit.contain),
+        title: Padding(
+          padding: const EdgeInsets.only(right: 10),
+          child: Stack(
+            children: [
+              Container(
+                width: double.infinity,
+                height: 18,
+                decoration: BoxDecoration(
+                    color: const Color.fromRGBO(197, 206, 215, 1.0),
+                    borderRadius: BorderRadius.circular(9)
+                ),
               ),
-            ),
-          ],
+              Container(
+                width: 100,
+                height: 18,
+                decoration: BoxDecoration(
+                    color: const Color.fromRGBO(33, 197, 41, 1.0),
+                    borderRadius: BorderRadius.circular(9)
+                ),
+              ),
+            ]
+          ),
         ),
         flexibleSpace: Container(
           decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Color.fromRGBO(30, 30, 30, 54),
-                Colors.black87
-              ], // Màu sắc cho gradient
-            ),
+            color: Color.fromRGBO(2, 33, 47, 1.0),
           ),
         ),
       ),
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-              image: const AssetImage('giaodien3.jpg'),
-              fit: BoxFit.cover,
-              colorFilter: ColorFilter.mode(
-                Colors.black.withOpacity(0.5),
-                BlendMode.darken,
-              )),
+        decoration: const BoxDecoration(
+          color: Color.fromRGBO(2, 33, 47, 1.0),
         ),
         child: Column(
           children: [
@@ -108,42 +100,76 @@ class ViewScreen extends State<LearnWordScreen> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Padding(
-                  padding: EdgeInsets.only(left: 20, top: 10),
+                  padding: EdgeInsets.only(left: 20),
                   child: Text(
-                    'Chọn bản dịch',
+                    'Chọn bản dịch đúng',
                     style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 24,
                       color: Colors.grey,
+                      fontWeight: FontWeight.bold
                     ),
                   ),
                 ),
               ],
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(20, 10, 0, 0),
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.only(right: 10),
-                        child: const Icon(
-                          Icons.messenger_rounded,
-                          color: Color.fromRGBO(208, 197, 100, 1.0),
-                          size: 28,
+              padding: const EdgeInsets.only(left: 20),
+              child: Container(
+                decoration: const BoxDecoration(
+                  color: Color.fromRGBO(2, 33, 47, 1.0),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Stack(
+                      clipBehavior: Clip.none,
+                      children: [
+                        IconButton(
+                          icon: const Icon(Icons.messenger_outline_sharp, size: 70,color: Color.fromRGBO(82, 79, 79, 1.0),),
+                          onPressed: () {
+                            null;
+                          },
                         ),
-                      ),
-                      Text(nameEN,
-                          style: const TextStyle(
-                              color: Colors.white, fontSize: 22)),
-                    ],
-                  ),
-                ],
+                        Positioned(
+                          top: 14,
+                          left: 40,
+                          child: Container(
+                            padding: const EdgeInsets.only(top: 3,bottom: 2, right: 20),
+                            decoration: const BoxDecoration(
+                              color: Color.fromRGBO(2, 33, 47, 1.0),
+                              border: Border(
+                                bottom: BorderSide(
+                                  color: Color.fromRGBO(82, 79, 79, 1.0),
+                                  width: 5,
+                                ),
+                                top: BorderSide(
+                                  color: Color.fromRGBO(79, 79, 79, 1.0),
+                                  width: 5,
+                                ),
+                                right: BorderSide(
+                                  color: Color.fromRGBO(79, 79, 79, 1.0),
+                                  width: 5,
+                                ),
+                              )
+                            ),
+                            child: Text(
+                              nameEN,
+                              style: const TextStyle(
+                                fontSize: 22,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
             Padding(
               padding: const EdgeInsets.only(
-                  left: 20, top: 30, bottom: 0, right: 20),
+                  left: 20, top: 0, bottom: 40, right: 20),
               child: Container(
                 height: 250,
                 width: double.infinity,
@@ -159,34 +185,67 @@ class ViewScreen extends State<LearnWordScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Expanded(
+                  Expanded(
+                    flex: 1,
+                    child: ListView.builder(
+                      itemCount: listAnswer.length,
+                      // reverse: true,
+                      itemBuilder: (context, index) {
+                        var answer = listAnswer[index];
+                        return Padding(
+                          padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
                           child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                  backgroundColor: const Color.fromRGBO(75, 75, 75, 1),
+                                  backgroundColor: const Color.fromRGBO(75, 75, 75, 0),
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(20)
-                                  )
+                                  ),
+                                side: const BorderSide(color: Color.fromRGBO(
+                                    90, 104, 129, 1.0), width: 3),
                               ),
                               onPressed: () {
-                                // xu ly logic
                               },
                               child: Padding(
-                                padding: const EdgeInsets.all(8),
+                                padding: const EdgeInsets.all(12),
                                 child: Text(
-                                  nameVN,
-                                  style: const TextStyle(color: Colors.white, fontSize: 22),
+                                  answer['nameVN'],
+                                  style: const TextStyle(
+                                      color: Colors.white, fontSize: 22),
                                 ),
-                              )),
-                        ),
-                      ],
+                              )
+                          ),
+                        );
+                      },
                     ),
                   ),
-                  const SizedBox(height: 15,)
+                  Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            // backgroundColor: const Color.fromRGBO(67, 203, 47,1.0),
+                            backgroundColor: const Color.fromRGBO(
+                                94, 94, 94, 1.0),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20)
+                            ),
+                          ),
+                          onPressed: () {
+                          },
+                          child: const Padding(
+                            padding: EdgeInsets.all(12),
+                            child: Text(
+                              'Kiểm tra',
+                              style: TextStyle(
+                                  // color: Colors.black,
+                                  color: Color.fromRGBO(134, 134, 134, 1.0),
+                                  fontSize: 22, fontWeight: FontWeight.bold),
+                            ),
+                          )
+                      ),
+                    ),
+                  ),
                 ],
               ),
             )
@@ -205,4 +264,3 @@ Future<bool> doesAssetExist(String assetName) async {
     return false;
   }
 }
-
