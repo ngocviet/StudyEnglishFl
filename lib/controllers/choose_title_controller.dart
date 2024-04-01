@@ -9,14 +9,14 @@ class ChooseTileController{
       return modelChooseTile(id_lesson: id_lesson, total_word: 30, total_question: 12, total_puzzle: 7);
     }
 
-    static Future<dynamic> getDataFromApi(int idLesson) async {
+    static Future<dynamic> getDataFromApi(String codeLesson) async {
       final rp = await http.post(
         Uri.parse('http://localhost:7183/api/ChooseTitles/GetData'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
         body: jsonEncode(<String, dynamic>{
-          'Code': "idLesson",
+          'Code': codeLesson,
         }),
       );
 

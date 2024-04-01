@@ -8,10 +8,10 @@ import 'package:project4/screen/combine_sentences_screen.dart';
 import 'package:project4/screen/learn_word_screen.dart';
 
 class ChooseTitleScreen extends StatefulWidget {
-  final int idLesson;
+  final String codeLesson;
   final String sttLesson;
   final String title;
-  const ChooseTitleScreen({super.key, required this.idLesson, required this.sttLesson, required this.title});
+  const ChooseTitleScreen({super.key, required this.codeLesson, required this.sttLesson, required this.title});
 
   @override
   State<ChooseTitleScreen> createState() => _ChooseTitleScreenState();
@@ -30,7 +30,7 @@ class _ChooseTitleScreenState extends State<ChooseTitleScreen> {
 
   void fetchData() async{
     try {
-      final rs = await ChooseTileController.getDataFromApi(widget.idLesson);
+      final rs = await ChooseTileController.getDataFromApi(widget.codeLesson);
 
       setState(() {
         totalWord = rs['totalWord'];
@@ -136,7 +136,7 @@ class _ChooseTitleScreenState extends State<ChooseTitleScreen> {
               onTap: (){
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => LearnWordScreen()),
+                  MaterialPageRoute(builder: (context) => LearnWordScreen(codeLesson: widget.codeLesson,stt: 0)),
                 );
               },
               child: Item(

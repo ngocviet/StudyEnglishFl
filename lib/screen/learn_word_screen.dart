@@ -1,10 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:project4/controllers/learn_word_controller.dart';
 
 class LearnWordScreen extends StatefulWidget {
-  LearnWordScreen({super.key});
+  final String codeLesson;
+  final int stt;
+  LearnWordScreen({super.key, required this.codeLesson, required this.stt});
 
   @override
   State<StatefulWidget> createState() {
@@ -15,7 +18,7 @@ class LearnWordScreen extends StatefulWidget {
 class ViewScreen extends State<LearnWordScreen> {
   late String nameEN = "";
   late String nameVN = "";
-  late String avatar = "question.jpg";
+  late String avatar = "default.jpg";
   @override
   void initState() {
     super.initState();
@@ -24,13 +27,19 @@ class ViewScreen extends State<LearnWordScreen> {
 
   void fetchData() async {
     try {
-      final data = await learnWordController.getDataQuestion();
+      final data = await learnWordController.getDataQuestion(widget.codeLesson, 1);
+      // final data = await learnWordController.getDataQuestion(widget.codeLesson, widget.stt);
 
       setState(() {
         nameEN = data['nameEN'];
         nameVN = data['nameVN'];
-        avatar = data['avatar'];
       });
+      bool isExists = await doesAssetExist('assets/fish.jpg');
+      if (isExists) {
+        setState(() {
+          avatar = data['avatar'];
+        });
+      }
     } catch (e) {
       print('Error: $e');
     }
@@ -158,7 +167,7 @@ class ViewScreen extends State<LearnWordScreen> {
                         Expanded(
                           child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color.fromRGBO(75, 75, 75, 1),
+                                  backgroundColor: const Color.fromRGBO(75, 75, 75, 1),
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(20)
                                   )
@@ -187,3 +196,13 @@ class ViewScreen extends State<LearnWordScreen> {
     );
   }
 }
+
+Future<bool> doesAssetExist(String assetName) async {
+  try {
+    await rootBundle.load(assetName);
+    return true;
+  } catch (_) {
+    return false;
+  }
+}
+

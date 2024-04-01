@@ -337,7 +337,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           MaterialPageRoute(
                                               builder: (context) =>
                                                   ChooseTitleScreen(
-                                                    idLesson: lesson['id'],
+                                                    codeLesson: lesson['code'],
                                                     title: lesson['title'],
                                                     sttLesson:
                                                     'Bài học số ${index + 1}',
