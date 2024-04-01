@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:project4/controllers/learn_word_controller.dart';
-class LearnWordScreen extends StatefulWidget{
+
+class LearnWordScreen extends StatefulWidget {
   LearnWordScreen({super.key});
 
   @override
@@ -10,29 +11,31 @@ class LearnWordScreen extends StatefulWidget{
     return ViewScreen();
   }
 }
-class ViewScreen extends State<LearnWordScreen>{
-  late String nameEN="";
-  late String nameVN="";
-  late String Avatar="";
+
+class ViewScreen extends State<LearnWordScreen> {
+  late String nameEN = "";
+  late String nameVN = "";
+  late String avatar = "question.jpg";
   @override
   void initState() {
     super.initState();
     fetchData();
   }
 
-  void fetchData() async{
+  void fetchData() async {
     try {
       final data = await learnWordController.getDataQuestion();
 
       setState(() {
-      nameEN = data['nameEN'];
-      nameVN = data['nameVN'];
-      Avatar = data['avatar'];
+        nameEN = data['nameEN'];
+        nameVN = data['nameVN'];
+        avatar = data['avatar'];
       });
     } catch (e) {
       print('Error: $e');
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,7 +102,10 @@ class ViewScreen extends State<LearnWordScreen>{
                   padding: EdgeInsets.only(left: 20, top: 10),
                   child: Text(
                     'Chọn bản dịch',
-                    style: TextStyle(fontSize: 20, color: Colors.grey,),
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.grey,
+                    ),
                   ),
                 ),
               ],
@@ -118,29 +124,24 @@ class ViewScreen extends State<LearnWordScreen>{
                           size: 28,
                         ),
                       ),
-                      Container(
-                        child: Text(
-                            nameEN,
-                            style: const TextStyle(color: Colors.white, fontSize: 22)
-                        ),
-                      ),
+                      Text(nameEN,
+                          style: const TextStyle(
+                              color: Colors.white, fontSize: 22)),
                     ],
                   ),
                 ],
               ),
             ),
             Padding(
-              padding:
-              const EdgeInsets.only(left: 20, top: 30, bottom: 0, right: 20),
+              padding: const EdgeInsets.only(
+                  left: 20, top: 30, bottom: 0, right: 20),
               child: Container(
-                height: 200,
+                height: 250,
                 width: double.infinity,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(40),
                   image: DecorationImage(
-                      image: AssetImage(Avatar),
-                      fit: BoxFit.cover
-                  ),
+                      image: AssetImage(avatar), fit: BoxFit.cover),
                 ),
               ),
             ),
@@ -156,56 +157,27 @@ class ViewScreen extends State<LearnWordScreen>{
                       children: [
                         Expanded(
                           child: ElevatedButton(
-                              style: ButtonStyle(
-                                backgroundColor:
-                                MaterialStateProperty.all<Color>(
-                                  const Color.fromRGBO(75, 75, 75, 1),
-                                ),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: const Color.fromRGBO(75, 75, 75, 1),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20)
+                                  )
                               ),
                               onPressed: () {
                                 // xu ly logic
                               },
                               child: Padding(
-                                padding: EdgeInsets.all(10),
+                                padding: const EdgeInsets.all(8),
                                 child: Text(
                                   nameVN,
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 22),
+                                  style: const TextStyle(color: Colors.white, fontSize: 22),
                                 ),
                               )),
                         ),
                       ],
                     ),
                   ),
-                  // Padding(
-                  //   padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-                  //   child: Row(
-                  //     mainAxisAlignment: MainAxisAlignment.center,
-                  //     children: [
-                  //       Expanded(
-                  //         child: ElevatedButton(
-                  //             style: ButtonStyle(
-                  //               backgroundColor:
-                  //               MaterialStateProperty.all<Color>(
-                  //                 const Color.fromRGBO(75, 75, 75, 1),
-                  //               ),
-                  //             ),
-                  //             onPressed: () {
-                  //               // xu ly logic
-                  //             },
-                  //             child: const Padding(
-                  //               padding: EdgeInsets.all(10),
-                  //               child: Text(
-                  //                 'Ăn',
-                  //                 style: TextStyle(
-                  //                     color: Colors.white, fontSize: 22),
-                  //               ),
-                  //             )),
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
-                  // const SizedBox(height: 20,)
+                  const SizedBox(height: 15,)
                 ],
               ),
             )
@@ -215,4 +187,3 @@ class ViewScreen extends State<LearnWordScreen>{
     );
   }
 }
-

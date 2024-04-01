@@ -17,7 +17,7 @@ class AnswerTheQuestionScreen extends StatefulWidget {
 class ScreenState extends State<AnswerTheQuestionScreen> {
   List<dynamic> listAnswer = [];
   String question = '';
-  String avatar = '';
+  String avatar = "question.jpg";
   int showSuccessMessage = 0;
   @override
   void initState() {
@@ -106,7 +106,7 @@ class ScreenState extends State<AnswerTheQuestionScreen> {
               )),
         ),
         child: Stack(
-          fit: StackFit.expand,
+          // fit: StackFit.expand,
           children: [
             Column(
               children: [
@@ -122,8 +122,7 @@ class ScreenState extends State<AnswerTheQuestionScreen> {
                   child: Column(
                     children: [
                       Row(
-                        crossAxisAlignment: CrossAxisAlignment
-                            .start, // Đảm bảo các phần tử con được căn chỉnh theo đầu dòng
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
                             padding: const EdgeInsets.all(8),
@@ -169,59 +168,53 @@ class ScreenState extends State<AnswerTheQuestionScreen> {
                   padding: const EdgeInsets.only(
                       left: 20, top: 0, bottom: 0, right: 20),
                   child: Container(
-                    height: 350,
+                    height: 250,
                     width: double.infinity,
                     decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(40),
                         image: DecorationImage(
                             image: AssetImage(avatar), fit: BoxFit.cover)),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 30),
-                  child: Expanded(
-                    flex: 1,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: List.generate(
-                        listAnswer.length,
-                        (index) {
-                          var answer = listAnswer[index];
-                          return Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 20,
-                                  top: 20,
-                                  bottom: 0,
-                                  right: 20), // Khoảng cách giữa mỗi TextButton
-                              child: SizedBox(
-                                width: double.infinity,
-                                child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
+                Expanded(
+                  flex: 1,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: List.generate(
+                      listAnswer.length,
+                          (index) {
+                        var answer = listAnswer[index];
+                        return Padding(
+                            padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                            child: SizedBox(
+                              width: double.infinity,
+                              child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
                                       backgroundColor: const Color.fromRGBO(75, 75, 75, 1),
                                       shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10)
+                                          borderRadius: BorderRadius.circular(20)
                                       )
+                                  ),
+                                  onPressed: () {
+                                    setState(() {
+                                      // showSuccessMessage = answer['isTrue'];
+                                      if(answer['isTrue'] == true){
+                                        showSuccessMessage = 1;
+                                      }else{
+                                        showSuccessMessage = 2;
+                                      }
+                                    });
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8),
+                                    child: Text(
+                                      answer['answer'],
+                                      style: const TextStyle(
+                                          color: Colors.white, fontSize: 22),
                                     ),
-                                    onPressed: () {
-                                      setState(() {
-                                        // showSuccessMessage = answer['isTrue'];
-                                        if(answer['isTrue'] == true){
-                                          showSuccessMessage = 1;
-                                        }else{
-                                          showSuccessMessage = 2;
-                                        }
-                                      });
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(10),
-                                      child: Text(
-                                        answer['answer'],
-                                        style: const TextStyle(
-                                            color: Colors.white, fontSize: 24),
-                                      ),
-                                    )),
-                              ));
-                        },
-                      ),
+                                  )),
+                            ));
+                      },
                     ),
                   ),
                 ),
@@ -233,7 +226,7 @@ class ScreenState extends State<AnswerTheQuestionScreen> {
                 left: 0,
                 right: 0,
                 height:
-                    150, // Chiều cao của container là 1 nửa chiều cao của màn hình
+                150, // Chiều cao của container là 1 nửa chiều cao của màn hình
                 child: Container(
                   color: const Color.fromRGBO(9, 21, 9, 1),
                   child: Column(
@@ -254,7 +247,7 @@ class ScreenState extends State<AnswerTheQuestionScreen> {
                               child: const Center(
                                 child: Icon(Icons.check,
                                     color:
-                                        Color.fromRGBO(9, 21, 9, 1)), // Icon hình tích (tick)
+                                    Color.fromRGBO(9, 21, 9, 1)), // Icon hình tích (tick)
                               ),
                             ),
                             const SizedBox(
@@ -376,12 +369,12 @@ class ScreenState extends State<AnswerTheQuestionScreen> {
                         child: Container(
                           width: double.infinity,
                           child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color.fromRGBO(243, 10, 10, 1),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20),
-                              )
-                            ),
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: const Color.fromRGBO(243, 10, 10, 1),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                  )
+                              ),
                               onPressed: () {
                                 setState(() {
                                   showSuccessMessage =0;
