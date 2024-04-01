@@ -19,8 +19,8 @@ class _HomeScreenState extends State<HomeScreen> {
 // Variables
   String totalDay = "0";
   String topic = "";
-  int idTopic = 1;
-  int idUser = 1;
+  String codeTopic = "GD";
+  String codeUser = "viet_1";
   List<dynamic> listLesson = [];
   List<Account> accounts = [];
 
@@ -30,13 +30,13 @@ class _HomeScreenState extends State<HomeScreen> {
     fetchData();
   }
 
-  void fetchData() async{
+  void fetchData() async {
     try {
-      final data = await HomeController.getDataTopic(idTopic);
+      final data = await HomeController.getDataTopic(codeTopic);
 
-      final data1 = await HomeController.getListLesson(idUser,idTopic);
+      final data1 = await HomeController.getListLesson(codeUser, codeTopic);
 
-      final data2 = await HomeController.getDay(idUser);
+      final data2 = await HomeController.getDay(codeUser);
       setState(() {
         topic = 'Chủ đề ${data['stt']}';
         listLesson = data1;
@@ -100,97 +100,102 @@ class _HomeScreenState extends State<HomeScreen> {
                         height: 100,
                         child: Center(
                             child: Container(
-                              width: 260,
-                              height: 260,
-                              decoration: const BoxDecoration(
-                                // color: Colors.red,
-                                  image: DecorationImage(
-                                    image: AssetImage('header.png'),
-                                    fit: BoxFit.contain,
-                                  )),
-                              child: Padding(
-                                padding: const EdgeInsets.only(top: 120),
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      width: 150,
-                                      height: 50,
-                                      // color: Colors.blue,
-                                      child: Row(
-                                        crossAxisAlignment: CrossAxisAlignment.end,
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          const IconButton(
-                                            onPressed: null,
-                                            padding: EdgeInsets.all(0),
-                                            icon: Icon(
-                                              Icons.local_fire_department_rounded,
-                                              color: Colors.orangeAccent,
-                                              size: 50,
-                                            ),
-                                          ),
-                                          Center(
-                                            child: Stack(
-                                              children: [
-                                                Text(
-                                                  '$totalDay',
-                                                  style: TextStyle(
-                                                    fontSize: 35,
-                                                    fontWeight: FontWeight.bold,
-                                                    foreground: Paint()
-                                                      ..style = PaintingStyle.stroke
-                                                      ..strokeWidth = 6 // Độ dày của border
-                                                      ..color = Colors.orangeAccent, // Màu của border
-                                                  ),
-                                                ),
-                                                Text(
-                                                  '$totalDay',
-                                                  style: const TextStyle(
-                                                    fontSize: 35,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.white, // Màu của chữ
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
+                          width: 260,
+                          height: 260,
+                          decoration: const BoxDecoration(
+                              // color: Colors.red,
+                              image: DecorationImage(
+                            image: AssetImage('header.png'),
+                            fit: BoxFit.contain,
+                          )),
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 120),
+                            child: Column(
+                              children: [
+                                Container(
+                                  width: 150,
+                                  height: 50,
+                                  // color: Colors.blue,
+                                  child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const IconButton(
+                                        onPressed: null,
+                                        padding: EdgeInsets.all(0),
+                                        icon: Icon(
+                                          Icons.local_fire_department_rounded,
+                                          color: Colors.orangeAccent,
+                                          size: 50,
+                                        ),
                                       ),
-                                    ),
-                                    const Padding(
-                                      padding: EdgeInsets.only(top: 8.0, right: 2),
-                                      child: Text(
-                                        'Chuỗi ngày',
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 16),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 12.0),
-                                      child: ElevatedButton(
-                                          onPressed: () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(builder: (context) => ChooseTopicScreen(idUser: 1)),
-                                            );
-                                          },
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(9),
-                                            child: Text(
-                                              topic,
+                                      Center(
+                                        child: Stack(
+                                          children: [
+                                            Text(
+                                              '$totalDay',
+                                              style: TextStyle(
+                                                fontSize: 35,
+                                                fontWeight: FontWeight.bold,
+                                                foreground: Paint()
+                                                  ..style = PaintingStyle.stroke
+                                                  ..strokeWidth =
+                                                      6 // Độ dày của border
+                                                  ..color = Colors
+                                                      .orangeAccent, // Màu của border
+                                              ),
+                                            ),
+                                            Text(
+                                              '$totalDay',
                                               style: const TextStyle(
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 18),
+                                                fontSize: 35,
+                                                fontWeight: FontWeight.bold,
+                                                color:
+                                                    Colors.white, // Màu của chữ
+                                              ),
                                             ),
-                                          )),
-                                    )
-                                  ],
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            )))),
+                                const Padding(
+                                  padding: EdgeInsets.only(top: 8.0, right: 2),
+                                  child: Text(
+                                    'Chuỗi ngày',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 12.0),
+                                  child: ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ChooseTopicScreen(idUser: 1)),
+                                        );
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(9),
+                                        child: Text(
+                                          topic,
+                                          style: const TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 18),
+                                        ),
+                                      )),
+                                )
+                              ],
+                            ),
+                          ),
+                        )))),
                 Expanded(
                     flex: 5,
                     child: ListView.builder(
@@ -200,13 +205,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       itemBuilder: (BuildContext context, int index) {
                         var lesson = listLesson[index];
                         double leftPadding = index == 0 ? 70 : 40;
-                        double rightPadding = index == listLesson.length - 1 ? 65 : 0;
+                        double rightPadding =
+                            index == listLesson.length - 1 ? 65 : 0;
                         var statusStar = List<bool>.filled(3, false);
                         for (int i = 0; i < lesson['totalStar']; i++) {
                           statusStar[i] = true;
                         }
                         return Padding(
-                          padding: EdgeInsets.only(left: leftPadding, right: rightPadding),
+                          padding: EdgeInsets.only(
+                              left: leftPadding, right: rightPadding),
                           child: Center(
                             child: Container(
                               width: 300,
@@ -227,12 +234,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                               ),
                               child: Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Padding(
                                     padding: const EdgeInsets.only(top: 8.0),
                                     child: Text(
-                                      lesson['sttLesson'],
+                                      'Bài học số ${index + 1}',
                                       style: const TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.bold,
@@ -268,9 +276,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                             child: IconButton(
                                               onPressed: null,
                                               icon: Icon(
-                                                statusStar[0] ? Icons.star_purple500_sharp : Icons.star_border_rounded,
+                                                statusStar[0]
+                                                    ? Icons.star_purple500_sharp
+                                                    : Icons.star_border_rounded,
                                                 size: 75,
-                                                color:statusStar[0] ? Colors.yellow : Colors.white,
+                                                color: statusStar[0]
+                                                    ? Colors.yellow
+                                                    : Colors.white,
                                               ),
                                             ),
                                           ),
@@ -283,9 +295,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                             child: IconButton(
                                               onPressed: null,
                                               icon: Icon(
-                                                statusStar[1] ? Icons.star_purple500_sharp : Icons.star_border_rounded,
+                                                statusStar[1]
+                                                    ? Icons.star_purple500_sharp
+                                                    : Icons.star_border_rounded,
                                                 size: 75,
-                                                color:statusStar[1] ? Colors.yellow : Colors.white,
+                                                color: statusStar[1]
+                                                    ? Colors.yellow
+                                                    : Colors.white,
                                               ),
                                             ),
                                           ),
@@ -298,9 +314,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                             child: IconButton(
                                               onPressed: null,
                                               icon: Icon(
-                                                statusStar[2] ? Icons.star_purple500_sharp : Icons.star_outline,
+                                                statusStar[2]
+                                                    ? Icons.star_purple500_sharp
+                                                    : Icons.star_outline,
                                                 size: 75,
-                                                color:statusStar[2] ? Colors.yellow : Colors.white,
+                                                color: statusStar[2]
+                                                    ? Colors.yellow
+                                                    : Colors.white,
                                               ),
                                             ),
                                           ),
@@ -314,10 +334,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                       onPressed: () {
                                         Navigator.push(
                                           context,
-                                          MaterialPageRoute(builder: (context) =>
-                                              ChooseTitleScreen(idLesson: lesson['id'],title: lesson['title'],sttLesson: lesson['sttLesson'],)
-                                            // LearnWordScreen()
-                                          ),
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ChooseTitleScreen(
+                                                    idLesson: lesson['id'],
+                                                    title: lesson['title'],
+                                                    sttLesson:
+                                                        lesson['sttLesson'],
+                                                  )
+                                              // LearnWordScreen()
+                                              ),
                                         );
                                       },
                                       style: ElevatedButton.styleFrom(
@@ -342,12 +368,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         );
                       },
-                    )
-                ),
+                    )),
               ],
             ),
           ),
-        )
-    );
+        ));
   }
 }
