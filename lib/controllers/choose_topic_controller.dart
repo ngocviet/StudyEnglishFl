@@ -4,7 +4,7 @@ import 'dart:convert';
 
 class ChooseTopicController{
 
-  static Future<List<dynamic>> getListTopic(int id_user) async {
+  static Future<List<dynamic>> getListTopic(String codeUser) async {
     // final response = await http.get(Uri.parse('http://localhost:7183/api/Values?param1=val1'));
 
     final response = await http.post(
@@ -13,7 +13,7 @@ class ChooseTopicController{
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(<String, dynamic>{
-        'Id': id_user,
+        'Code': codeUser,
       }),
     );
 

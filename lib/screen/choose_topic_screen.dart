@@ -4,8 +4,8 @@ import 'package:project4/models/topic.dart';
 
 class ChooseTopicScreen extends StatefulWidget {
 
-  final int idUser;
-  const ChooseTopicScreen({super.key, required this.idUser});
+  final String codeUser;
+  const ChooseTopicScreen({super.key, required this.codeUser});
 
   @override
   State<ChooseTopicScreen> createState() => _ChooseTopicScreenState();
@@ -23,7 +23,7 @@ class _ChooseTopicScreenState extends State<ChooseTopicScreen> {
 
   void fetchData() async{
     try {
-      final rp = await ChooseTopicController.getListTopic(widget.idUser);
+      final rp = await ChooseTopicController.getListTopic(widget.codeUser);
       setState(() {
         listData = rp;
       });

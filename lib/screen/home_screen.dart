@@ -178,7 +178,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  ChooseTopicScreen(idUser: 1)),
+                                                  ChooseTopicScreen(codeUser: "viet_1")),
                                         );
                                       },
                                       child: Padding(
