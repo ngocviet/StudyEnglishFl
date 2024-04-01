@@ -16,7 +16,7 @@ class ChooseTileController{
           'Content-Type': 'application/json; charset=UTF-8',
         },
         body: jsonEncode(<String, dynamic>{
-          'Id': idLesson,
+          'Code': "idLesson",
         }),
       );
 

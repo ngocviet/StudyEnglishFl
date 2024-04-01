@@ -340,7 +340,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     idLesson: lesson['id'],
                                                     title: lesson['title'],
                                                     sttLesson:
-                                                        lesson['sttLesson'],
+                                                    'Bài học số ${index + 1}',
                                                   )
                                               // LearnWordScreen()
                                               ),
