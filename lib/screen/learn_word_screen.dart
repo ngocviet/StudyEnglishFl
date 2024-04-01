@@ -1,10 +1,38 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:project4/controllers/learn_word_controller.dart';
+class LearnWordScreen extends StatefulWidget{
+  LearnWordScreen({super.key});
 
-class LearnWordScreen extends StatelessWidget {
-  const LearnWordScreen({super.key});
+  @override
+  State<StatefulWidget> createState() {
+    return ViewScreen();
+  }
+}
+class ViewScreen extends State<LearnWordScreen>{
+  late String nameEN="";
+  late String nameVN="";
+  late String Avatar="";
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
 
+  void fetchData() async{
+    try {
+      final data = await learnWordController.getDataQuestion();
+
+      setState(() {
+      nameEN = data['nameEN'];
+      nameVN = data['nameVN'];
+      Avatar = data['avatar'];
+      });
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,38 +92,6 @@ class LearnWordScreen extends StatelessWidget {
         ),
         child: Column(
           children: [
-            // Padding(
-            //   padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.center,
-            //     children: [
-            //       Container(
-            //         decoration: BoxDecoration(
-            //           borderRadius: BorderRadius.circular(20),
-            //           color: const Color.fromRGBO(75, 75, 75, 1),
-            //         ),
-            //         height: 15,
-            //         width: 350,
-            //       ),
-            //       const SizedBox(
-            //         width: 15,
-            //       ),
-            //       Container(
-            //         decoration: const BoxDecoration(
-            //           color: Color.fromRGBO(75, 75, 75, 1),
-            //           shape: BoxShape.circle,
-            //         ),
-            //         height: 40,
-            //         width: 40,
-            //         child: const Center(
-            //             child: Text(
-            //           '0',
-            //           style: TextStyle(color: Colors.white),
-            //         )),
-            //       )
-            //     ],
-            //   ),
-            // ),
             const Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -122,29 +118,29 @@ class LearnWordScreen extends StatelessWidget {
                           size: 28,
                         ),
                       ),
-                       Container(
-                         child: const Text(
-                          'Watch',
-                          style: TextStyle(color: Colors.white, fontSize: 22)
-                         ),
-                       ),
+                      Container(
+                        child: Text(
+                            nameEN,
+                            style: const TextStyle(color: Colors.white, fontSize: 22)
+                        ),
+                      ),
                     ],
                   ),
-                      ],
+                ],
               ),
             ),
             Padding(
               padding:
-                  const EdgeInsets.only(left: 20, top: 30, bottom: 0, right: 20),
+              const EdgeInsets.only(left: 20, top: 30, bottom: 0, right: 20),
               child: Container(
                 height: 200,
                 width: double.infinity,
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(40),
-                    image: const DecorationImage(
-                  image: AssetImage('Xem-phim.jpg'),
+                  borderRadius: BorderRadius.circular(40),
+                  image: DecorationImage(
+                      image: AssetImage(Avatar),
                       fit: BoxFit.cover
-                ),
+                  ),
                 ),
               ),
             ),
@@ -162,17 +158,17 @@ class LearnWordScreen extends StatelessWidget {
                           child: ElevatedButton(
                               style: ButtonStyle(
                                 backgroundColor:
-                                    MaterialStateProperty.all<Color>(
+                                MaterialStateProperty.all<Color>(
                                   const Color.fromRGBO(75, 75, 75, 1),
                                 ),
                               ),
                               onPressed: () {
                                 // xu ly logic
                               },
-                              child: const Padding(
+                              child: Padding(
                                 padding: EdgeInsets.all(10),
                                 child: Text(
-                                  'Xem',
+                                  nameVN,
                                   style: TextStyle(
                                       color: Colors.white, fontSize: 22),
                                 ),
@@ -181,35 +177,35 @@ class LearnWordScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Expanded(
-                          child: ElevatedButton(
-                              style: ButtonStyle(
-                                backgroundColor:
-                                    MaterialStateProperty.all<Color>(
-                                  const Color.fromRGBO(75, 75, 75, 1),
-                                ),
-                              ),
-                              onPressed: () {
-                                // xu ly logic
-                              },
-                              child: const Padding(
-                                padding: EdgeInsets.all(10),
-                                child: Text(
-                                  'Ăn',
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 22),
-                                ),
-                              )),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 20,)
+                  // Padding(
+                  //   padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                  //   child: Row(
+                  //     mainAxisAlignment: MainAxisAlignment.center,
+                  //     children: [
+                  //       Expanded(
+                  //         child: ElevatedButton(
+                  //             style: ButtonStyle(
+                  //               backgroundColor:
+                  //               MaterialStateProperty.all<Color>(
+                  //                 const Color.fromRGBO(75, 75, 75, 1),
+                  //               ),
+                  //             ),
+                  //             onPressed: () {
+                  //               // xu ly logic
+                  //             },
+                  //             child: const Padding(
+                  //               padding: EdgeInsets.all(10),
+                  //               child: Text(
+                  //                 'Ăn',
+                  //                 style: TextStyle(
+                  //                     color: Colors.white, fontSize: 22),
+                  //               ),
+                  //             )),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
+                  // const SizedBox(height: 20,)
                 ],
               ),
             )
@@ -219,3 +215,4 @@ class LearnWordScreen extends StatelessWidget {
     );
   }
 }
+
