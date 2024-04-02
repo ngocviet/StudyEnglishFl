@@ -6,7 +6,9 @@ import '../controllers/answer_the_question_controller.dart';
 import '../models/answer.dart';
 
 class AnswerTheQuestionScreen extends StatefulWidget {
-  const AnswerTheQuestionScreen({super.key});
+  final String codeLesson;
+
+  const AnswerTheQuestionScreen({super.key, required this.codeLesson});
 
   @override
   State<StatefulWidget> createState() {
@@ -17,8 +19,9 @@ class AnswerTheQuestionScreen extends StatefulWidget {
 class ScreenState extends State<AnswerTheQuestionScreen> {
   List<dynamic> listAnswer = [];
   List<dynamic> listQuestion =[];
-  // String question = '';
-  // String avatar = "question.jpg";
+  int stt =0;
+  String question = '';
+  String avatar = "question.jpg";
   int showSuccessMessage = 0;
   @override
   void initState() {
@@ -28,20 +31,30 @@ class ScreenState extends State<AnswerTheQuestionScreen> {
 
   void fetchData() async {
     try {
-      final dataQuestion = await AnswerTheQuestionController.getDataQuestion();
+      final dataQuestion = await AnswerTheQuestionController.getDataQuestion(widget.codeLesson);
 
       final dataAnswer = await AnswerTheQuestionController.getDataAnswer();
       setState(() {
         listAnswer = dataAnswer;
         listQuestion = dataQuestion;
-        // avatar = dataQuestion[0]["avatar"];
-        // question = dataQuestion[0]["question"];
+        avatar = dataQuestion[stt]["avatar"];
+        question = dataQuestion[stt]["question"];
       });
     } catch (e) {
       print('Error: screen $e');
     }
   }
-
+  void nextQuestion() {
+    stt++;
+    if (stt < listQuestion.length) {
+      setState(() {
+        question = listQuestion[stt]['question'];
+        avatar = listQuestion[stt]['avatar'];
+      });
+    }else{
+      print('object');
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,34 +67,34 @@ class ScreenState extends State<AnswerTheQuestionScreen> {
           color: Colors.white,
         ),
         title: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: const Color.fromRGBO(75, 75, 75, 1),
-                ),
-                height: 15,
-                width: 250,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: const Color.fromRGBO(75, 75, 75, 1),
               ),
-              const SizedBox(
-                width: 15,
-              ),
-              Container(
-                decoration: const BoxDecoration(
-                  color: Color.fromRGBO(75, 75, 75, 1),
-                  shape: BoxShape.circle,
-                ),
-                height: 40,
-                width: 40,
-                child: const Center(
-                    child: Text(
-                      '0',
-                      style: TextStyle(color: Colors.white),
-                    )),
-              )
-            ],
+              height: 15,
+              width: 250,
             ),
+            const SizedBox(
+              width: 15,
+            ),
+            Container(
+              decoration: const BoxDecoration(
+                color: Color.fromRGBO(75, 75, 75, 1),
+                shape: BoxShape.circle,
+              ),
+              height: 40,
+              width: 40,
+              child: const Center(
+                  child: Text(
+                    '0',
+                    style: TextStyle(color: Colors.white),
+                  )),
+            )
+          ],
+        ),
         flexibleSpace: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
@@ -149,8 +162,8 @@ class ScreenState extends State<AnswerTheQuestionScreen> {
                                         ),
                                       ),
                                     ),
-                                    child: const Text(
-                                      "Nguyen quang huong",
+                                    child: Text(
+                                      question,
                                       overflow: TextOverflow.visible,
                                       maxLines: 3,
                                       style: TextStyle(
@@ -171,8 +184,8 @@ class ScreenState extends State<AnswerTheQuestionScreen> {
                           width: double.infinity,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(40),
-                              image: const DecorationImage(
-                                  image: AssetImage('question.jpg'), fit: BoxFit.cover)),
+                              image: DecorationImage(
+                                  image: AssetImage(avatar), fit: BoxFit.cover)),
                         ),
                       ),
                     ],
@@ -277,6 +290,7 @@ class ScreenState extends State<AnswerTheQuestionScreen> {
                               setState(() {
                                 showSuccessMessage = 0;
                               });
+                              nextQuestion();
                             },
                             child: const Padding(
                               padding: EdgeInsets.all(10),
@@ -381,6 +395,7 @@ class ScreenState extends State<AnswerTheQuestionScreen> {
                                 setState(() {
                                   showSuccessMessage =0;
                                 });
+                                nextQuestion();
                               },
                               child: const Padding(
                                 padding: EdgeInsets.all(10),

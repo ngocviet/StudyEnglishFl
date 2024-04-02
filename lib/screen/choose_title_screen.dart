@@ -150,7 +150,7 @@ class _ChooseTitleScreenState extends State<ChooseTitleScreen> {
               onTap: (){
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const AnswerTheQuestionScreen()),
+                  MaterialPageRoute(builder: (context) => AnswerTheQuestionScreen(codeLesson: widget.codeLesson,)),
                 );
               },
               child: Item(

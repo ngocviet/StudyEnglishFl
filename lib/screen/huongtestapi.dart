@@ -17,57 +17,57 @@ class huong extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-      return AnswerTheQuestionScreen();
+      // return const AnswerTheQuestionScreen(codeLesson: 'L_GD_1',);
       // return CombineSentencesScreen();
     // return ListLessonsScreen();
-    // return const MyHomePage(title: 'huong',);
+    return Text('NHuong');
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  late List<dynamic> accounts = [];
-
-  @override
-  void initState() {
-    super.initState();
-    fetchData();
-  }
-
-  void fetchData() async{
-    try {
-      final data = await ListVocabularyScreenController.getListWord();
-      setState(() {
-        accounts = data;
-      });
-    } catch (e) {
-      // Handle errors
-      print('Error: $e');
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: ListView.builder(
-          itemCount: accounts.length,
-            itemBuilder: (context, index){
-              return ListTile(title: Text(accounts[index]['userName']),);
-            }
-        ),
-      ),
-    );
-  }
-}
+// class MyHomePage extends StatefulWidget {
+//   const MyHomePage({Key? key, required this.title}) : super(key: key);
+//   final String title;
+//
+//   @override
+//   State<MyHomePage> createState() => _MyHomePageState();
+// }
+//
+// class _MyHomePageState extends State<MyHomePage> {
+//   late List<dynamic> accounts = [];
+//
+//   @override
+//   void initState() {
+//     super.initState();
+//     fetchData();
+//   }
+//
+//   void fetchData() async{
+//     try {
+//       final data = await ListVocabularyScreenController.getListWord();
+//       setState(() {
+//         accounts = data;
+//       });
+//     } catch (e) {
+//       // Handle errors
+//       print('Error: $e');
+//     }
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+//         title: Text(widget.title),
+//       ),
+//       body: Center(
+//         child: ListView.builder(
+//           itemCount: accounts.length,
+//             itemBuilder: (context, index){
+//               return ListTile(title: Text(accounts[index]['userName']),);
+//             }
+//         ),
+//       ),
+//     );
+//   }
+// }
