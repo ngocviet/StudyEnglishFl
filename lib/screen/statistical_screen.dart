@@ -5,13 +5,50 @@ import 'package:project4/controllers/statistical_controller.dart';
 import 'package:project4/screen/list_vocabulary_screen.dart';
 import '../model_views/model_statistical.dart';
 
-class StatisticalScreen extends StatelessWidget {
-  StatisticalScreen({super.key});
+class StatisticalScreen extends StatefulWidget {
+  const StatisticalScreen({super.key});
+
+  @override
+  State<StatisticalScreen> createState() => _StatisticalScreenState();
+}
+
+class _StatisticalScreenState extends State<StatisticalScreen> {
+  int totalWord = 0;
+  int totalQuestion = 0;
+  String listWord = "";
+  String listQuestionString = "";
+  String time = "";
+  int totalNewWord = 0;
+  int totalNewQues = 0;
+  int totalOldWord = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
+  void fetchData() async{
+    try {
+      final data = await StatisticalController.getInfoData("viet_1");
+
+      setState(() {
+        totalWord = data['totalWord'];
+        totalQuestion = data['totalQuestion'];
+        totalNewWord = data['totalNewWord'];
+        totalNewQues = data['totalNewQues'];
+        totalOldWord = data['totalOldWord'];
+        listWord = data['listWordString'];
+        listQuestionString = data['listQuestionString'];
+        time = data['time'];
+      });
+    } catch (e) {
+      print('Error: StatisticalScreen $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    modelStatistical data = StatisticalController.getData(1);
-
     return Scaffold(
       appBar: AppBar(
         title: const Row(
@@ -20,7 +57,7 @@ class StatisticalScreen extends StatelessWidget {
             Padding(
               padding: EdgeInsets.only(top: 15.0),
               child: Text(
-                'Mài dũa kỹ năng',
+                'Thống kê học tập',
                 style: TextStyle(
                     fontSize: 28,
                     fontWeight: FontWeight.bold,
@@ -56,7 +93,7 @@ class StatisticalScreen extends StatelessWidget {
                         children: [
                           Item1(
                             title: 'Ôn lại các từ',
-                            content: data.listWord,
+                            content: listWord,
                             img: 'handle.png',
                           ),
                         ],
@@ -76,7 +113,7 @@ class StatisticalScreen extends StatelessWidget {
                         children: [
                           Item1(
                             title: 'Bài tập trắc nghiệm',
-                            content: data.listWord,
+                            content: listQuestionString,
                             img: 'book.png',
                           ),
                         ],
@@ -128,7 +165,7 @@ class StatisticalScreen extends StatelessWidget {
                                                 BorderRadius.circular(30)),
                                             child: Center(
                                               child: Text(
-                                                '${data.totalWord} từ',
+                                                '$totalWord từ',
                                                 style: const TextStyle(
                                                     fontSize: 18,
                                                     fontWeight: FontWeight.bold,
@@ -148,7 +185,7 @@ class StatisticalScreen extends StatelessWidget {
                                                 BorderRadius.circular(30)),
                                             child: Center(
                                               child: Text(
-                                                '${data.totalQues} bài tập',
+                                                '$totalQuestion câu hỏi',
                                                 style: const TextStyle(
                                                     fontSize: 18,
                                                     fontWeight: FontWeight.bold,
@@ -187,7 +224,7 @@ class StatisticalScreen extends StatelessWidget {
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.only(left: 8),
-                                    child: Text(data.time,
+                                    child: Text(time,
                                         style: const TextStyle(
                                             color: Colors.orange,
                                             fontWeight: FontWeight.w800,
@@ -210,16 +247,16 @@ class StatisticalScreen extends StatelessWidget {
                                 Row(
                                   children: [
                                     Item3(
-                                        total: data.totalNewWord,
-                                        status: 'Tốt',
+                                        total: totalNewWord,
+                                        status: totalNewWord > 10 ? 'Tuyệt' : totalNewWord > 0 ? 'Tốt' : '...',
                                         title: 'Từ mới đã học'),
                                     Item3(
-                                        total: data.totalNewQues,
-                                        status: 'Tuyệt',
+                                        total: totalNewQues,
+                                        status: totalNewQues > 10 ? 'Tuyệt' : totalNewQues > 0 ? 'Tốt' : '...',
                                         title: 'Bài tập đã làm'),
                                     Item3(
-                                        total: data.totalOldWord,
-                                        status: 'Tốt',
+                                        total: totalOldWord,
+                                        status: totalOldWord > 10 ? 'Tuyệt' : totalOldWord > 0 ? 'Tốt' : '...',
                                         title: 'Từ đã ôn'),
                                   ],
                                 ),

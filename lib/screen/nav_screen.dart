@@ -21,9 +21,9 @@ class _NavScreenState extends State<NavScreen> {
     HomeScreen(),
     StatisticalScreen(),
     Scaffold(),
-    huong(),
-    Thuong(),
-    AccountAdmin(),
+    // huong(),
+    // Thuong(),
+    // AccountAdmin(),
     // AnswerAdmin()
   ];
 
@@ -31,10 +31,10 @@ class _NavScreenState extends State<NavScreen> {
     Icons.home,
     Icons.handyman,
     Icons.perm_contact_cal_outlined,
-    Icons.add,
-    Icons.add,
-    Icons.abc,
-    Icons.abc_outlined
+    // Icons.add,
+    // Icons.add,
+    // Icons.abc,
+    // Icons.abc_outlined
   ];
 
   int _selectedIndex = 0;
