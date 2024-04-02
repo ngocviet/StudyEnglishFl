@@ -6,9 +6,11 @@ import '../controllers/answer_the_question_controller.dart';
 import '../models/answer.dart';
 
 class AnswerTheQuestionScreen extends StatefulWidget {
-  final String codeLesson;
-
-  const AnswerTheQuestionScreen({super.key, required this.codeLesson});
+  final String CodeLesson;
+  final String CodeQuestion;
+  final String UserCode;
+  final bool IsCorrect;
+  const AnswerTheQuestionScreen({super.key, required this.CodeLesson, required this.UserCode, required this.IsCorrect, required this.CodeQuestion});
 
   @override
   State<StatefulWidget> createState() {
@@ -23,6 +25,7 @@ class ScreenState extends State<AnswerTheQuestionScreen> {
   String question = '';
   String avatar = "question.jpg";
   int showSuccessMessage = 0;
+  List<dynamic> answer = [];
   @override
   void initState() {
     super.initState();
@@ -31,11 +34,12 @@ class ScreenState extends State<AnswerTheQuestionScreen> {
 
   void fetchData() async {
     try {
-      final dataQuestion = await AnswerTheQuestionController.getDataQuestion(widget.codeLesson);
+      final dataQuestion = await AnswerTheQuestionController.getDataQuestion(widget.CodeLesson,widget.IsCorrect,widget.UserCode);
 
-      final dataAnswer = await AnswerTheQuestionController.getDataAnswer();
+      final dataAnswer = await AnswerTheQuestionController.getDataAnswer(widget.CodeLesson,widget.IsCorrect,widget.UserCode);
       setState(() {
         listAnswer = dataAnswer;
+        answer = listAnswer[stt]["answers"];
         listQuestion = dataQuestion;
         avatar = dataQuestion[stt]["avatar"];
         question = dataQuestion[stt]["question"];
@@ -47,9 +51,12 @@ class ScreenState extends State<AnswerTheQuestionScreen> {
   void nextQuestion() {
     stt++;
     if (stt < listQuestion.length) {
-      setState(() {
+      setState(()  {
         question = listQuestion[stt]['question'];
         avatar = listQuestion[stt]['avatar'];
+        answer = listAnswer[stt]["answers"];
+
+        final dataAnswer = AnswerTheQuestionController.addHistory(widget.CodeLesson,widget.IsCorrect,widget.UserCode);
       });
     }else{
       print('object');
@@ -196,9 +203,9 @@ class ScreenState extends State<AnswerTheQuestionScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: List.generate(
-                      listAnswer.length,
+                      answer.length,
                           (index) {
-                        var answer = listAnswer[index];
+                        var item = answer[index];
                         return Padding(
                             padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
                             child: SizedBox(
@@ -213,7 +220,7 @@ class ScreenState extends State<AnswerTheQuestionScreen> {
                                   onPressed: () {
                                     setState(() {
                                       // showSuccessMessage = answer['isTrue'];
-                                      if(answer['isTrue'] == true){
+                                      if(item['isTrue'] == true){
                                         showSuccessMessage = 1;
                                       }else{
                                         showSuccessMessage = 2;
@@ -223,7 +230,7 @@ class ScreenState extends State<AnswerTheQuestionScreen> {
                                   child: Padding(
                                     padding: const EdgeInsets.all(8),
                                     child: Text(
-                                      answer['answer'],
+                                      item['name'],
                                       style: const TextStyle(
                                           color: Colors.white, fontSize: 22),
                                     ),
@@ -290,6 +297,7 @@ class ScreenState extends State<AnswerTheQuestionScreen> {
                               setState(() {
                                 showSuccessMessage = 0;
                               });
+
                               nextQuestion();
                             },
                             child: const Padding(
@@ -306,7 +314,6 @@ class ScreenState extends State<AnswerTheQuestionScreen> {
                           ),
                         ),
                       ),
-
                     ],
                   ),
                 ),
@@ -368,9 +375,9 @@ class ScreenState extends State<AnswerTheQuestionScreen> {
                       Padding(
                         padding: const EdgeInsets.only(top: 5, left: 20),
                         child: Row(
-                          children: listAnswer.where((answer) => answer['isTrue']).map((answer) {
+                          children: answer.where((answers) => answers['isTrue']).map((answer) {
                             return Text(
-                              answer['answer'],
+                              answer['name'],
                               style: const TextStyle(
                                 color: Color.fromRGBO(243, 10, 10, 1),
                                 fontSize: 20,
@@ -393,7 +400,7 @@ class ScreenState extends State<AnswerTheQuestionScreen> {
                               ),
                               onPressed: () {
                                 setState(() {
-                                  showSuccessMessage =0;
+                                  showSuccessMessage = 0;
                                 });
                                 nextQuestion();
                               },
