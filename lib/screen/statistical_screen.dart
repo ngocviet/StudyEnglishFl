@@ -49,7 +49,7 @@ class StatisticalScreen extends StatelessWidget {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => ListVocabularyScreen()),
+                          MaterialPageRoute(builder: (context) => ListVocabularyScreen(codeUser: "viet_1",)),
                         );
                       },
                       child: Row(
@@ -69,7 +69,7 @@ class StatisticalScreen extends StatelessWidget {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => ListVocabularyScreen()),
+                          MaterialPageRoute(builder: (context) => ListVocabularyScreen(codeUser: "viet_1",)),
                         );
                       },
                       child: Row(

@@ -3,13 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_tts/flutter_tts.dart';
-import 'package:project4/model_views/model_list_vocabulary.dart';
-import 'package:project4/models/word.dart';
 import '../controllers/list_vocabulary_controller.dart';
 import 'dart:math' as math;
 
 class ListVocabularyScreen extends StatefulWidget {
-  ListVocabularyScreen({super.key});
+  final String codeUser;
+  ListVocabularyScreen({super.key, required this.codeUser});
 
   @override
   State<ListVocabularyScreen> createState() => _ListVocabularyScreenState();
@@ -32,9 +31,9 @@ class _ListVocabularyScreenState extends State<ListVocabularyScreen> {
 
   void fetchData() async{
     try {
-      final data = await ListVocabularyScreenController.getListWord();
+      final data = await ListVocabularyScreenController.getListWord(widget.codeUser, status);
 
-       final data1  = await ListVocabularyScreenController.totalNumber();
+       final data1  = await ListVocabularyScreenController.infoTotalWord(widget.codeUser);
       setState(() {
         listWord = data;
         totalNumber = data1['totalNumber'];
@@ -44,6 +43,14 @@ class _ListVocabularyScreenState extends State<ListVocabularyScreen> {
     } catch (e) {
       print('Error: $e');
     }
+  }
+
+  void changeTab(int index, bool isRemomerize){
+    setState(() {
+      indexSelected = index;
+      status = isRemomerize;
+    });
+    fetchData();
   }
 
 
@@ -168,23 +175,20 @@ class _ListVocabularyScreenState extends State<ListVocabularyScreen> {
                   child: Row(
                     children: [
                       Expanded(
+                        flex:1,
                         child: GestureDetector(
                             onTap: () {
-                              setState(() {
-                                indexSelected = 0;
-                                status = false;
-                              });
+                              changeTab(0, false);
                             },
                             child: Item(title: 'Tôi đang học $wordsLearned từ', index: 0, indexSelected: indexSelected)
                         ),
+
                       ),
                       Expanded(
+                        flex:1,
                         child: GestureDetector(
                             onTap: () {
-                              setState(() {
-                                indexSelected = 1;
-                                status = true;
-                              });
+                              changeTab(1, true);
                             },
                             child: Item(title: 'Đã học $wordsBeingStudied từ', index: 1, indexSelected: indexSelected)),
                       ),
@@ -287,7 +291,7 @@ class _ListVocabularyScreenState extends State<ListVocabularyScreen> {
                                 ),
                               ),
                             ),
-                            const SizedBox(height: 15), // Khoảng cách giữa các container
+                            const SizedBox(height: 15),
                           ],
                         );
                       },
@@ -362,24 +366,22 @@ class Item extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 600),
-        curve: Curves.easeInOut,
-        width: double.infinity,
-        height: 50,
-        decoration: BoxDecoration(
-            color: index == indexSelected ? const Color.fromRGBO(18, 189, 117, 1.0) : const Color.fromRGBO(90, 90, 90, 1.0),
-            borderRadius: BorderRadius.circular(25)),
-        child: Center(
-            child: Text(
-              title,
-              style: const TextStyle(
-                  fontSize: 17,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold),
-            )),
-      ),
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 400),
+      curve: Curves.easeInOut,
+      width: double.infinity,
+      height: 50,
+      decoration: BoxDecoration(
+          color: index == indexSelected ? const Color.fromRGBO(18, 189, 117, 1.0) : const Color.fromRGBO(90, 90, 90, 1.0),
+          borderRadius: BorderRadius.circular(25)),
+      child: Center(
+          child: Text(
+            title,
+            style: const TextStyle(
+                fontSize: 17,
+                color: Colors.white,
+                fontWeight: FontWeight.bold),
+          )),
     );
   }
 }

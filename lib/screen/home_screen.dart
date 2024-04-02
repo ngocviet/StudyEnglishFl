@@ -47,6 +47,15 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  void chooseTopic(code){
+    if(code != null){
+      setState(() {
+        codeTopic = code;
+      });
+      fetchData();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -179,7 +188,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                           MaterialPageRoute(
                                               builder: (context) =>
                                                   ChooseTopicScreen(codeUser: "viet_1")),
-                                        );
+                                        ).then((value) {
+                                          chooseTopic(value);
+                                        });
                                       },
                                       child: Padding(
                                         padding: const EdgeInsets.all(9),

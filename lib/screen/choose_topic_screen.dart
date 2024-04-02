@@ -246,7 +246,9 @@ class _ChooseTopicScreenState extends State<ChooseTopicScreen> {
                                             MainAxisAlignment.center,
                                             children: [
                                               ElevatedButton(
-                                                  onPressed: () {},
+                                                  onPressed: () {
+                                                    Navigator.pop(context, item['codeTopic']);
+                                                  },
                                                   child: Container(
                                                     width: double.infinity,
                                                     height: 70,
