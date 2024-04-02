@@ -7,10 +7,10 @@ import '../models/answer.dart';
 
 class AnswerTheQuestionScreen extends StatefulWidget {
   final String CodeLesson;
-  final String CodeQuestion;
+  late String CodeQuestion;
   final String UserCode;
   final bool IsCorrect;
-  const AnswerTheQuestionScreen({super.key, required this.CodeLesson, required this.UserCode, required this.IsCorrect, required this.CodeQuestion});
+  AnswerTheQuestionScreen({super.key, required this.CodeLesson, required this.UserCode, required this.IsCorrect, required this.CodeQuestion});
 
   @override
   State<StatefulWidget> createState() {
@@ -34,15 +34,16 @@ class ScreenState extends State<AnswerTheQuestionScreen> {
 
   void fetchData() async {
     try {
-      final dataQuestion = await AnswerTheQuestionController.getDataQuestion(widget.CodeLesson,widget.IsCorrect,widget.UserCode);
+      final dataQuestion = await AnswerTheQuestionController.getDataQuestion(widget.CodeLesson,widget.IsCorrect,widget.UserCode,widget.CodeQuestion);
 
       final dataAnswer = await AnswerTheQuestionController.getDataAnswer(widget.CodeLesson,widget.IsCorrect,widget.UserCode);
       setState(() {
         listAnswer = dataAnswer;
         answer = listAnswer[stt]["answers"];
         listQuestion = dataQuestion;
+        widget.CodeQuestion = dataQuestion[stt]["code"];
+        question= dataQuestion[stt]["question"];
         avatar = dataQuestion[stt]["avatar"];
-        question = dataQuestion[stt]["question"];
       });
     } catch (e) {
       print('Error: screen $e');
@@ -55,11 +56,13 @@ class ScreenState extends State<AnswerTheQuestionScreen> {
         question = listQuestion[stt]['question'];
         avatar = listQuestion[stt]['avatar'];
         answer = listAnswer[stt]["answers"];
-
-        final dataAnswer = AnswerTheQuestionController.addHistory(widget.CodeLesson,widget.IsCorrect,widget.UserCode);
+        widget.CodeQuestion = listQuestion[stt]['code'];
+        final dataAnswer = AnswerTheQuestionController.addHistory(widget.CodeLesson,widget.IsCorrect,widget.UserCode,widget.CodeQuestion);
       });
     }else{
       print('object');
+      // widget.CodeQuestion = listQuestion[stt]['code'];
+      final dataAnswer = AnswerTheQuestionController.addHistory(widget.CodeLesson,widget.IsCorrect,widget.UserCode,widget.CodeQuestion);
     }
   }
   @override
@@ -297,7 +300,6 @@ class ScreenState extends State<AnswerTheQuestionScreen> {
                               setState(() {
                                 showSuccessMessage = 0;
                               });
-
                               nextQuestion();
                             },
                             child: const Padding(
