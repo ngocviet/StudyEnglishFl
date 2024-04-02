@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 class AnswerTheQuestionController{
-  static Future<dynamic> getDataQuestion() async {
+  static Future<List<dynamic>> getDataQuestion() async {
     final response = await http.post(Uri.parse('http://localhost:7183/api/AnswerTheQuestion/GetDataQuestion'), );
     if (response.statusCode == 200) {
       return json.decode(response.body);

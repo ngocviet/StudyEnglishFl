@@ -16,8 +16,9 @@ class AnswerTheQuestionScreen extends StatefulWidget {
 
 class ScreenState extends State<AnswerTheQuestionScreen> {
   List<dynamic> listAnswer = [];
-  String question = '';
-  String avatar = "question.jpg";
+  List<dynamic> listQuestion =[];
+  // String question = '';
+  // String avatar = "question.jpg";
   int showSuccessMessage = 0;
   @override
   void initState() {
@@ -32,8 +33,9 @@ class ScreenState extends State<AnswerTheQuestionScreen> {
       final dataAnswer = await AnswerTheQuestionController.getDataAnswer();
       setState(() {
         listAnswer = dataAnswer;
-        avatar = dataQuestion[0]["avatar"];
-        question = dataQuestion[0]["question"];
+        listQuestion = dataQuestion;
+        // avatar = dataQuestion[0]["avatar"];
+        // question = dataQuestion[0]["question"];
       });
     } catch (e) {
       print('Error: screen $e');
@@ -147,11 +149,11 @@ class ScreenState extends State<AnswerTheQuestionScreen> {
                                         ),
                                       ),
                                     ),
-                                    child: Text(
-                                      question,
+                                    child: const Text(
+                                      "Nguyen quang huong",
                                       overflow: TextOverflow.visible,
                                       maxLines: 3,
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                           color: Colors.white, fontSize: 20),
                                     ),
                                   ),
@@ -161,19 +163,19 @@ class ScreenState extends State<AnswerTheQuestionScreen> {
                           ),
                         ],
                       ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            left: 20, top: 0, bottom: 0, right: 20),
+                        child: Container(
+                          height: 250,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(40),
+                              image: const DecorationImage(
+                                  image: AssetImage('question.jpg'), fit: BoxFit.cover)),
+                        ),
+                      ),
                     ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                      left: 20, top: 0, bottom: 0, right: 20),
-                  child: Container(
-                    height: 250,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(40),
-                        image: DecorationImage(
-                            image: AssetImage(avatar), fit: BoxFit.cover)),
                   ),
                 ),
                 Expanded(

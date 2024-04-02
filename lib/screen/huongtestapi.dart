@@ -10,14 +10,16 @@ import 'package:project4/screen/list_vocabulary_screen.dart';
 import 'answer_the_question_screen.dart';
 import 'combine_sentences_screen.dart';
 import 'learn_word_screen.dart';
+import 'list_lessons_screen.dart';
 
 class huong extends StatelessWidget {
   const huong({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-      // return AnswerTheQuestionScreen();
-      return CombineSentencesScreen();
+      return AnswerTheQuestionScreen();
+      // return CombineSentencesScreen();
+    // return ListLessonsScreen();
     // return const MyHomePage(title: 'huong',);
   }
 }
