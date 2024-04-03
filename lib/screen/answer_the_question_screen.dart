@@ -6,11 +6,9 @@ import '../controllers/answer_the_question_controller.dart';
 import '../models/answer.dart';
 
 class AnswerTheQuestionScreen extends StatefulWidget {
-  final String CodeLesson;
-  late String CodeQuestion;
   final String UserCode;
-  final bool IsCorrect;
-  AnswerTheQuestionScreen({super.key, required this.CodeLesson, required this.UserCode, required this.IsCorrect, required this.CodeQuestion});
+  final String CodeLesson;
+  AnswerTheQuestionScreen({super.key, required this.CodeLesson, required this.UserCode});
 
   @override
   State<StatefulWidget> createState() {
@@ -22,7 +20,8 @@ class ScreenState extends State<AnswerTheQuestionScreen> {
   List<dynamic> listAnswer = [];
   List<dynamic> listQuestion =[];
   int stt =0;
-  String question = '';
+  String question = "";
+  String codeQuestion="";
   String avatar = "question.jpg";
   int showSuccessMessage = 0;
   List<dynamic> answer = [];
@@ -34,14 +33,14 @@ class ScreenState extends State<AnswerTheQuestionScreen> {
 
   void fetchData() async {
     try {
-      final dataQuestion = await AnswerTheQuestionController.getDataQuestion(widget.CodeLesson,widget.IsCorrect,widget.UserCode,widget.CodeQuestion);
+      final dataQuestion = await AnswerTheQuestionController.getDataQuestion(widget.CodeLesson,widget.UserCode);
 
-      final dataAnswer = await AnswerTheQuestionController.getDataAnswer(widget.CodeLesson,widget.IsCorrect,widget.UserCode);
+      final dataAnswer = await AnswerTheQuestionController.getDataAnswer(widget.CodeLesson,widget.UserCode);
       setState(() {
         listAnswer = dataAnswer;
         answer = listAnswer[stt]["answers"];
         listQuestion = dataQuestion;
-        widget.CodeQuestion = dataQuestion[stt]["code"];
+        codeQuestion = dataQuestion[stt]["code"];
         question= dataQuestion[stt]["question"];
         avatar = dataQuestion[stt]["avatar"];
       });
@@ -49,20 +48,18 @@ class ScreenState extends State<AnswerTheQuestionScreen> {
       print('Error: screen $e');
     }
   }
-  void nextQuestion() {
+  void nextQuestion(bool isCorrect) {
+    final dataAnswer = AnswerTheQuestionController.addHistory(widget.CodeLesson,isCorrect,widget.UserCode,codeQuestion);
     stt++;
     if (stt < listQuestion.length) {
       setState(()  {
         question = listQuestion[stt]['question'];
         avatar = listQuestion[stt]['avatar'];
         answer = listAnswer[stt]["answers"];
-        widget.CodeQuestion = listQuestion[stt]['code'];
-        final dataAnswer = AnswerTheQuestionController.addHistory(widget.CodeLesson,widget.IsCorrect,widget.UserCode,widget.CodeQuestion);
+        codeQuestion = listQuestion[stt]['code'];
       });
     }else{
       print('object');
-      // widget.CodeQuestion = listQuestion[stt]['code'];
-      final dataAnswer = AnswerTheQuestionController.addHistory(widget.CodeLesson,widget.IsCorrect,widget.UserCode,widget.CodeQuestion);
     }
   }
   @override
@@ -70,65 +67,47 @@ class ScreenState extends State<AnswerTheQuestionScreen> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: const Icon(Icons.close),
           onPressed: () {
             Navigator.pop(context);
           },
-          color: Colors.white,
+          color: const Color.fromRGBO(158, 182, 203, 1.0),
+          iconSize: 40,
         ),
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: const Color.fromRGBO(75, 75, 75, 1),
-              ),
-              height: 15,
-              width: 250,
-            ),
-            const SizedBox(
-              width: 15,
-            ),
-            Container(
-              decoration: const BoxDecoration(
-                color: Color.fromRGBO(75, 75, 75, 1),
-                shape: BoxShape.circle,
-              ),
-              height: 40,
-              width: 40,
-              child: const Center(
-                  child: Text(
-                    '0',
-                    style: TextStyle(color: Colors.white),
-                  )),
-            )
-          ],
+        title: Padding(
+          padding: const EdgeInsets.only(right: 10),
+          child: Stack(
+              children: [
+                Container(
+                  width: double.infinity,
+                  height: 18,
+                  decoration: BoxDecoration(
+                      color: const Color.fromRGBO(197, 206, 215, 1.0),
+                      borderRadius: BorderRadius.circular(9)
+                  ),
+                ),
+                Container(
+                  width: 100,
+                  height: 18,
+                  decoration: BoxDecoration(
+                      color: const Color.fromRGBO(33, 197, 41, 1.0),
+                      borderRadius: BorderRadius.circular(9)
+                  ),
+                ),
+              ]
+          ),
         ),
         flexibleSpace: Container(
           decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Color.fromRGBO(30, 30, 30, 54),
-                Colors.black87
-              ], // Màu sắc cho gradient
-            ),
+            color: Color.fromRGBO(2, 33, 47, 1.0),
           ),
         ),
       ),
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-              image: const AssetImage('giaodien3.jpg'),
-              fit: BoxFit.cover,
-              colorFilter: ColorFilter.mode(
-                Colors.black.withOpacity(0.4),
-                BlendMode.darken,
-              )),
+        decoration: const BoxDecoration(
+          color: Color.fromRGBO(2, 33, 47, 1.0),
         ),
         child: Stack(
           // fit: StackFit.expand,
@@ -300,7 +279,7 @@ class ScreenState extends State<AnswerTheQuestionScreen> {
                               setState(() {
                                 showSuccessMessage = 0;
                               });
-                              nextQuestion();
+                              nextQuestion(true);
                             },
                             child: const Padding(
                               padding: EdgeInsets.all(10),
@@ -404,7 +383,7 @@ class ScreenState extends State<AnswerTheQuestionScreen> {
                                 setState(() {
                                   showSuccessMessage = 0;
                                 });
-                                nextQuestion();
+                                nextQuestion(false);
                               },
                               child: const Padding(
                                 padding: EdgeInsets.all(10),
