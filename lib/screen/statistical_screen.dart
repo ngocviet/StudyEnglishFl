@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:project4/controllers/statistical_controller.dart';
+import 'package:project4/screen/list_lessons_screen.dart';
 import 'package:project4/screen/list_vocabulary_screen.dart';
 import '../model_views/model_statistical.dart';
 
@@ -28,7 +29,7 @@ class _StatisticalScreenState extends State<StatisticalScreen> {
     fetchData();
   }
 
-  void fetchData() async{
+  void fetchData() async {
     try {
       final data = await StatisticalController.getInfoData("viet_1");
 
@@ -68,7 +69,7 @@ class _StatisticalScreenState extends State<StatisticalScreen> {
         ),
         flexibleSpace: Container(
           decoration:
-          const BoxDecoration(color: Color.fromRGBO(50, 50, 50, 1.0)),
+              const BoxDecoration(color: Color.fromRGBO(50, 50, 50, 1.0)),
         ),
       ),
       body: Column(
@@ -86,7 +87,10 @@ class _StatisticalScreenState extends State<StatisticalScreen> {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => ListVocabularyScreen(codeUser: "viet_1",)),
+                          MaterialPageRoute(
+                              builder: (context) => ListVocabularyScreen(
+                                    codeUser: "viet_1",
+                                  )),
                         );
                       },
                       child: Row(
@@ -106,7 +110,10 @@ class _StatisticalScreenState extends State<StatisticalScreen> {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => ListVocabularyScreen(codeUser: "viet_1",)),
+                          MaterialPageRoute(
+                              builder: (context) => const ListLessonsScreen(
+                                    codeUser: "viet_1",
+                                  )),
                         );
                       },
                       child: Row(
@@ -152,48 +159,73 @@ class _StatisticalScreenState extends State<StatisticalScreen> {
                                 flex: 3,
                                 child: Padding(
                                   padding:
-                                  const EdgeInsets.fromLTRB(0, 20, 00, 10),
+                                      const EdgeInsets.fromLTRB(0, 20, 00, 10),
                                   child: Row(
                                     children: [
                                       Expanded(
-                                          child: Container(
-                                            height: double.infinity,
-                                            decoration: BoxDecoration(
-                                                color: const Color.fromRGBO(
-                                                    45, 45, 45, 1.0),
-                                                borderRadius:
-                                                BorderRadius.circular(30)),
-                                            child: Center(
-                                              child: Text(
-                                                '$totalWord từ',
-                                                style: const TextStyle(
-                                                    fontSize: 18,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.white,
-                                                    fontStyle: FontStyle.italic),
-                                              ),
+                                          child: GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    ListVocabularyScreen(
+                                                      codeUser: "viet_1",
+                                                    )),
+                                          );
+                                        },
+                                        child: Container(
+                                          height: double.infinity,
+                                          decoration: BoxDecoration(
+                                              color: const Color.fromRGBO(
+                                                  45, 45, 45, 1.0),
+                                              borderRadius:
+                                                  BorderRadius.circular(30)),
+                                          child: Center(
+                                            child: Text(
+                                              '$totalWord từ',
+                                              style: const TextStyle(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.white,
+                                                  fontStyle: FontStyle.italic),
                                             ),
-                                          )),
+                                          ),
+                                        ),
+                                      )),
                                       const SizedBox(width: 20),
                                       Expanded(
-                                          child: Container(
-                                            height: double.infinity,
-                                            decoration: BoxDecoration(
-                                                color: const Color.fromRGBO(
-                                                    45, 45, 45, 1.0),
-                                                borderRadius:
-                                                BorderRadius.circular(30)),
-                                            child: Center(
-                                              child: Text(
-                                                '$totalQuestion câu hỏi',
-                                                style: const TextStyle(
-                                                    fontSize: 18,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.white,
-                                                    fontStyle: FontStyle.italic),
-                                              ),
+                                          child: GestureDetector(
+                                              child: GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const ListLessonsScreen(
+                                                      codeUser: "viet_1",
+                                                    )),
+                                          );
+                                        },
+                                        child: Container(
+                                          height: double.infinity,
+                                          decoration: BoxDecoration(
+                                              color: const Color.fromRGBO(
+                                                  45, 45, 45, 1.0),
+                                              borderRadius:
+                                                  BorderRadius.circular(30)),
+                                          child: Center(
+                                            child: Text(
+                                              '$totalQuestion câu hỏi',
+                                              style: const TextStyle(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.white,
+                                                  fontStyle: FontStyle.italic),
                                             ),
-                                          ))
+                                          ),
+                                        ),
+                                      )))
                                     ],
                                   ),
                                 ))
@@ -248,15 +280,27 @@ class _StatisticalScreenState extends State<StatisticalScreen> {
                                   children: [
                                     Item3(
                                         total: totalNewWord,
-                                        status: totalNewWord > 10 ? 'Tuyệt' : totalNewWord > 0 ? 'Tốt' : '...',
+                                        status: totalNewWord > 10
+                                            ? 'Tuyệt'
+                                            : totalNewWord > 0
+                                                ? 'Tốt'
+                                                : '...',
                                         title: 'Từ mới đã học'),
                                     Item3(
                                         total: totalNewQues,
-                                        status: totalNewQues > 10 ? 'Tuyệt' : totalNewQues > 0 ? 'Tốt' : '...',
+                                        status: totalNewQues > 10
+                                            ? 'Tuyệt'
+                                            : totalNewQues > 0
+                                                ? 'Tốt'
+                                                : '...',
                                         title: 'Bài tập đã làm'),
                                     Item3(
                                         total: totalOldWord,
-                                        status: totalOldWord > 10 ? 'Tuyệt' : totalOldWord > 0 ? 'Tốt' : '...',
+                                        status: totalOldWord > 10
+                                            ? 'Tuyệt'
+                                            : totalOldWord > 0
+                                                ? 'Tốt'
+                                                : '...',
                                         title: 'Từ đã ôn'),
                                   ],
                                 ),
@@ -377,9 +421,9 @@ class Item3 extends StatelessWidget {
 
   const Item3(
       {super.key,
-        required this.total,
-        required this.status,
-        required this.title});
+      required this.total,
+      required this.status,
+      required this.title});
 
   @override
   Widget build(BuildContext context) {

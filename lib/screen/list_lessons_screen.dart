@@ -1,9 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import '../controllers/list_lesson.controller.dart';
 
 class ListLessonsScreen extends StatefulWidget {
+  final codeUser;
+
+  const ListLessonsScreen({super.key, this.codeUser});
   @override
   State<StatefulWidget> createState() {
     return ViewListLesson();
@@ -21,7 +25,9 @@ class ViewListLesson extends State<ListLessonsScreen> {
   void fetchData() async {
     try {
       final data = await ListLesson.getListLesson();
-      listLesson = data;
+      setState(() {
+        listLesson = data;
+      });
     } catch (e) {
       print('Error: $e');
     }
@@ -86,6 +92,7 @@ class ViewListLesson extends State<ListLessonsScreen> {
           ),
           child: Column(
             children: [
+              SizedBox(height: 20,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -137,66 +144,89 @@ class ViewListLesson extends State<ListLessonsScreen> {
                   ),
                 ],
               ),
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Cùng nhau ôn lại bài nhé',
-                    style: TextStyle(color: Colors.white, fontSize: 20),
-                  )
-                ],
+              const Padding(
+                padding: EdgeInsets.only(top: 15, bottom: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Cùng nhau ôn lại bài nhé',
+                      style: TextStyle(color: Colors.white, fontSize: 20),
+                    )
+                  ],
+                ),
               ),
               Expanded(
                 child: ListView.builder(
                   physics: const BouncingScrollPhysics(),
                   itemCount: listLesson.length,
-                  itemBuilder: (BuildContext context, int index) {
+                  itemBuilder: (context, index) {
                     var lesson = listLesson[index];
-                    return GestureDetector(
-                      onTap: () {},
-                      child: Column(
-                        children: [
-                          Padding(
-                              padding: const EdgeInsets.only(
-                                  right: 20, left: 20, top: 20),
+                    return Stack(
+                      children: [
+                        Align(
+                          alignment: Alignment.center,
+                          child: Padding(
+                              padding: const EdgeInsets.only(right: 20, left: 20, top: 30),
                               child: ElevatedButton(
                                 onPressed: () {},
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor:
                                       const Color.fromRGBO(75, 75, 75, 1),
-                                  // padding: EdgeInsets
-                                  //     .zero, // Xác định padding của nút
-                                  minimumSize: const Size(double.infinity,
-                                      80),
+                                  // minimumSize: const Size(double.infinity,0),
                                   shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(
-                                        8),
+                                    borderRadius: BorderRadius.circular(10),
                                   ),
                                 ),
-                                child: Row(
-                                   // mainAxisAlignment:MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    const Padding(
-                                      padding: EdgeInsets.only(left: 10, right: 10),
-                                      child: Text(
-                                        'Bài số 1: ',
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(0, 20, 0, 20),
+                                  child: Row(
+                                    children: [
+                                      const Text(
+                                        'Bài 1 :  ',
                                         style: TextStyle(
-                                            fontSize: 20,
-                                            color: Colors.white),
+                                            fontSize: 20, color: Colors.white),
                                       ),
-                                    ),
-                                    Text(
-                                      lesson['name'],
-                                      style: const TextStyle(
-                                          fontSize: 20,
-                                          color: Colors.white),
-                                    ),
-                                  ],
+                                      Expanded(
+                                        flex: 1,
+                                        child: Text(
+                                          lesson['name'],
+                                          style: const TextStyle(
+                                              fontSize: 20, color: Colors.white),
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               )),
-                        ],
-                      ),
+                        ),
+                        Positioned(
+                          top: 15,
+                          right: 15,
+                            child: Container(
+                              width: 28,
+                              height: 28,
+                              decoration: BoxDecoration(
+                                color: const Color.fromRGBO(29, 106, 122, 1.0),
+                                borderRadius: BorderRadius.circular(14),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  '2',
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.white
+                                  ),
+                                ),
+                              ),
+                            ),
+                        )
+                      ],
                     );
+                    // return Text('data',style: TextStyle(color: Colors.white),);
                   },
                 ),
               )

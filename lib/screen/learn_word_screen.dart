@@ -6,8 +6,7 @@ import 'package:project4/controllers/learn_word_controller.dart';
 
 class LearnWordScreen extends StatefulWidget {
   final String codeLesson;
-  final int stt;
-  LearnWordScreen({super.key, required this.codeLesson, required this.stt});
+  LearnWordScreen({super.key, required this.codeLesson});
 
   @override
   State<StatefulWidget> createState() {
@@ -20,6 +19,7 @@ class ViewScreen extends State<LearnWordScreen> {
   late String nameVN = "";
   late String avatar = "default.jpg";
   List<dynamic> listAnswer = [];
+  int stt = 0;
   @override
   void initState() {
     super.initState();
@@ -28,23 +28,30 @@ class ViewScreen extends State<LearnWordScreen> {
 
   void fetchData() async {
     try {
-      final data = await learnWordController.getDataQuestion(
-          widget.codeLesson, widget.stt);
+      final data = await learnWordController.getDataQuestion(widget.codeLesson);
 
       setState(() {
-        nameEN = data['nameEN'];
-        // nameVN = data['nameVN'];
-        listAnswer = data['listAnswer'];
+        nameEN = data[stt]['nameEN'];
+        listAnswer = data[stt]['listAnswer'];
       });
-      bool isExists = await doesAssetExist('assets/${data['avatar']}');
+      bool isExists = await doesAssetExist('assets/${data[stt]['avatar']}');
       if (isExists) {
         setState(() {
-          avatar = data['avatar'];
+          avatar = data[stt]['avatar'];
+        });
+      }else{
+        setState(() {
+          avatar = "default.jpg";
         });
       }
     } catch (e) {
       print('Error: $e');
     }
+  }
+
+  void next(){
+    stt++;
+    fetchData();
   }
 
   @override
@@ -232,6 +239,7 @@ class ViewScreen extends State<LearnWordScreen> {
                             ),
                           ),
                           onPressed: () {
+                            next();
                           },
                           child: const Padding(
                             padding: EdgeInsets.all(12),
