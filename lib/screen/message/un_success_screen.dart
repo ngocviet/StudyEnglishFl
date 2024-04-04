@@ -75,7 +75,7 @@ class _UnSuccessScreenState extends State<UnSuccessScreen> {
               ]),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
+              padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
               child: SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(

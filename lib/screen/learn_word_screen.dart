@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:project4/controllers/learn_word_controller.dart';
 import 'package:project4/screen/message/message_next_title_screen.dart';
+import 'package:project4/screen/message/message_out_screen.dart';
 import 'package:project4/screen/message/success_screen.dart';
 import 'package:project4/screen/message/un_success_screen.dart';
 
@@ -113,6 +114,15 @@ class ViewScreen extends State<LearnWordScreen> {
     }
   }
 
+  void outScreen(bool status) {
+    setState(() {
+      showMessage = 4;
+    });
+    if(status){
+      Navigator.pop(context);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -120,7 +130,7 @@ class ViewScreen extends State<LearnWordScreen> {
         leading: IconButton(
           icon: const Icon(Icons.close),
           onPressed: () {
-            Navigator.pop(context);
+            outScreen(false);
           },
           color: const Color.fromRGBO(158, 182, 203, 1.0),
           iconSize: 40,
@@ -201,196 +211,219 @@ class ViewScreen extends State<LearnWordScreen> {
           ),
         ),
       ),
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        decoration: const BoxDecoration(
-          color: Color.fromRGBO(2, 33, 47, 1.0),
-        ),
-        child: Stack(children: [
-          Column(
-            children: [
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+      body: Stack(
+        children: [
+          Container(
+            width: double.infinity,
+            height: double.infinity,
+            decoration: const BoxDecoration(
+              color: Color.fromRGBO(2, 33, 47, 1.0),
+            ),
+            child: Stack(children: [
+              Column(
                 children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 20),
-                    child: Text(
-                      'Chọn bản dịch đúng',
-                      style: TextStyle(
-                          fontSize: 24,
-                          color: Colors.grey,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Stack(
-                      clipBehavior: Clip.none,
-                      children: [
-                        IconButton(
-                          icon: const Icon(
-                            Icons.messenger_outline_sharp,
-                            size: 70,
-                            color: Color.fromRGBO(82, 79, 79, 1.0),
-                          ),
-                          onPressed: () {
-                            null;
-                          },
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(left: 20),
+                        child: Text(
+                          'Chọn bản dịch đúng',
+                          style: TextStyle(
+                              fontSize: 24,
+                              color: Colors.grey,
+                              fontWeight: FontWeight.bold),
                         ),
-                        Positioned(
-                          top: 14,
-                          left: 40,
-                          child: Container(
-                            padding: const EdgeInsets.only(
-                                top: 3, bottom: 2, right: 20),
-                            decoration: const BoxDecoration(
-                                color: Color.fromRGBO(2, 33, 47, 1.0),
-                                border: Border(
-                                  bottom: BorderSide(
-                                    color: Color.fromRGBO(82, 79, 79, 1.0),
-                                    width: 5,
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Stack(
+                          clipBehavior: Clip.none,
+                          children: [
+                            IconButton(
+                              icon: const Icon(
+                                Icons.messenger_outline_sharp,
+                                size: 70,
+                                color: Color.fromRGBO(82, 79, 79, 1.0),
+                              ),
+                              onPressed: () {
+                                null;
+                              },
+                            ),
+                            Positioned(
+                              top: 14,
+                              left: 40,
+                              child: Container(
+                                padding: const EdgeInsets.only(
+                                    top: 3, bottom: 2, right: 20),
+                                decoration: const BoxDecoration(
+                                    color: Color.fromRGBO(2, 33, 47, 1.0),
+                                    border: Border(
+                                      bottom: BorderSide(
+                                        color: Color.fromRGBO(82, 79, 79, 1.0),
+                                        width: 5,
+                                      ),
+                                      top: BorderSide(
+                                        color: Color.fromRGBO(79, 79, 79, 1.0),
+                                        width: 5,
+                                      ),
+                                      right: BorderSide(
+                                        color: Color.fromRGBO(79, 79, 79, 1.0),
+                                        width: 5,
+                                      ),
+                                    )),
+                                child: Text(
+                                  nameEN,
+                                  style: const TextStyle(
+                                    fontSize: 22,
+                                    color: Colors.white,
                                   ),
-                                  top: BorderSide(
-                                    color: Color.fromRGBO(79, 79, 79, 1.0),
-                                    width: 5,
-                                  ),
-                                  right: BorderSide(
-                                    color: Color.fromRGBO(79, 79, 79, 1.0),
-                                    width: 5,
-                                  ),
-                                )),
-                            child: Text(
-                              nameEN,
-                              style: const TextStyle(
-                                fontSize: 22,
-                                color: Colors.white,
+                                ),
                               ),
                             ),
-                          ),
+                          ],
                         ),
                       ],
                     ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(
-                    left: 20, top: 0, bottom: 40, right: 20),
-                child: Container(
-                  height: 250,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(40),
-                    image: DecorationImage(
-                        image: AssetImage(avatar), fit: BoxFit.cover),
                   ),
-                ),
-              ),
-              Expanded(
-                flex: 1,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Expanded(
-                      flex: 1,
-                      child: ListView.builder(
-                        itemCount: listAnswer.length,
-                        // reverse: true,
-                        itemBuilder: (context, index) {
-                          var answer = listAnswer[index];
-                          return Padding(
-                            padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        left: 20, top: 0, bottom: 40, right: 20),
+                    child: Container(
+                      height: 250,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(40),
+                        image: DecorationImage(
+                            image: AssetImage(avatar), fit: BoxFit.cover),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: ListView.builder(
+                            itemCount: listAnswer.length,
+                            // reverse: true,
+                            itemBuilder: (context, index) {
+                              var answer = listAnswer[index];
+                              return Padding(
+                                padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
+                                child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor:
+                                          const Color.fromRGBO(75, 75, 75, 0),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(20)),
+                                      side: BorderSide(
+                                          color: !answer['isChoose']
+                                              ? const Color.fromRGBO(
+                                                  90, 104, 129, 1.0)
+                                              : const Color.fromRGBO(
+                                                  75, 199, 84, 1.0),
+                                          width: 3),
+                                    ),
+                                    onPressed: () {
+                                      if (showMessage == 0) {
+                                        chooseAnswer(index);
+                                      }
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(12),
+                                      child: Text(
+                                        answer['nameVN'],
+                                        style: const TextStyle(
+                                            color: Colors.white, fontSize: 22),
+                                      ),
+                                    )),
+                              );
+                            },
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(30),
+                          child: SizedBox(
+                            width: double.infinity,
                             child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor:
-                                      const Color.fromRGBO(75, 75, 75, 0),
+                                  backgroundColor: !canSubmit
+                                      ? const Color.fromRGBO(94, 94, 94, 1.0)
+                                      : const Color.fromRGBO(67, 203, 47, 1.0),
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(20)),
-                                  side: BorderSide(
-                                      color: !answer['isChoose']
-                                          ? const Color.fromRGBO(
-                                              90, 104, 129, 1.0)
-                                          : const Color.fromRGBO(
-                                              75, 199, 84, 1.0),
-                                      width: 3),
                                 ),
                                 onPressed: () {
-                                  if (showMessage == 0) {
-                                    chooseAnswer(index);
+                                  if (canSubmit) {
+                                    checkAnswer();
                                   }
                                 },
                                 child: Padding(
                                   padding: const EdgeInsets.all(12),
                                   child: Text(
-                                    answer['nameVN'],
-                                    style: const TextStyle(
-                                        color: Colors.white, fontSize: 22),
+                                    'Kiểm tra',
+                                    style: TextStyle(
+                                        color: !canSubmit
+                                            ? const Color.fromRGBO(
+                                                134, 134, 134, 1.0)
+                                            : Colors.black,
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.bold),
                                   ),
                                 )),
-                          );
-                        },
-                      ),
+                          ),
+                        ),
+                      ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(30),
-                      child: SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: !canSubmit
-                                  ? const Color.fromRGBO(94, 94, 94, 1.0)
-                                  : const Color.fromRGBO(67, 203, 47, 1.0),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20)),
-                            ),
-                            onPressed: () {
-                              if (canSubmit) {
-                                checkAnswer();
-                              }
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.all(12),
-                              child: Text(
-                                'Kiểm tra',
-                                style: TextStyle(
-                                    color: !canSubmit
-                                        ? const Color.fromRGBO(
-                                            134, 134, 134, 1.0)
-                                        : Colors.black,
-                                    fontSize: 22,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            )),
-                      ),
-                    ),
-                  ],
-                ),
-              )
-            ],
-          ),
-          if (showMessage == 1)
-            SuccessScreen(onTap: () {
-              next();
-            }),
-          if (showMessage == 2)
-            UnSuccessScreen(
-                onTap: () {
+                  )
+                ],
+              ),
+              if (showMessage == 1)
+                SuccessScreen(onTap: () {
                   next();
-                },
-                answer: answerCorrect),
+                }),
+              if (showMessage == 2)
+                UnSuccessScreen(
+                    onTap: () {
+                      next();
+                    },
+                    answer: answerCorrect),
+
+            ]),
+          ),
+          if (showMessage == 4 || showMessage == 3)
+            Container(
+              width: double.infinity,
+              height: double.infinity,
+              color: const Color.fromRGBO(59, 59, 59, 0.4),
+            ),
           if (showMessage == 3)
             MessageNextTitleScreen(
-                onTap: () {
-                  Navigator.pop(context, 0);
-                },
-                title: "Học từ vựng!",),
-        ]),
+              onTap: () {
+                Navigator.pop(context, 0);
+              },
+              title: "Học từ vựng!",
+            ),
+          if (showMessage == 4)
+            MessageOutScreen(
+              onTapExit: () {
+                Navigator.pop(context);
+              },
+              onTapContinue: (){
+                setState(() {
+                  showMessage = 0;
+                });
+              },
+            ),
+        ],
       ),
     );
   }

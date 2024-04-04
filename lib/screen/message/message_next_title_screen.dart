@@ -30,7 +30,7 @@ class _MessageNextTitleScreenState extends State<MessageNextTitleScreen> {
                     height: 30,
                     width: 30,
                     decoration: const BoxDecoration(
-                      color: Color.fromRGBO(19, 243, 19, 1),
+                      color: Color.fromRGBO(19, 157, 243, 1.0),
                       shape: BoxShape
                           .circle, // Hình dạng của icon là hình tròn
                     ),
@@ -44,7 +44,7 @@ class _MessageNextTitleScreenState extends State<MessageNextTitleScreen> {
                       width: 15), // Khoảng cách giữa icon và text
                   Text('Bạn đã hoàn thành phần ${widget.title}',
                       style: const TextStyle(
-                          color: Color.fromRGBO(25, 227, 40, 1.0),
+                          color: Color.fromRGBO(19, 157, 243, 1.0),
                           fontSize: 20,
                           fontWeight: FontWeight.bold)), // Text
                 ],
@@ -59,7 +59,7 @@ class _MessageNextTitleScreenState extends State<MessageNextTitleScreen> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    backgroundColor: const Color.fromRGBO(19, 243, 19, 1),
+                    backgroundColor: const Color.fromRGBO(19, 157, 243, 1.0),
                   ),
                   onPressed: () {
                     widget.onTap();
@@ -71,6 +71,7 @@ class _MessageNextTitleScreenState extends State<MessageNextTitleScreen> {
                       style: TextStyle(
                         color: Color.fromRGBO(9, 21, 9, 1),
                         fontSize: 24,
+                        fontWeight: FontWeight.bold
                       ),
                       textAlign: TextAlign.center,
                     ),
