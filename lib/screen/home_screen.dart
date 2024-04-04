@@ -289,7 +289,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               icon: Icon(
                                                 statusStar[0]
                                                     ? Icons.star_purple500_sharp
-                                                    : Icons.star_border_rounded,
+                                                    : Icons.star_outline,
                                                 size: 75,
                                                 color: statusStar[0]
                                                     ? Colors.yellow
@@ -308,7 +308,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               icon: Icon(
                                                 statusStar[1]
                                                     ? Icons.star_purple500_sharp
-                                                    : Icons.star_border_rounded,
+                                                    : Icons.star_outline,
                                                 size: 75,
                                                 color: statusStar[1]
                                                     ? Colors.yellow

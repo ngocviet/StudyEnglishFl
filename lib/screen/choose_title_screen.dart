@@ -2,7 +2,6 @@ import 'dart:js_util';
 
 import 'package:flutter/material.dart';
 import 'package:project4/controllers/choose_title_controller.dart';
-import 'package:project4/model_views/model_choose_title.dart';
 import 'package:project4/screen/answer_the_question_screen.dart';
 import 'package:project4/screen/combine_sentences_screen.dart';
 import 'package:project4/screen/learn_word_screen.dart';
@@ -11,7 +10,11 @@ class ChooseTitleScreen extends StatefulWidget {
   final String codeLesson;
   final String sttLesson;
   final String title;
-  const ChooseTitleScreen({super.key, required this.codeLesson, required this.sttLesson, required this.title});
+  const ChooseTitleScreen(
+      {super.key,
+      required this.codeLesson,
+      required this.sttLesson,
+      required this.title});
 
   @override
   State<ChooseTitleScreen> createState() => _ChooseTitleScreenState();
@@ -21,6 +24,7 @@ class _ChooseTitleScreenState extends State<ChooseTitleScreen> {
   int totalWord = 0;
   int totalQuestion = 0;
   int totalPuzzle = 0;
+  List<bool> isComplete = [false, false, false];
 
   @override
   void initState() {
@@ -28,7 +32,7 @@ class _ChooseTitleScreenState extends State<ChooseTitleScreen> {
     fetchData();
   }
 
-  void fetchData() async{
+  void fetchData() async {
     try {
       final rs = await ChooseTileController.getDataFromApi(widget.codeLesson);
 
@@ -42,6 +46,11 @@ class _ChooseTitleScreenState extends State<ChooseTitleScreen> {
     }
   }
 
+  void changeStatusItem(int index) {
+    setState(() {
+      isComplete[index] = true;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,8 +79,8 @@ class _ChooseTitleScreenState extends State<ChooseTitleScreen> {
               height: 50,
               decoration: const BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage('htv_preview_rev_1.png'),
-                    fit: BoxFit.contain,
+                  image: AssetImage('htv_preview_rev_1.png'),
+                  fit: BoxFit.contain,
                 ),
               ),
             ),
@@ -98,7 +107,7 @@ class _ChooseTitleScreenState extends State<ChooseTitleScreen> {
             image: const AssetImage('giaodien2.jpg'),
             fit: BoxFit.cover,
             colorFilter: ColorFilter.mode(
-              Colors.black.withOpacity(0.5),
+              Colors.black.withOpacity(0.6),
               BlendMode.darken,
             ),
           ),
@@ -113,7 +122,8 @@ class _ChooseTitleScreenState extends State<ChooseTitleScreen> {
                     children: [
                       Text(
                         widget.sttLesson,
-                        style: const TextStyle(color: Colors.amber, fontSize: 20),
+                        style:
+                            const TextStyle(color: Colors.amber, fontSize: 20),
                       )
                     ],
                   ),
@@ -123,7 +133,8 @@ class _ChooseTitleScreenState extends State<ChooseTitleScreen> {
                         padding: const EdgeInsets.only(top: 10),
                         child: Text(
                           widget.title,
-                          style: const TextStyle(color: Colors.white, fontSize: 20),
+                          style: const TextStyle(
+                              color: Colors.white, fontSize: 20),
                         ),
                       )
                     ],
@@ -133,44 +144,58 @@ class _ChooseTitleScreenState extends State<ChooseTitleScreen> {
             ),
             const SizedBox(height: 50),
             GestureDetector(
-              onTap: (){
+              onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => LearnWordScreen(codeLesson: widget.codeLesson)),
-                );
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          LearnWordScreen(codeLesson: widget.codeLesson)),
+                ).then((index) {
+                  changeStatusItem(index);
+                });
               },
               child: Item(
                 imageUrl: 'abc1.jpg',
                 title: 'Học từ vựng',
                 total: totalWord,
+                isComplete: isComplete[0],
               ),
             ),
             const SizedBox(height: 50),
             GestureDetector(
-              onTap: (){
+              onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => AnswerTheQuestionScreen(CodeLesson: widget.codeLesson, UserCode: "")),
-                );
+                  MaterialPageRoute(
+                      builder: (context) => AnswerTheQuestionScreen(
+                          CodeLesson: widget.codeLesson, UserCode: "")),
+                ).then((index) {
+                  changeStatusItem(index);
+                });
               },
               child: Item(
                 imageUrl: 'hoicham2.png',
                 title: 'Trả lời câu hỏi',
                 total: totalQuestion,
+                isComplete: isComplete[1],
               ),
             ),
             const SizedBox(height: 50),
             GestureDetector(
-              onTap: (){
+              onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => CombineSentencesScreen()),
-                );
+                  MaterialPageRoute(
+                      builder: (context) => CombineSentencesScreen()),
+                ).then((index) {
+                  changeStatusItem(index);
+                });
               },
               child: Item(
                 imageUrl: 'ghepcau1.jpg',
                 title: 'Ghép câu có ý nghĩa',
                 total: totalPuzzle,
+                isComplete: isComplete[2],
               ),
             ),
           ],
@@ -180,17 +205,18 @@ class _ChooseTitleScreenState extends State<ChooseTitleScreen> {
   }
 }
 
-
 class Item extends StatelessWidget {
   final String imageUrl;
   final String title;
   final int total;
+  final bool isComplete;
 
   const Item({
     super.key,
     required this.imageUrl,
     required this.title,
     required this.total,
+    required this.isComplete,
   });
 
   @override
@@ -199,9 +225,13 @@ class Item extends StatelessWidget {
       width: 370,
       height: 150,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        color: Colors.grey,
-      ),
+          borderRadius: BorderRadius.circular(20),
+          color: const Color.fromRGBO(143, 138, 138, 0.5),
+          border: Border.all(
+              color: isComplete
+                  ? const Color.fromRGBO(99, 197, 106, 1.0)
+                  : const Color.fromRGBO(143, 138, 138, 1.0),
+              width: 2)),
       child: Column(
         children: [
           Padding(
@@ -244,7 +274,9 @@ class Item extends StatelessWidget {
                     width: 40,
                     height: 40,
                     decoration: BoxDecoration(
-                      color: Colors.red,
+                      color: isComplete
+                          ? const Color.fromRGBO(99, 197, 106, 1.0)
+                          : const Color.fromRGBO(229, 62, 85, 1.0),
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Center(
@@ -253,6 +285,7 @@ class Item extends StatelessWidget {
                         style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
+                          color: Colors.white
                         ),
                       ),
                     ),
