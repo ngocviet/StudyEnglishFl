@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-class ProileScreen extends StatefulWidget {
-  const ProileScreen({super.key});
+class ProFileScreen extends StatefulWidget {
+  const ProFileScreen({super.key});
 
   @override
   State<StatefulWidget> createState() {
@@ -11,7 +11,7 @@ class ProileScreen extends StatefulWidget {
   }
 }
 
-class ViewProFile extends State<ProileScreen> {
+class ViewProFile extends State<ProFileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -21,7 +21,7 @@ class _NavScreenState extends State<NavScreen> {
   final List<Widget> _screens = [
     HomeScreen(),
     StatisticalScreen(),
-    ProileScreen(),
+    ProFileScreen(),
     // huong(),
     // Thuong(),
     // AccountAdmin(),
