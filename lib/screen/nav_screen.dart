@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project4/screen/home_screen.dart';
 import 'package:project4/screen/list_vocabulary_screen.dart';
+import 'package:project4/screen/proflie_screen.dart';
 import 'package:project4/screen/statistical_screen.dart';
 import 'package:project4/screen/thuong.dart';
 import 'package:project4/screen_admin/answer_admin.dart';
@@ -20,7 +21,7 @@ class _NavScreenState extends State<NavScreen> {
   final List<Widget> _screens = [
     HomeScreen(),
     StatisticalScreen(),
-    Scaffold(),
+    ProileScreen(),
     // huong(),
     // Thuong(),
     // AccountAdmin(),
