@@ -50,7 +50,7 @@ class _SuccessScreenState extends State<SuccessScreen> {
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(20,30,20,30),
-              child: Container(
+              child: SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(

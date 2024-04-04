@@ -47,9 +47,11 @@ class _ChooseTitleScreenState extends State<ChooseTitleScreen> {
   }
 
   void changeStatusItem(int index) {
-    setState(() {
-      isComplete[index] = true;
-    });
+    if(index != null){
+      setState(() {
+        isComplete[index] = true;
+      });
+    }
   }
 
   @override
@@ -183,13 +185,15 @@ class _ChooseTitleScreenState extends State<ChooseTitleScreen> {
             const SizedBox(height: 50),
             GestureDetector(
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => CombineSentencesScreen()),
-                ).then((index) {
-                  changeStatusItem(index);
-                });
+                if (totalPuzzle > 0) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => CombineSentencesScreen()),
+                  ).then((index) {
+                    changeStatusItem(index);
+                  });
+                }
               },
               child: Item(
                 imageUrl: 'ghepcau1.jpg',
@@ -221,81 +225,106 @@ class Item extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 370,
-      height: 150,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          color: const Color.fromRGBO(143, 138, 138, 0.5),
-          border: Border.all(
-              color: isComplete
-                  ? const Color.fromRGBO(99, 197, 106, 1.0)
-                  : const Color.fromRGBO(143, 138, 138, 1.0),
-              width: 2)),
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(20, 8, 0, 8),
-            child: Stack(
-              clipBehavior: Clip.none,
-              children: [
-                Align(
-                  alignment: Alignment.center,
-                  child: Row(
-                    children: [
-                      Container(
-                        height: 130,
-                        width: 120,
+    return Stack(
+      children: [
+        Container(
+          width: 370,
+          height: 150,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              color: const Color.fromRGBO(143, 138, 138, 0.5),
+              border: Border.all(
+                  color: isComplete
+                      ? const Color.fromRGBO(99, 197, 106, 1.0)
+                      : const Color.fromRGBO(143, 138, 138, 1.0),
+                  width: 2)),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 8, 0, 8),
+                child: Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    Align(
+                      alignment: Alignment.center,
+                      child: Row(
+                        children: [
+                          Container(
+                            height: 130,
+                            width: 120,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.white,
+                              image: DecorationImage(
+                                image: AssetImage(imageUrl),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 30),
+                          Text(
+                            title,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    Positioned(
+                      top: -20,
+                      right: -5,
+                      child: Container(
+                        width: 40,
+                        height: 40,
                         decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.white,
-                          image: DecorationImage(
-                            image: AssetImage(imageUrl),
-                            fit: BoxFit.cover,
+                          color: isComplete
+                              ? const Color.fromRGBO(99, 197, 106, 1.0)
+                              : const Color.fromRGBO(229, 62, 85, 1.0),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Center(
+                          child: Text(
+                            '$total',
+                            style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
                           ),
                         ),
                       ),
-                      const SizedBox(width: 30),
-                      Text(
-                        title,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                Positioned(
-                  top: -20,
-                  right: -5,
-                  child: Container(
-                    width: 40,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      color: isComplete
-                          ? const Color.fromRGBO(99, 197, 106, 1.0)
-                          : const Color.fromRGBO(229, 62, 85, 1.0),
-                      borderRadius: BorderRadius.circular(20),
                     ),
-                    child: Center(
-                      child: Text(
-                        '$total',
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white
+                    if (total == 0)
+                      Positioned(
+                        top: -20,
+                        right: -5,
+                        child: Container(
+                          width: 40,
+                          height: 40,
+                          decoration: BoxDecoration(
+                            color: const Color.fromRGBO(155, 155, 155, 0.5),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
+                  ],
                 ),
-              ],
+              ),
+            ],
+          ),
+        ),
+        if (total == 0)
+          Container(
+            width: 370,
+            height: 150,
+            decoration: BoxDecoration(
+              color: const Color.fromRGBO(155, 155, 155, 0.6),
+              borderRadius: BorderRadius.circular(20),
             ),
           ),
-        ],
-      ),
+      ],
     );
   }
 }
