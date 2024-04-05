@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:project4/wiget/CustomTabbar.dart';
 import '../screen_admin/home_admin.dart';
 import 'huongtestapi.dart';
@@ -12,12 +13,14 @@ class NavScreenAdmin extends StatefulWidget {
 
 class _NavScreenState extends State<NavScreenAdmin> {
   final List<Widget> _screens = [
-    HomeAdmin(id_user: 1,),
+    HomeAdmin(code: 'viet_1',),
+
 
   ];
 
   final List<IconData> _icons = const [
     Icons.home,
+
 
   ];
 

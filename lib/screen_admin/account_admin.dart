@@ -128,7 +128,7 @@ class _AccountAdminState extends State<AccountAdmin> {
                                   ,onPressed: (){
                                 Navigator.push(
                                     context,
-                                    MaterialPageRoute(builder: (context) => DetailAccountAdmin(id_user: 1,)
+                                    MaterialPageRoute(builder: (context) => DetailAccountAdmin(code: acc['code'],)
                                     )
                                 );
                               }, child: Text('Detail',style: TextStyle(

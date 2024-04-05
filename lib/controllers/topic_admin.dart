@@ -1,13 +1,11 @@
+import 'package:project4/models/topic.dart';
+import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import '../models/account.dart';
-import 'package:http/http.dart' as http;
-
-class AccountController {
-
-  static Future<List<dynamic>> getAccountInfo() async{
+class TopicAdmin1{
+  static Future<List<dynamic>> getTopic() async{
     final response = await http.get(
-      Uri.parse('http://localhost:7183/api/Accounts'),
+      Uri.parse('http://localhost:7183/api/TopicAdmin/GetTopic'),
 
     );
     if (response.statusCode == 200) {
@@ -17,9 +15,9 @@ class AccountController {
     }
   }
 
-  static Future<List<dynamic>> getAccountId(String code) async {
+  static Future<List<dynamic>> getTopicById(String code) async {
     final response = await http.post(
-      Uri.parse('http://localhost:7183/api/AccountAdmin/GetAccountById'),
+      Uri.parse('http://localhost:7183/api/TopicAdmin/GetTopicById'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -30,9 +28,8 @@ class AccountController {
     if (response.statusCode == 200) {
       return json.decode(response.body) as List<dynamic>;
     } else {
-      throw Exception('Failed to load data getAccountId');
+      throw Exception(' 1Failed to load dat getTopicById a');
     }
   }
-
 
 }

@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:project4/controllers/topic_admin.dart';
 import 'package:project4/models/account.dart';
 import 'package:project4/models/topic.dart';
 
@@ -8,10 +9,10 @@ import '../controllers/account_admin_controller.dart';
 import '../controllers/choose_topic_controller.dart';
 
 class DetailTopicAdmin extends StatefulWidget {
-  final int id_user;
-  final int id_topic;
+  final String code;
+  final String code_topic;
 
-  const DetailTopicAdmin({Key? key, required this.id_user, required this.id_topic}) : super(key: key);
+  const DetailTopicAdmin({Key? key, required this.code, required this.code_topic}) : super(key: key);
 
   @override
   State<DetailTopicAdmin> createState() => _DetailTopicAdmin();
@@ -20,6 +21,15 @@ class DetailTopicAdmin extends StatefulWidget {
 class _DetailTopicAdmin extends State<DetailTopicAdmin> {
   List<dynamic> accounts = [];
   List<dynamic> topics = [];
+  final TextEditingController _codeController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _avatarController = TextEditingController();
+  final TextEditingController _comboColorController = TextEditingController();
+  final TextEditingController _createdByController = TextEditingController();
+  final TextEditingController _createdTimeController = TextEditingController();
+  final TextEditingController _updatedByController = TextEditingController();
+  final TextEditingController _updatedTimeController = TextEditingController();
+
 
   @override
   void initState() {
@@ -29,16 +39,17 @@ class _DetailTopicAdmin extends State<DetailTopicAdmin> {
 
   void fetchData() async {
     try {
-      final data = await AccountController.getAccountId(widget.id_user);
+      final data = await AccountController.getAccountId(widget.code);
 
-      final data1 = await ChooseTopicController.getTopicById(widget.id_topic);
+      // final data1 = await ChooseTopicController.getTopicById(widget.code_topic);
+      final data1 = await TopicAdmin1.getTopicById(widget.code_topic);
 
       setState(() {
         accounts = data ;
         topics = data1;
       });
     } catch (e) {
-      print('Error: $e');
+      print('Error: 1 $e');
     }
   }
 
@@ -135,7 +146,6 @@ class _DetailTopicAdmin extends State<DetailTopicAdmin> {
                           ),
                         ),
                         SizedBox(height: 5,),
-
                         Container(
                           width: MediaQuery.of(context).size.width * 0.6,
                           child: Text(
@@ -146,6 +156,204 @@ class _DetailTopicAdmin extends State<DetailTopicAdmin> {
                           ),
                         ),
                         SizedBox(height: 5,),
+                        Container(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween, // Căn lề của hàng theo chiều ngang
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.green,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10)
+                                    )
+                                ),
+                                onPressed: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: Text("Thêm dữ liệu"),
+                                        content: SingleChildScrollView(
+                                          child: Column(
+                                            children: [
+                                              // Thêm các trường dữ liệu vào form
+                                              TextFormField(
+                                                controller: _codeController,
+                                                decoration: InputDecoration(labelText: 'Code'),
+                                              ),
+                                              TextFormField(
+                                                controller: _nameController,
+                                                decoration: InputDecoration(labelText: 'Name'),
+                                              ),
+                                              TextFormField(
+                                                controller: _avatarController,
+                                                decoration: InputDecoration(labelText: 'Avatar'),
+                                              ),
+                                              TextFormField(
+                                                controller: _comboColorController,
+                                                decoration: InputDecoration(labelText: 'ComboColor'),
+                                              ),
+                                              TextFormField(
+                                                controller: _createdByController,
+                                                decoration: InputDecoration(labelText: 'CreatedBy'),
+                                              ),
+                                              TextFormField(
+                                                controller: _createdTimeController,
+                                                decoration: InputDecoration(labelText: 'CreatedTime'),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: Text('Hủy'),
+                                          ),
+                                          ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                                backgroundColor: Colors.green,
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.circular(10)
+                                                )
+                                            ),
+                                            onPressed: () {
+                                              final String code = _codeController.text;
+                                              final String name = _nameController.text;
+                                              final String avatar = _avatarController.text;
+                                              final String comboColor = _comboColorController.text;
+                                              final String createdBy = _createdByController.text;
+                                              final String createdTime = _createdTimeController.text;
+
+                                              // Thực hiện các hành động cần thiết với dữ liệu được nhập
+
+                                              // Sau khi xử lý xong, đóng AlertDialog
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: Text('Thêm', style: TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.bold
+                                            )),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                },
+                                child: Text('Add', style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold
+                                )),
+                              ),
+
+                              SizedBox(width: 20),
+
+                              ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.orange,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(10)
+                                      )
+                                  ),
+                                  onPressed: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          title: Text("Chỉnh sửa dữ liệu"),
+                                          content: SingleChildScrollView(
+                                            child: Column(
+                                              children: [
+                                                // Thêm các trường dữ liệu vào form
+                                                TextFormField(
+                                                  controller: _codeController,
+                                                  decoration: InputDecoration(labelText: 'Code'),
+                                                ),
+                                                TextFormField(
+                                                  controller: _nameController,
+                                                  decoration: InputDecoration(labelText: 'Name'),
+                                                ),
+                                                TextFormField(
+                                                  controller: _avatarController,
+                                                  decoration: InputDecoration(labelText: 'Avatar'),
+                                                ),
+                                                TextFormField(
+                                                  controller: _comboColorController,
+                                                  decoration: InputDecoration(labelText: 'ComboColor'),
+                                                ),
+                                                TextFormField(
+                                                  controller: _updatedByController,
+                                                  decoration: InputDecoration(labelText: 'UpdatedBy'),
+                                                ),
+                                                TextFormField(
+                                                  controller: _updatedTimeController,
+                                                  decoration: InputDecoration(labelText: 'UpdatedTime'),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: Text('Hủy'),
+                                            ),
+                                            ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                  backgroundColor: Colors.blue,
+                                                  shape: RoundedRectangleBorder(
+                                                      borderRadius: BorderRadius.circular(10)
+                                                  )
+                                              ),
+                                              onPressed: () {
+                                                final String code = _codeController.text;
+                                                final String name = _nameController.text;
+                                                final String avatar = _avatarController.text;
+                                                final String comboColor = _comboColorController.text;
+                                                final String updatedBy = _updatedByController.text;
+                                                final String updatedTime = _updatedTimeController.text;
+
+                                                // Thực hiện các hành động cần thiết với dữ liệu đã chỉnh sửa
+
+                                                // Sau khi xử lý xong, đóng AlertDialog
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: Text('Lưu', style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold
+                                              )),
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
+                                  },
+                                  child: Text('Edit',style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold
+                                  ),)
+                              ),
+
+                              SizedBox(width: 20),
+                              ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.red,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(10)
+                                      )
+                                  ),
+                                  onPressed: (){}, child: Text('Delete',style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold
+                              ),)
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: 10,),
 
                       ],
                     ),
