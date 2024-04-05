@@ -23,6 +23,19 @@ class _MessageNextTitleScreenState extends State<MessageNextTitleScreen> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Padding(
+              padding: const EdgeInsets.only(top: 20),
+              child: Container(
+                width: 150,
+                height: 150,
+                decoration: const BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage("congratulations.png"),
+                        fit: BoxFit.cover
+                    )
+                ),
+              ),
+            ),
+            Padding(
               padding: const EdgeInsets.only(top: 20, left: 20),
               child: Row(
                 children: [

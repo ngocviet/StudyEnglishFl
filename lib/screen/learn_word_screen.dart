@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:project4/controllers/learn_word_controller.dart';
+import 'package:project4/screen/message/game_over_screen.dart';
 import 'package:project4/screen/message/message_next_title_screen.dart';
 import 'package:project4/screen/message/message_out_screen.dart';
 import 'package:project4/screen/message/success_screen.dart';
@@ -20,7 +21,6 @@ class LearnWordScreen extends StatefulWidget {
 
 class ViewScreen extends State<LearnWordScreen> {
   late String nameEN = "";
-  late String nameVN = "";
   late String avatar = "default.jpg";
   List<dynamic> listAnswer = [];
   int stt = 0;
@@ -29,6 +29,7 @@ class ViewScreen extends State<LearnWordScreen> {
   bool canSubmit = false;
   String answerCorrect = "";
   List<dynamic> dataMain = [];
+  double percentWidth = 0.0;
   @override
   void initState() {
     super.initState();
@@ -38,13 +39,15 @@ class ViewScreen extends State<LearnWordScreen> {
   void fetchData() async {
     try {
       final data = await learnWordController.getDataQuestion(widget.codeLesson);
-
       setState(() {
+        stt = 0;
         dataMain = data;
         nameEN = data[stt]['nameEN'];
         listAnswer = data[stt]['listAnswer'];
         canSubmit = false;
         showMessage = 0;
+        percentWidth = 0.0;
+        totalHeart = 3;
       });
       bool isExists = await doesAssetExist('assets/${data[stt]['avatar']}');
       if (isExists) {
@@ -84,7 +87,6 @@ class ViewScreen extends State<LearnWordScreen> {
       setState(() {
         showMessage = 3;
       });
-      // Navigator.pop(context, 0);
     }
   }
 
@@ -101,26 +103,33 @@ class ViewScreen extends State<LearnWordScreen> {
   void checkAnswer() {
     dynamic check = listAnswer.firstWhere((e) => e["isChoose"]);
     dynamic checkCorrect = listAnswer.firstWhere((e) => e["isCorrect"]);
-    if (check["isCorrect"]) {
-      setState(() {
+    setState(() {
+      if (check["isCorrect"]) {
         showMessage = 1;
-      });
-    } else {
-      setState(() {
+        if(percentWidth == 0.0){
+          percentWidth = 1 / dataMain.length;
+        }else{
+          percentWidth += 1 / dataMain.length;
+        }
+      } else {
         answerCorrect = checkCorrect["nameVN"];
         showMessage = 2;
         totalHeart--;
-      });
-    }
+      }
+    });
   }
 
   void outScreen(bool status) {
     setState(() {
       showMessage = 4;
     });
-    if(status){
+    if (status) {
       Navigator.pop(context);
     }
+  }
+
+  void learnAgain(){
+    fetchData();
   }
 
   @override
@@ -130,7 +139,9 @@ class ViewScreen extends State<LearnWordScreen> {
         leading: IconButton(
           icon: const Icon(Icons.close),
           onPressed: () {
-            outScreen(false);
+            if(showMessage == 0){
+              outScreen(false);
+            }
           },
           color: const Color.fromRGBO(158, 182, 203, 1.0),
           iconSize: 40,
@@ -145,25 +156,34 @@ class ViewScreen extends State<LearnWordScreen> {
                   decoration: BoxDecoration(
                       color: const Color.fromRGBO(197, 206, 215, 1.0),
                       borderRadius: BorderRadius.circular(9)),
-                ),
-                Container(
-                  width: 100,
-                  height: 18,
-                  decoration: BoxDecoration(
-                      color: const Color.fromRGBO(22, 182, 32, 1.0),
-                      borderRadius: BorderRadius.circular(9)),
-                ),
-                Positioned(
-                  top: 4,
-                  left: 15,
-                  child: Container(
-                    width: 70,
-                    height: 6,
-                    decoration: BoxDecoration(
-                        color: const Color.fromRGBO(255, 255, 255, 0.3),
-                        borderRadius: BorderRadius.circular(3)),
+                  child: Stack(
+                    children: [
+                      FractionallySizedBox(
+                        widthFactor: percentWidth,
+                        child: Container(
+                          height: 18,
+                          decoration: BoxDecoration(
+                              color: percentWidth > 0.7 ? const Color.fromRGBO(22, 182, 32, 1.0) : percentWidth > 0.4 ? const Color.fromRGBO(
+                                  182, 174, 22, 1.0) : const Color.fromRGBO(
+                                  182, 51, 22, 1.0),
+                              borderRadius: BorderRadius.circular(9)),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
+                if (percentWidth > 0.1)
+                  Positioned(
+                    top: 4,
+                    left: 6,
+                    child: Container(
+                      width: 150 * percentWidth,
+                      height: 6,
+                      decoration: BoxDecoration(
+                          color: const Color.fromRGBO(255, 255, 255, 0.3),
+                          borderRadius: BorderRadius.circular(3)),
+                    ),
+                  ),
               ]),
             ),
             Row(
@@ -317,13 +337,15 @@ class ViewScreen extends State<LearnWordScreen> {
                             itemBuilder: (context, index) {
                               var answer = listAnswer[index];
                               return Padding(
-                                padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
+                                padding:
+                                    const EdgeInsets.fromLTRB(20, 0, 20, 10),
                                 child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor:
                                           const Color.fromRGBO(75, 75, 75, 0),
                                       shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(20)),
+                                          borderRadius:
+                                              BorderRadius.circular(20)),
                                       side: BorderSide(
                                           color: !answer['isChoose']
                                               ? const Color.fromRGBO(
@@ -393,13 +415,18 @@ class ViewScreen extends State<LearnWordScreen> {
               if (showMessage == 2)
                 UnSuccessScreen(
                     onTap: () {
-                      next();
+                      if(totalHeart > 0){
+                        next();
+                      }else{
+                        setState(() {
+                          showMessage = 5;
+                        });
+                      }
                     },
                     answer: answerCorrect),
-
             ]),
           ),
-          if (showMessage == 4 || showMessage == 3)
+          if (showMessage == 4 || showMessage == 3 || showMessage == 5)
             Container(
               width: double.infinity,
               height: double.infinity,
@@ -417,10 +444,19 @@ class ViewScreen extends State<LearnWordScreen> {
               onTapExit: () {
                 Navigator.pop(context);
               },
-              onTapContinue: (){
+              onTapContinue: () {
                 setState(() {
                   showMessage = 0;
                 });
+              },
+            ),
+          if (showMessage == 5)
+            GameOverScreen(
+              onTapExit: () {
+                Navigator.pop(context);
+              },
+              onTapContinue: () {
+                learnAgain();
               },
             ),
         ],
