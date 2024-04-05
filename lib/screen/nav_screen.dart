@@ -23,7 +23,7 @@ class _NavScreenState extends State<NavScreen> {
     HomeScreen(),
     StatisticalScreen(),
     RatingsScreen(),
-    // ProFileScreen(),
+    ProFileScreen(),
     // huong(),
     // Thuong(),
     // AccountAdmin(),
@@ -32,9 +32,9 @@ class _NavScreenState extends State<NavScreen> {
 
   final List<IconData> _icons = const [
     Icons.home,
-    Icons.handyman,
-    Icons.perm_contact_cal_outlined,
-    // Icons.add,
+    Icons.airplay_rounded,
+    Icons.bar_chart,
+    Icons.person,
     // Icons.add,
     // Icons.abc,
     // Icons.abc_outlined
@@ -59,11 +59,10 @@ class _NavScreenState extends State<NavScreen> {
             ),
             child: CustomTabar(
               icons: _icons,
-              selectedIndex : _selectedIndex,
-              onTap:(index) =>setState(()=>_selectedIndex = index),
+              selectedIndex: _selectedIndex,
+              onTap: (index) => setState(() => _selectedIndex = index),
             ),
           ),
-        )
-    );
+        ));
   }
 }

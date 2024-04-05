@@ -10,8 +10,9 @@ import 'package:project4/screen/message/success_screen.dart';
 import 'package:project4/screen/message/un_success_screen.dart';
 
 class LearnWordScreen extends StatefulWidget {
+  final String UserCode;
   final String codeLesson;
-  LearnWordScreen({super.key, required this.codeLesson});
+  LearnWordScreen({super.key, required this.codeLesson, required this.UserCode});
 
   @override
   State<StatefulWidget> createState() {
@@ -24,7 +25,7 @@ class ViewScreen extends State<LearnWordScreen> {
   late String avatar = "default.jpg";
   List<dynamic> listAnswer = [];
   int stt = 0;
-  int totalHeart = 3;
+  int totalHeart = 0;
   int showMessage = 0;
   bool canSubmit = false;
   String answerCorrect = "";
@@ -47,7 +48,7 @@ class ViewScreen extends State<LearnWordScreen> {
         canSubmit = false;
         showMessage = 0;
         percentWidth = 0.0;
-        totalHeart = 3;
+        totalHeart = 5;
       });
       bool isExists = await doesAssetExist('assets/${data[stt]['avatar']}');
       if (isExists) {
@@ -102,9 +103,9 @@ class ViewScreen extends State<LearnWordScreen> {
 
   void checkAnswer() {
     dynamic check = listAnswer.firstWhere((e) => e["isChoose"]);
-    dynamic checkCorrect = listAnswer.firstWhere((e) => e["isCorrect"]);
+    dynamic checkCorrect = listAnswer.firstWhere((e) => e["isTrue"]);
     setState(() {
-      if (check["isCorrect"]) {
+      if (check["isTrue"]) {
         showMessage = 1;
         if(percentWidth == 0.0){
           percentWidth = 1 / dataMain.length;
@@ -119,13 +120,10 @@ class ViewScreen extends State<LearnWordScreen> {
     });
   }
 
-  void outScreen(bool status) {
+  void outScreen() {
     setState(() {
       showMessage = 4;
     });
-    if (status) {
-      Navigator.pop(context);
-    }
   }
 
   void learnAgain(){
@@ -140,7 +138,7 @@ class ViewScreen extends State<LearnWordScreen> {
           icon: const Icon(Icons.close),
           onPressed: () {
             if(showMessage == 0){
-              outScreen(false);
+              outScreen();
             }
           },
           color: const Color.fromRGBO(158, 182, 203, 1.0),

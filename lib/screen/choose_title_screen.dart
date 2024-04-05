@@ -151,7 +151,7 @@ class _ChooseTitleScreenState extends State<ChooseTitleScreen> {
                   context,
                   MaterialPageRoute(
                       builder: (context) =>
-                          LearnWordScreen(codeLesson: widget.codeLesson)),
+                          LearnWordScreen(codeLesson: widget.codeLesson, UserCode: "")),
                 ).then((index) {
                   changeStatusItem(index);
                 });

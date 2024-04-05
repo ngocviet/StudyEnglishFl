@@ -22,29 +22,56 @@ class ViewProFile extends State<ProFileScreen> {
           color: Color.fromRGBO(2, 33, 47, 1.0),
         ),
         child: ListView(
+          physics: const BouncingScrollPhysics(),
           children: [
             Container(
-              height: 300,
+              padding: const EdgeInsets.all(10),
+              height: 225,
               decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('avatar.jpg'),
-                  fit: BoxFit.fill,
-                ),
+                // image: DecorationImage(
+                //   image: AssetImage('avatar.jpg'),
+                //   fit: BoxFit.cover,
+                // ),
+                color: Color.fromRGBO(2, 33, 47, 1.0),
               ),
               child: Stack(
                 children: [
+                  Align(
+                    alignment: Alignment.topCenter,
+                    child: Container(
+                      height: 130,
+                      decoration: BoxDecoration(
+                        color: const Color.fromRGBO(159, 159, 159, 1.0),
+                        borderRadius: BorderRadius.circular(20)
+                      ),
+                    ),
+                  ),
                   Align(
                     alignment: Alignment.topRight,
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: TextButton(
                         onPressed: () {
-                          // Xử lý sự kiện khi nút được nhấn
+
                         },
-                        child: Icon(Icons.settings),
+                        child: const Icon(Icons.settings,size: 35,color: Colors.white,),
                       ),
                     ),
                   ),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                      height: 150,
+                      width: 150,
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage('avatar.jpg'),
+                          fit: BoxFit.cover,
+                        ),
+                        shape: BoxShape.circle
+                      ),
+                    ),
+                  )
                 ],
               ),
             ),
@@ -69,7 +96,7 @@ class ViewProFile extends State<ProFileScreen> {
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
-                              fontSize: 25),
+                              fontSize: 24),
                         ),
                       ),
                     ],
@@ -79,8 +106,9 @@ class ViewProFile extends State<ProFileScreen> {
                       Padding(
                         padding: EdgeInsets.only(top: 5, left: 15),
                         child: Text(
-                          'QuangHuong1062003',
-                          style: TextStyle(color: Colors.white, fontSize: 20),
+                          '@QuangHuong1062003',
+                          style: TextStyle(color: Color.fromRGBO(
+                              159, 159, 159, 1.0), fontSize: 18),
                         ),
                       ),
                     ],
@@ -153,32 +181,62 @@ class ViewProFile extends State<ProFileScreen> {
                 ],
               ),
             ),
-            Container(
-              height: 300,
-              decoration: const BoxDecoration(
-                  border: Border(
-                      bottom: BorderSide(
-                        color: Colors.grey, // Màu của đường viền
-                        width: 3.0, // Độ rộng của đường viền
-                      )
-                  )
-              ),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        Text('Thống Kê',style: TextStyle(color: Colors.white,fontSize: 30,fontWeight: FontWeight.bold),)
-                      ],
-                    ),
-
+            Column(
+              children: [
+                const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Text('Thống Kê',style: TextStyle(color: Colors.white,fontSize: 30,fontWeight: FontWeight.bold),)
+                    ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        Container(
+
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 200,
+                        height: 100,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10.0),
+                          border: const Border(
+                            top: BorderSide(width: 2.0, color: Colors.grey),
+                            bottom: BorderSide(width: 2.0, color: Colors.grey),
+                            left: BorderSide(width: 2.0, color: Colors.grey),
+                            right: BorderSide(width: 2.0, color: Colors.grey),
+                          ),
+                        ),
+                        child:const Column(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Row(
+                                children: [
+                                   Icon(
+                                    Icons.local_fire_department_rounded,
+                                    color: Colors.orangeAccent,
+                                    size: 50,
+                                  ),
+                                  Text('1',style: TextStyle(color: Colors.white,fontSize: 30,fontWeight: FontWeight.bold),),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(left: 25),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: [
+                                  Text('Ngày streak',style: TextStyle(fontSize: 20,color: Colors.grey),)
+                                ],
+                              ),
+                            )
+                          ],
+                        )
+                      ),
+                      SizedBox(width: 13,),
+                      Container(
                           width: 200,
                           height: 100,
                           decoration: BoxDecoration(
@@ -196,12 +254,12 @@ class ViewProFile extends State<ProFileScreen> {
                                 padding: EdgeInsets.all(8.0),
                                 child: Row(
                                   children: [
-                                     Icon(
-                                      Icons.local_fire_department_rounded,
+                                    Icon(
+                                      Icons.light_mode,
                                       color: Colors.orangeAccent,
                                       size: 50,
                                     ),
-                                    Text('1',style: TextStyle(color: Colors.white,fontSize: 30,fontWeight: FontWeight.bold),),
+                                    Text('3882',style: TextStyle(color: Colors.white,fontSize: 30,fontWeight: FontWeight.bold),),
                                   ],
                                 ),
                               ),
@@ -210,58 +268,17 @@ class ViewProFile extends State<ProFileScreen> {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                                   children: [
-                                    Text('Ngày streak',style: TextStyle(fontSize: 20,color: Colors.grey),)
+                                    Text('Tổng KN',style: TextStyle(fontSize: 20,color: Colors.grey),)
                                   ],
                                 ),
                               )
                             ],
                           )
-                        ),
-                        SizedBox(width: 13,),
-                        Container(
-                            width: 200,
-                            height: 100,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.0),
-                              border: const Border(
-                                top: BorderSide(width: 2.0, color: Colors.grey),
-                                bottom: BorderSide(width: 2.0, color: Colors.grey),
-                                left: BorderSide(width: 2.0, color: Colors.grey),
-                                right: BorderSide(width: 2.0, color: Colors.grey),
-                              ),
-                            ),
-                            child:const Column(
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: Row(
-                                    children: [
-                                      Icon(
-                                        Icons.light_mode,
-                                        color: Colors.orangeAccent,
-                                        size: 50,
-                                      ),
-                                      Text('3882',style: TextStyle(color: Colors.white,fontSize: 30,fontWeight: FontWeight.bold),),
-                                    ],
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(left: 25),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                    children: [
-                                      Text('Tổng KN',style: TextStyle(fontSize: 20,color: Colors.grey),)
-                                    ],
-                                  ),
-                                )
-                              ],
-                            )
-                        )
-                      ],
-                    ),
-                  )
-                ],
-              ),
+                      )
+                    ],
+                  ),
+                )
+              ],
             )
           ],
         ),
