@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -176,18 +177,19 @@ class ViewRating extends State<RatingsScreen> {
               ],
             ),
           ),
-          Stack(
-            children: [
-              Positioned(
-              left: _offset.dx,
-              top: _offset.dy,
-              child: GestureDetector(
-                onPanUpdate: (details) {
-                  setState(() {
-                    _offset += details.delta;
-                  });
-                },
-                child: Column(
+          Positioned(
+          left: _offset.dx,
+          top: _offset.dy,
+          child: GestureDetector(
+            onPanUpdate: (details) {
+              setState(() {
+                _offset += details.delta;
+              });
+            },
+            child: Column(
+              children: [
+                Stack(
+                  clipBehavior: Clip.none,
                   children: [
                     Container(
                       width: 60, // Đường kính của hình tròn
@@ -198,21 +200,29 @@ class ViewRating extends State<RatingsScreen> {
                       ),
                       child: const Icon(Icons.light_mode, color: Colors.yellow),
                     ),
-                    Container(
-                      width: 60,
-                      height: 30,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: const Color.fromRGBO(255, 77, 245, 1),
+                    Positioned(
+                      top: 40,
+                      child: Container(
+                        width: 60,
+                        height: 30,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: const Color.fromRGBO(255, 77, 245, 1),
+                          border: Border.all(
+                            color: Colors.black,
+                            width: 2// Màu đen cho viền
+                          ),
+                        ),
+                        child: const Center(child: Text('2 ngày',style: TextStyle(color: Colors.white),)),
                       ),
-                      child: const Center(child: Text('2 ngày',style: TextStyle(color: Colors.white),)),
                     )
                   ],
-                )
+                ),
+              ],
+            )
 
-              ),
-            ),],
           ),
+                      ),
         ],
       ),
     );
