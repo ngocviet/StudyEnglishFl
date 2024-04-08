@@ -73,6 +73,7 @@ class _AccountAdminState extends State<AccountAdmin> {
             child: OutlinedButton(
               onPressed: () {
                 Navigator.push(
+
                   context,
                   MaterialPageRoute(builder: (context) => DetailAccountAdmin(code: acc['code'])
                   ),

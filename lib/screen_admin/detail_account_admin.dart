@@ -161,7 +161,8 @@ class _DetailAccountAdminState extends State<DetailAccountAdmin> {
                                     onPressed: (){}, child: Text('Delete',style: TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold
-                                ),)
+                                ),
+                                )
                                 ),
                               ],
                             ),

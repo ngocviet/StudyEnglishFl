@@ -20,7 +20,6 @@ class HomeAdmin extends StatefulWidget {
 class _HomeAdminState extends State<HomeAdmin> {
   String name = "";
   String avatar = "default.jpg";
-
   List<dynamic> accounts = [];
 
   void initState() {
