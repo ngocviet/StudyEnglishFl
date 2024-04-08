@@ -70,106 +70,94 @@ class _AccountAdminState extends State<AccountAdmin> {
           return Container(
             color: Colors.white,
             padding: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Divider(thickness: 3,color: Colors.grey,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+            child: OutlinedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => DetailAccountAdmin(code: acc['code'])
+                  ),
+                );
+              },
+              style: OutlinedButton.styleFrom(
+                side: BorderSide(color: Colors.white), // Màu của đường viền
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Divider(thickness: 3,color: Colors.grey,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
 
-                    Container(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
+                      Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                        ),
+                        child: ClipRRect(
+                            borderRadius: BorderRadius.circular(150),
+                            child: CachedNetworkImage(imageUrl: 'assets/${acc['avatar']}',height: 80,width: 80,fit: BoxFit.cover,)),
+
                       ),
-                      child: ClipRRect(
-                          borderRadius: BorderRadius.circular(150),
-                          child: CachedNetworkImage(imageUrl: 'assets/${acc['avatar']}',height: 80,width: 80,fit: BoxFit.cover,)),
+                      SizedBox(width: 20,),
+                      Column(
+                        children: [
+                          Container(
+                            width: MediaQuery.of(context).size.width * 0.6,
+                            child: Text(
+                              'Name: ${acc['name']}',
+                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                              softWrap: true,
 
-                    ),
-                    SizedBox(width: 20,),
-                    Column(
-                      children: [
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.6,
-                          child: Text(
-                            'Name: ${acc['name']}',
-                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                            softWrap: true,
-
+                            ),
                           ),
-                        ),
-                        SizedBox(width: 20,),
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.6,
-                          child: Text(
-                            'UserName: ${acc['userName']}',
-                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                            softWrap: true,
+                          SizedBox(width: 20,),
+                          Container(
+                            width: MediaQuery.of(context).size.width * 0.6,
+                            child: Text(
+                              'UserName: ${acc['userName']}',
+                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                              softWrap: true,
 
+                            ),
                           ),
-                        ),
-                        SizedBox(width: 20,),
+                          SizedBox(width: 20,),
 
 
-                        Container(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween, // Căn lề của hàng theo chiều ngang
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.green,
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(10)
-                                      )
-                                  )
-                                  ,onPressed: (){
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => DetailAccountAdmin(code: acc['code'],)
+                          Container(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween, // Căn lề của hàng theo chiều ngang
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        backgroundColor: Colors.green,
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(10)
+                                        )
                                     )
-                                );
-                              }, child: Text('Detail',style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold
-                              ),)),
-                              SizedBox(width: 20),
-                              ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.orange,
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(10)
+                                    ,onPressed: (){
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => DetailAccountAdmin(code: acc['code'],)
                                       )
-                                  )
-                                  ,onPressed: (){}, child: Text('Edit',style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold
-                              ),)),
-                              SizedBox(width: 20),
-                              ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.red,
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(10)
-                                      )
-                                  ),
-                                  onPressed: (){}, child: Text('Delete',style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold
-                              ),)
-                              ),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
+                                  );
+                                }, child: Text('Detail',style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold
+                                ),)),
 
-                  ],
-                )
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
 
-              ],
+                    ],
+                  )
+
+                ],
+              ),
             ),
           );
         },

@@ -171,13 +171,17 @@ class _Lesson1AdminState extends State<Lesson1Admin> {
                       child: Container(
                         alignment: Alignment.center,
                         width: MediaQuery.of(context).size.width * 0.6,
-                        child: Text(
-                          '${word['nameEN']}: ${word['nameVN']}',
-                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,color: Colors.black),
-                          softWrap: true,
-
+                        child: Column(
+                          children: [
+                            Text(
+                              '${word['nameEN']}: ${word['nameVN']}',
+                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,color: Colors.black),
+                              softWrap: true,
+                            ),
+                          ],
                         ),
                       ),
+
                     );
                   else{
                     return Text("2");
