@@ -345,7 +345,9 @@ class ScreenState extends State<AnswerTheQuestionScreen> {
                                             width: 3),
                                       ),
                                       onPressed: () {
-                                        chooseAnswer(index);
+                                        if (showMessage == 0) {
+                                          chooseAnswer(index);
+                                        }
                                       },
                                       child: Padding(
                                         padding: const EdgeInsets.all(12),

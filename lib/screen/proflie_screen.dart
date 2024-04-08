@@ -29,7 +29,7 @@ class ViewProFile extends State<ProFileScreen> {
               height: 225,
               decoration: const BoxDecoration(
                 // image: DecorationImage(
-                //   image: AssetImage('avatar.jpg'),
+                //   image: AssetImage('vinhhalong.jpg'),
                 //   fit: BoxFit.cover,
                 // ),
                 color: Color.fromRGBO(2, 33, 47, 1.0),
@@ -41,9 +41,12 @@ class ViewProFile extends State<ProFileScreen> {
                     child: Container(
                       height: 130,
                       decoration: BoxDecoration(
-                        color: const Color.fromRGBO(159, 159, 159, 1.0),
-                        borderRadius: BorderRadius.circular(20)
-                      ),
+                          // color: const Color.fromRGBO(159, 159, 159, 1.0),
+                          image: const DecorationImage(
+                            image: AssetImage('vinhhalong.jpg'),
+                            fit: BoxFit.cover,
+                          ),
+                          borderRadius: BorderRadius.circular(20)),
                     ),
                   ),
                   Align(
@@ -51,10 +54,12 @@ class ViewProFile extends State<ProFileScreen> {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: TextButton(
-                        onPressed: () {
-
-                        },
-                        child: const Icon(Icons.settings,size: 35,color: Colors.white,),
+                        onPressed: () {},
+                        child: const Icon(
+                          Icons.settings,
+                          size: 35,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ),
@@ -64,12 +69,11 @@ class ViewProFile extends State<ProFileScreen> {
                       height: 150,
                       width: 150,
                       decoration: const BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage('avatar.jpg'),
-                          fit: BoxFit.cover,
-                        ),
-                        shape: BoxShape.circle
-                      ),
+                          image: DecorationImage(
+                            image: AssetImage('avatar.jpg'),
+                            fit: BoxFit.cover,
+                          ),
+                          shape: BoxShape.circle),
                     ),
                   )
                 ],
@@ -79,210 +83,542 @@ class ViewProFile extends State<ProFileScreen> {
               decoration: const BoxDecoration(
                 border: Border(
                   bottom: BorderSide(
-                    color: Colors.grey, // Màu của đường viền
-                    width: 3.0, // Độ rộng của đường viền
+                    color: Colors.grey,
+                    width: 1,
                   ),
                 ),
               ),
-              height: 150, // Chiều cao cố định cho phần tiếp theo
-              child: const Column(
-                children: [
-                  Row(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(top: 15, left: 15),
-                        child: Text(
-                          'Quang Hướng',
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.only(top: 10, left: 5),
+                          child: Text(
+                            'Quang Hướng',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 24),
+                          ),
+                        ),
+                        Container(
+                          width: 50,
+                          height: 40,
+                          decoration: BoxDecoration(
+                              image: const DecorationImage(
+                                  image: AssetImage("vietnam.jpg"),
+                                  fit: BoxFit.cover),
+                              borderRadius: BorderRadius.circular(10)),
+                        )
+                      ],
+                    ),
+                    const Row(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(top: 5, left: 5),
+                          child: Text(
+                            '@QagHuog1063',
+                            style: TextStyle(
+                                color: Color.fromRGBO(159, 159, 159, 1.0),
+                                fontSize: 18),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const Row(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(top: 5, left: 5, bottom: 20),
+                          child: Text(
+                            'Đã tham gia tháng Mười Hai 2024',
+                            style: TextStyle(
+                                color: Color.fromRGBO(159, 159, 159, 1.0),
+                                fontSize: 18),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Container(
+              decoration: const BoxDecoration(
+                  border: Border(
+                      bottom: BorderSide(
+                color: Colors.grey,
+                width: 1,
+              ))),
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                child: Column(
+                  children: [
+                    const Row(
+                      children: [
+                        Text(
+                          'Thành Tích',
                           style: TextStyle(
                               color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 24),
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold),
+                        )
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        const SizedBox(
+                          width: 170,
+                          child: Padding(
+                            padding: EdgeInsets.only(right: 20),
+                            child: Text(
+                              'Các vị trí đã đạt: ',
+                              style: TextStyle(
+                                  color: Color.fromRGBO(159, 159, 159, 1.0),
+                                  fontSize: 18),
+                            ),
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(top: 5, left: 15),
-                        child: Text(
-                          '@QuangHuong1062003',
-                          style: TextStyle(color: Color.fromRGBO(
-                              159, 159, 159, 1.0), fontSize: 18),
+                        Expanded(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                height: 50,
+                                width: 50,
+                                decoration: const BoxDecoration(
+                                    image: DecorationImage(
+                                        image: AssetImage('1.png'))),
+                              ),
+                              Container(
+                                height: 50,
+                                width: 50,
+                                decoration: const BoxDecoration(
+                                    image: DecorationImage(
+                                        image: AssetImage('2.png'))),
+                              ),
+                              Container(
+                                height: 50,
+                                width: 50,
+                                decoration: const BoxDecoration(
+                                    image: DecorationImage(
+                                        image: AssetImage('3.png'))),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(top: 5, left: 15),
-                        child: Text(
-                          'Đã tham gia tháng Mười Hai 2024',
-                          style: TextStyle(color: Colors.white, fontSize: 20),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      children: [
+                        const SizedBox(
+                          width: 170,
+                          child: Padding(
+                            padding: EdgeInsets.only(right: 20),
+                            child: Text(
+                              'Vị trí hien tai: ',
+                              style: TextStyle(
+                                  color: Color.fromRGBO(159, 159, 159, 1.0),
+                                  fontSize: 18),
+                            ),
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                        Expanded(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                height: 50,
+                                width: 50,
+                                child: const Center(
+                                  child: Stack(
+                                    children: [
+                                      Icon(Icons.bookmark_rounded,size: 50,color: Color.fromRGBO(
+                                          55, 141, 21, 1.0),),
+                                      Align(
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                          '5',
+                                          style: TextStyle(
+                                              fontSize: 20, color: Colors.white,
+                                          fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
               ),
             ),
-            Container(
-              decoration: const BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(
-                    color: Colors.grey, // Màu của đường viền
-                    width: 3.0, // Độ rộng của đường viền
-                  )
-                )
-              ),
-              height: 200,
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
               child: Column(
                 children: [
-                  const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        Text('Thành Tích',style: TextStyle(color: Colors.white,fontSize: 30,fontWeight: FontWeight.bold),)
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 20),
-                    child: Row(
-                      children: [
-                        Container(
-                          height: 50,
-                          width: 50,
-                          decoration: const BoxDecoration(
-                              image: DecorationImage(image: AssetImage('1.png'))),
-                        ),
-                        Container(
-                          height: 50,
-                          width: 50,
-                          decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                            image: DecorationImage(image: AssetImage('phone.jpg'),
-                              fit: BoxFit.fill,
-                            )
-                          ),
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.only(left: 10),
-                          child: Text('Nguyen Quang Huong',style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),),
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.only(left: 30),
-                          child: Text('200 KN',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.white),),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Column(
-              children: [
-                const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Row(
+                  const Row(
                     children: [
-                      Text('Thống Kê',style: TextStyle(color: Colors.white,fontSize: 30,fontWeight: FontWeight.bold),)
-                    ],
-                  ),
-
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: [
-                      Container(
-                        width: 200,
-                        height: 100,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10.0),
-                          border: const Border(
-                            top: BorderSide(width: 2.0, color: Colors.grey),
-                            bottom: BorderSide(width: 2.0, color: Colors.grey),
-                            left: BorderSide(width: 2.0, color: Colors.grey),
-                            right: BorderSide(width: 2.0, color: Colors.grey),
-                          ),
-                        ),
-                        child:const Column(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Row(
-                                children: [
-                                   Icon(
-                                    Icons.local_fire_department_rounded,
-                                    color: Colors.orangeAccent,
-                                    size: 50,
-                                  ),
-                                  Text('1',style: TextStyle(color: Colors.white,fontSize: 30,fontWeight: FontWeight.bold),),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(left: 25),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: [
-                                  Text('Ngày streak',style: TextStyle(fontSize: 20,color: Colors.grey),)
-                                ],
-                              ),
-                            )
-                          ],
-                        )
-                      ),
-                      SizedBox(width: 13,),
-                      Container(
-                          width: 200,
-                          height: 100,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10.0),
-                            border: const Border(
-                              top: BorderSide(width: 2.0, color: Colors.grey),
-                              bottom: BorderSide(width: 2.0, color: Colors.grey),
-                              left: BorderSide(width: 2.0, color: Colors.grey),
-                              right: BorderSide(width: 2.0, color: Colors.grey),
-                            ),
-                          ),
-                          child:const Column(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Row(
-                                  children: [
-                                    Icon(
-                                      Icons.light_mode,
-                                      color: Colors.orangeAccent,
-                                      size: 50,
-                                    ),
-                                    Text('3882',style: TextStyle(color: Colors.white,fontSize: 30,fontWeight: FontWeight.bold),),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(left: 25),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                  children: [
-                                    Text('Tổng KN',style: TextStyle(fontSize: 20,color: Colors.grey),)
-                                  ],
-                                ),
-                              )
-                            ],
-                          )
+                      Text(
+                        'Thống Kê',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold),
                       )
                     ],
                   ),
-                )
-              ],
+                  SizedBox(height: 15,),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.0),
+                              border: Border.all(
+                                color: Colors.grey,
+                                width: 1
+                              )
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const Icon(
+                                        Icons.local_fire_department_rounded,
+                                        color: Colors.orangeAccent,
+                                        size: 40,
+                                      ),
+                                      SizedBox(width: 5,),
+                                      Stack(
+                                        children: [
+                                          Text(
+                                            '1',
+                                            style: TextStyle(
+                                              fontSize: 26,
+                                              fontWeight: FontWeight.bold,
+                                              foreground: Paint()
+                                                ..style = PaintingStyle.stroke
+                                                ..strokeWidth =
+                                                6 // Độ dày của border
+                                                ..color = Colors
+                                                    .orangeAccent, // Màu của border
+                                            ),
+                                          ),
+                                          const Text(
+                                            '1',
+                                            style: TextStyle(
+                                              fontSize: 26,
+                                              fontWeight: FontWeight.bold,
+                                              color:
+                                              Colors.white, // Màu của chữ
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  const Padding(
+                                    padding: EdgeInsets.only(top:8.0),
+                                    child: Text(
+                                      'Ngày streak',
+                                      style: TextStyle(
+                                          fontSize: 18, color: Colors.grey),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            )),
+                      ),
+                      SizedBox(width: 15,),
+                      Expanded(
+                        child: Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10.0),
+                                border: Border.all(
+                                    color: Colors.grey,
+                                    width: 1
+                                )
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const Icon(
+                                        Icons.adjust_rounded,
+                                        color: Colors.orangeAccent,
+                                        size: 36,
+                                      ),
+                                      SizedBox(width: 5,),
+                                      Stack(
+                                        children: [
+                                          Text(
+                                            '1000',
+                                            style: TextStyle(
+                                              fontSize: 26,
+                                              fontWeight: FontWeight.bold,
+                                              foreground: Paint()
+                                                ..style = PaintingStyle.stroke
+                                                ..strokeWidth =
+                                                6 // Độ dày của border
+                                                ..color = Colors
+                                                    .orangeAccent, // Màu của border
+                                            ),
+                                          ),
+                                          const Text(
+                                            '1000',
+                                            style: TextStyle(
+                                              fontSize: 26,
+                                              fontWeight: FontWeight.bold,
+                                              color:
+                                              Colors.white, // Màu của chữ
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  const Padding(
+                                    padding: EdgeInsets.only(top:8.0),
+                                    child: Text(
+                                      'Tổng KN',
+                                      style: TextStyle(
+                                          fontSize: 18, color: Colors.grey),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            )),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 20,),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.0),
+                              border: Border.all(
+                                color: Colors.grey,
+                                width: 1
+                              )
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const Icon(
+                                        Icons.local_fire_department_rounded,
+                                        color: Colors.orangeAccent,
+                                        size: 40,
+                                      ),
+                                      SizedBox(width: 5,),
+                                      Stack(
+                                        children: [
+                                          Text(
+                                            '1',
+                                            style: TextStyle(
+                                              fontSize: 26,
+                                              fontWeight: FontWeight.bold,
+                                              foreground: Paint()
+                                                ..style = PaintingStyle.stroke
+                                                ..strokeWidth =
+                                                6 // Độ dày của border
+                                                ..color = Colors
+                                                    .orangeAccent, // Màu của border
+                                            ),
+                                          ),
+                                          const Text(
+                                            '1',
+                                            style: TextStyle(
+                                              fontSize: 26,
+                                              fontWeight: FontWeight.bold,
+                                              color:
+                                              Colors.white, // Màu của chữ
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  const Padding(
+                                    padding: EdgeInsets.only(top:8.0),
+                                    child: Text(
+                                      'Ngày streak',
+                                      style: TextStyle(
+                                          fontSize: 18, color: Colors.grey),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            )),
+                      ),
+                      SizedBox(width: 15,),
+                      Expanded(
+                        child: Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10.0),
+                                border: Border.all(
+                                    color: Colors.grey,
+                                    width: 1
+                                )
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const Icon(
+                                        Icons.adjust_rounded,
+                                        color: Colors.orangeAccent,
+                                        size: 36,
+                                      ),
+                                      SizedBox(width: 5,),
+                                      Stack(
+                                        children: [
+                                          Text(
+                                            '1000',
+                                            style: TextStyle(
+                                              fontSize: 26,
+                                              fontWeight: FontWeight.bold,
+                                              foreground: Paint()
+                                                ..style = PaintingStyle.stroke
+                                                ..strokeWidth =
+                                                6 // Độ dày của border
+                                                ..color = Colors
+                                                    .orangeAccent, // Màu của border
+                                            ),
+                                          ),
+                                          const Text(
+                                            '1000',
+                                            style: TextStyle(
+                                              fontSize: 26,
+                                              fontWeight: FontWeight.bold,
+                                              color:
+                                              Colors.white, // Màu của chữ
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  const Padding(
+                                    padding: EdgeInsets.only(top:8.0),
+                                    child: Text(
+                                      'Tổng KN',
+                                      style: TextStyle(
+                                          fontSize: 18, color: Colors.grey),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            )),
+                      ),
+                    ],
+                  )
+                ],
+              ),
             )
           ],
         ),
       ),
+    );
+  }
+}
+
+class Item1 extends StatefulWidget {
+  final String title;
+  final List<dynamic> listPosit;
+  const Item1({super.key, required this.title, required this.listPosit});
+
+  @override
+  State<Item1> createState() => _Item1State();
+}
+
+class _Item1State extends State<Item1> {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(right: 20),
+          child: Text(
+            widget.title,
+            style: const TextStyle(
+                color: Color.fromRGBO(159, 159, 159, 1.0), fontSize: 18),
+          ),
+        ),
+        Expanded(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ListView.builder(
+                  itemCount: widget.listPosit.length,
+                  itemBuilder: (context, index) {
+                    var item = widget.listPosit[index];
+                    return Row(
+                      children: [
+                        if (item["onTop"])
+                          Container(
+                            height: 50,
+                            width: 50,
+                            decoration: const BoxDecoration(
+                                image: DecorationImage(
+                                    image: AssetImage('1.png'))),
+                          ),
+                        if (!item["onTop"])
+                          const SizedBox(
+                            height: 50,
+                            width: 50,
+                            child: Text('4'),
+                          ),
+                      ],
+                    );
+                  }),
+              Container(
+                height: 50,
+                width: 50,
+                decoration: const BoxDecoration(
+                    image: DecorationImage(image: AssetImage('1.png'))),
+              ),
+              Container(
+                height: 50,
+                width: 50,
+                decoration: const BoxDecoration(
+                    image: DecorationImage(image: AssetImage('2.png'))),
+              ),
+              Container(
+                height: 50,
+                width: 50,
+                decoration: const BoxDecoration(
+                    image: DecorationImage(image: AssetImage('3.png'))),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
