@@ -10,6 +10,7 @@ import 'package:project4/wiget/CustomTabbar.dart';
 
 import '../screen_admin/account_admin.dart';
 import 'huongtestapi.dart';
+import 'list_lessons_screen.dart';
 
 class NavScreen extends StatefulWidget {
   const NavScreen({super.key});
@@ -22,7 +23,8 @@ class _NavScreenState extends State<NavScreen> {
   final List<Widget> _screens = [
     HomeScreen(),
     StatisticalScreen(),
-    RatingsScreen(),
+    // RatingsScreen(),
+    ListLessonsScreen(codeUser: 'viet_1',),
     ProFileScreen(),
     // huong(),
     // Thuong(),
