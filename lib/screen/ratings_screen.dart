@@ -17,7 +17,7 @@ class ViewRating extends State<RatingsScreen> {
   @override
   void initState() {
     super.initState();
-    _offset = Offset(350, 700);
+    _offset = const Offset(350, 700);
   }
 
   @override
@@ -31,150 +31,130 @@ class ViewRating extends State<RatingsScreen> {
             decoration: const BoxDecoration(
               color: Color.fromRGBO(2, 33, 47, 1.0),
             ),
-            child: ListView(
-              children: [
-                Container(
-                  height: 200,
-                  decoration: const BoxDecoration(
-                    color: Colors.grey,
-                    border: Border(
-                      bottom: BorderSide(
-                        color: Colors.white, // Màu của đường viền
-                        width: 3.0, // Độ rộng của đường viền
+            child: Padding(
+              padding: const EdgeInsets.only(left: 20, right: 20),
+              child: ListView(
+                children: [
+                  Container(
+                    height: 200,
+                    decoration: const BoxDecoration(
+                      color: Colors.grey,
+                      border: Border(
+                        bottom: BorderSide(
+                          color: Colors.white,
+                          width: 1,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 20),
-                  child: Row(
-                    children: [
-                      Container(
-                        height: 50,
-                        width: 50,
-                        decoration: const BoxDecoration(
-                            image: DecorationImage(image: AssetImage('1.png'))),
-                      ),
-                      Container(
-                        height: 50,
-                        width: 50,
-                        decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                              image: AssetImage('phone.jpg'),
-                              fit: BoxFit.fill,
-                            )),
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.only(left: 10),
-                        child: Text(
-                          'Nguyen Quang Huong',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20),
+                    child: Row(
+                      children: [
+                        Container(
+                          height: 40,
+                          width: 40,
+                          decoration: const BoxDecoration(
+                              image: DecorationImage(image: AssetImage('1.png'))),
                         ),
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.only(left: 30),
-                        child: Text(
-                          '200 KN',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                              color: Colors.white),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 4),
+                          child: Container(
+                            height: 45,
+                            width: 45,
+                            decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                  image: AssetImage('phone.jpg'),
+                                  fit: BoxFit.fill,
+                                )),
+                          ),
                         ),
-                      ),
-                    ],
+                        Padding(
+                          padding: const EdgeInsets.only(left: 15),
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width / 2,
+                            child: const Text(
+                              'anwer asley',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 19,
+                                  fontWeight: FontWeight.bold),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ),
+                        const Expanded(
+                          flex: 1,
+                          child: Text(
+                            '200 KN',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 19,
+                                color: Colors.white,
+                            ),
+                            textAlign: TextAlign.right,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 20),
-                  child: Row(
-                    children: [
-                      Container(
-                        height: 50,
-                        width: 50,
-                        decoration: const BoxDecoration(
-                            image: DecorationImage(image: AssetImage('1.png'))),
-                      ),
-                      Container(
-                        height: 50,
-                        width: 50,
-                        decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                              image: AssetImage('phone.jpg'),
-                              fit: BoxFit.fill,
-                            )),
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.only(left: 10),
-                        child: Text(
-                          'Nguyen Quang Huong',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20),
+                    child: Row(
+                      children: [
+                        Container(
+                          height: 40,
+                          width: 40,
+                          decoration: const BoxDecoration(
+                              image: DecorationImage(image: AssetImage('1.png'))),
                         ),
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.only(left: 30),
-                        child: Text(
-                          '200 KN',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                              color: Colors.white),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 4),
+                          child: Container(
+                            height: 45,
+                            width: 45,
+                            decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                  image: AssetImage('phone.jpg'),
+                                  fit: BoxFit.fill,
+                                )),
+                          ),
                         ),
-                      ),
-                    ],
+                        Padding(
+                          padding: const EdgeInsets.only(left: 15),
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width / 2,
+                            child: const Text(
+                              'sanjay kumar',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 19,
+                                  fontWeight: FontWeight.bold),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ),
+                        const Expanded(
+                          flex: 1,
+                          child: Text(
+                            '200 KN',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 19,
+                                color: Colors.white,
+                            ),
+                            textAlign: TextAlign.right,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 20),
-                  child: Row(
-                    children: [
-                      Container(
-                        height: 50,
-                        width: 50,
-                        decoration: const BoxDecoration(
-                            image: DecorationImage(image: AssetImage('1.png'))),
-                      ),
-                      Container(
-                        height: 50,
-                        width: 50,
-                        decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                              image: AssetImage('phone.jpg'),
-                              fit: BoxFit.fill,
-                            )),
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.only(left: 10),
-                        child: Text(
-                          'Nguyen Quang Huong',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.only(left: 30),
-                        child: Text(
-                          '200 KN',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                              color: Colors.white),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
           Positioned(
