@@ -42,7 +42,7 @@ class AnswerTheQuestionController{
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(<String, dynamic>{
-        'UserCode': "1",
+        'UserCode': "viet_1",
         'CodeLesson' : codeLesson,
         'IsCorrect' : IsCorrect,
         'CodeQuestion' : codeQuestion,
