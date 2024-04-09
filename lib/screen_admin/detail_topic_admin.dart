@@ -25,8 +25,7 @@ class _DetailTopicAdmin extends State<DetailTopicAdmin> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _avatarController = TextEditingController();
   final TextEditingController _comboColorController = TextEditingController();
-  final TextEditingController _createdByController = TextEditingController();
-  final TextEditingController _createdTimeController = TextEditingController();
+  DateTime _createdTime = DateTime.now();
   final TextEditingController _updatedByController = TextEditingController();
   final TextEditingController _updatedTimeController = TextEditingController();
 
@@ -40,8 +39,6 @@ class _DetailTopicAdmin extends State<DetailTopicAdmin> {
   void fetchData() async {
     try {
       final data = await AccountController.getAccountId(widget.code);
-
-      // final data1 = await ChooseTopicController.getTopicById(widget.code_topic);
       final data1 = await TopicAdmin1.getTopicById(widget.code_topic);
 
       setState(() {
@@ -73,7 +70,7 @@ class _DetailTopicAdmin extends State<DetailTopicAdmin> {
                           child: Text('Topic Manager',
                             style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
                         ),
-                        Container(child:ClipRRect(borderRadius: BorderRadius.circular(50),child: CachedNetworkImage(imageUrl: 'assets/abc1.jpg',height: 50,width: 50,fit: BoxFit.cover,)),)
+                        Container(child:ClipRRect(borderRadius: BorderRadius.circular(50),child: CachedNetworkImage(imageUrl: 'assets/assets/${accounts[0]['avatar']}',height: 50,width: 50,fit: BoxFit.cover,)),)
                       ],),
 
                   ],
@@ -194,14 +191,6 @@ class _DetailTopicAdmin extends State<DetailTopicAdmin> {
                                                 controller: _comboColorController,
                                                 decoration: InputDecoration(labelText: 'ComboColor'),
                                               ),
-                                              TextFormField(
-                                                controller: _createdByController,
-                                                decoration: InputDecoration(labelText: 'CreatedBy'),
-                                              ),
-                                              TextFormField(
-                                                controller: _createdTimeController,
-                                                decoration: InputDecoration(labelText: 'CreatedTime'),
-                                              ),
                                             ],
                                           ),
                                         ),
@@ -219,17 +208,15 @@ class _DetailTopicAdmin extends State<DetailTopicAdmin> {
                                                     borderRadius: BorderRadius.circular(10)
                                                 )
                                             ),
-                                            onPressed: () {
+                                            onPressed: () async  {
                                               final String code = _codeController.text;
                                               final String name = _nameController.text;
                                               final String avatar = _avatarController.text;
                                               final String comboColor = _comboColorController.text;
-                                              final String createdBy = _createdByController.text;
-                                              final String createdTime = _createdTimeController.text;
+                                              final String createdBy = 'Thuong';
+                                              final DateTime createdTime = _createdTime;
 
-                                              // Thực hiện các hành động cần thiết với dữ liệu được nhập
-
-                                              // Sau khi xử lý xong, đóng AlertDialog
+                                              await TopicAdmin1.PostTopicAPI(code, name, avatar, comboColor, createdBy, createdTime);
                                               Navigator.of(context).pop();
                                             },
                                             child: Text('Thêm', style: TextStyle(
@@ -386,4 +373,6 @@ class _DetailTopicAdmin extends State<DetailTopicAdmin> {
     );
   }
 }
+
+
 
