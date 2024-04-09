@@ -155,7 +155,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               ),
                                             ),
                                             Text(
-                                              '$totalDay',
+                                              totalDay,
                                               style: const TextStyle(
                                                 fontSize: 35,
                                                 fontWeight: FontWeight.bold,

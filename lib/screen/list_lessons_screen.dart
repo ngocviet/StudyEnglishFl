@@ -5,9 +5,9 @@ import 'package:flutter/widgets.dart';
 import '../controllers/list_lesson.controller.dart';
 
 class ListLessonsScreen extends StatefulWidget {
-  final codeUser;
+  final String codeUser;
 
-  const ListLessonsScreen({super.key, this.codeUser});
+  const ListLessonsScreen({super.key,required this.codeUser});
   @override
   State<StatefulWidget> createState() {
     return ViewListLesson();
@@ -16,6 +16,7 @@ class ListLessonsScreen extends StatefulWidget {
 
 class ViewListLesson extends State<ListLessonsScreen> {
   List<dynamic> listLesson = [];
+  int totalLesson = 0;
   @override
   void initState() {
     super.initState();
@@ -24,12 +25,13 @@ class ViewListLesson extends State<ListLessonsScreen> {
 
   void fetchData() async {
     try {
-      final data = await ListLesson.getListLesson();
+      final data = await ListLesson.getListLesson(widget.codeUser);
       setState(() {
-        listLesson = data;
+        listLesson = data["data"];
+        totalLesson = data["totalCount"];
       });
     } catch (e) {
-      print('Error: $e');
+      print('Error:hi $e');
     }
   }
 
@@ -92,7 +94,9 @@ class ViewListLesson extends State<ListLessonsScreen> {
           ),
           child: Column(
             children: [
-              SizedBox(height: 20,),
+              SizedBox(
+                height: 20,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -110,7 +114,7 @@ class ViewListLesson extends State<ListLessonsScreen> {
                       children: [
                         // Border
                         Text(
-                          '20',
+                          totalLesson.toString(),
                           style: TextStyle(
                             fontSize: 80,
                             fontWeight: FontWeight.bold,
@@ -122,8 +126,8 @@ class ViewListLesson extends State<ListLessonsScreen> {
                           ),
                         ),
                         // Text
-                        const Text(
-                          '20',
+                        Text(
+                          totalLesson.toString(),
                           style: TextStyle(
                             fontSize: 80,
                             fontWeight: FontWeight.bold,
@@ -167,7 +171,8 @@ class ViewListLesson extends State<ListLessonsScreen> {
                         Align(
                           alignment: Alignment.center,
                           child: Padding(
-                              padding: const EdgeInsets.only(right: 20, left: 20, top: 30),
+                              padding: const EdgeInsets.only(
+                                  right: 20, left: 20, top: 30),
                               child: ElevatedButton(
                                 onPressed: () {},
                                 style: ElevatedButton.styleFrom(
@@ -183,17 +188,20 @@ class ViewListLesson extends State<ListLessonsScreen> {
                                       const EdgeInsets.fromLTRB(0, 20, 0, 20),
                                   child: Row(
                                     children: [
-                                      const Text(
-                                        'Bài 1 :  ',
+                                      Text(
+                                        "bài ${index + 1}: ", // Nối chuỗi "bài" với số thứ tự
                                         style: TextStyle(
-                                            fontSize: 20, color: Colors.white),
+                                          fontSize: 20,
+                                          color: Colors.white,
+                                        ),
                                       ),
                                       Expanded(
                                         flex: 1,
                                         child: Text(
                                           lesson['name'],
                                           style: const TextStyle(
-                                              fontSize: 20, color: Colors.white),
+                                              fontSize: 20,
+                                              color: Colors.white),
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
                                         ),
@@ -206,23 +214,21 @@ class ViewListLesson extends State<ListLessonsScreen> {
                         Positioned(
                           top: 15,
                           right: 15,
-                            child: Container(
-                              width: 28,
-                              height: 28,
-                              decoration: BoxDecoration(
-                                color: const Color.fromRGBO(29, 106, 122, 1.0),
-                                borderRadius: BorderRadius.circular(14),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  '2',
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.white
-                                  ),
-                                ),
+                          child: Container(
+                            width: 28,
+                            height: 28,
+                            decoration: BoxDecoration(
+                              color: const Color.fromRGBO(29, 106, 122, 1.0),
+                              borderRadius: BorderRadius.circular(14),
+                            ),
+                            child: Center(
+                              child: Text(
+                                lesson["totalquestion"].toString(),
+                                style: const TextStyle(
+                                    fontSize: 16, color: Colors.white),
                               ),
                             ),
+                          ),
                         )
                       ],
                     );
