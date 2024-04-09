@@ -1,6 +1,4 @@
 import 'dart:convert';
-
-import '../models/account.dart';
 import 'package:http/http.dart' as http;
 
 class AccountController {

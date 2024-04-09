@@ -125,32 +125,7 @@ class _AccountAdminState extends State<AccountAdmin> {
                           SizedBox(width: 20,),
 
 
-                          Container(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween, // Căn lề của hàng theo chiều ngang
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                        backgroundColor: Colors.green,
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(10)
-                                        )
-                                    )
-                                    ,onPressed: (){
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(builder: (context) => DetailAccountAdmin(code: acc['code'],)
-                                      )
-                                  );
-                                }, child: Text('Detail',style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold
-                                ),)),
 
-                              ],
-                            ),
-                          )
                         ],
                       ),
 

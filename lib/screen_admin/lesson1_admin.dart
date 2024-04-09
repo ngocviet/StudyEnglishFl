@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:project4/controllers/lesson_admin_controller.dart';
 
 import '../controllers/account_admin_controller.dart';
+import '../controllers/question_answers_admin_controller.dart';
 
 class Lesson1Admin extends StatefulWidget {
   final String code;
@@ -15,6 +16,9 @@ class Lesson1Admin extends StatefulWidget {
 class _Lesson1AdminState extends State<Lesson1Admin> {
   bool showQuestions1 = true;
   bool showQuestions2 = false;
+
+  Map<String, bool> showAnswers = {};
+  List<dynamic> questions = [];
 
   Color wordButtonColor = Colors.black;
   Color wordButtonColor1 = Colors.blue;
@@ -34,9 +38,12 @@ class _Lesson1AdminState extends State<Lesson1Admin> {
       final word = await LessonAdminController.GetWord();
 
       final acc = await AccountController.getAccountId(widget.code);
+
+      final data1 = await QuestionAnswersAdminController.getQuestion();
       setState(() {
         words = word;
         accounts = acc;
+        questions = data1;
       });
     } catch (e) {
       print('Error: $e');
@@ -155,9 +162,10 @@ class _Lesson1AdminState extends State<Lesson1Admin> {
             SizedBox(height: 20),
             Expanded(
               child:ListView.builder(
-                itemCount: words.length,
+                itemCount: showQuestions1 ? words.length : questions.length,
                 itemBuilder: (context, index) {
-                  var word = words[index];
+                  var word = showQuestions1 ? words[index] : questions[index];
+                  final bool isShowingAnswers = showAnswers[word['questionCode']] ?? false;
                   if(showQuestions1)
                     return  ElevatedButton(
                       style: ElevatedButton.styleFrom(
@@ -172,18 +180,106 @@ class _Lesson1AdminState extends State<Lesson1Admin> {
                         width: MediaQuery.of(context).size.width * 0.6,
                         child: Column(
                           children: [
+                            SizedBox(height: 10,),
                             Text(
-                              '${word['nameEN']}: ${word['nameVN']}',
+                              '${word['nameEN']}: ${word['nameVN']} ',
                               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,color: Colors.black),
                               softWrap: true,
                             ),
+                            SizedBox(height: 10,)
                           ],
                         ),
                       ),
 
                     );
                   else{
-                    return Text("2");
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)
+                              ),
+                              minimumSize: Size(MediaQuery.of(context).size.width , 70),
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                showAnswers[word['questionCode']] = !isShowingAnswers;
+                              });
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  '${word['questionName']}',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  softWrap: true,
+                                ),
+                                Icon(
+                                  Icons.keyboard_arrow_down,
+                                  color: Colors.black, // Màu của biểu tượng
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+
+                        if (isShowingAnswers) ...[
+
+                          Center(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: word['answers'].map<Widget>((answer) {
+                                return Container(
+                                  color: answer['isTrue'] ? Colors.blue : null,
+                                  child:
+                                  OutlinedButton(
+                                    style: OutlinedButton.styleFrom(
+
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10), // Độ bo tròn ở đây là 10
+                                      ),
+                                    ),
+                                    onPressed: () {
+
+                                    },
+                                    child: Container(
+                                      width: MediaQuery.of(context).size.width*0.6,
+                                      height: 40,
+                                      child: Center(
+                                        child: Center(
+                                          child: Row(
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text('${(answer['answerName'])}',style: TextStyle(
+                                                color: Colors.black,
+                                              ),
+                                              ),
+
+
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                        ],
+                        Divider(),
+                      ],
+                    );
                   }
                 },
               ),
