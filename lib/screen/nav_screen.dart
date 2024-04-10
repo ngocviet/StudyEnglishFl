@@ -9,6 +9,7 @@ import 'package:project4/screen_admin/answer_admin.dart';
 import 'package:project4/wiget/CustomTabbar.dart';
 
 import '../screen_admin/account_admin.dart';
+import 'detail_lesson_screen.dart';
 import 'huongtestapi.dart';
 import 'list_lessons_screen.dart';
 
@@ -23,13 +24,8 @@ class _NavScreenState extends State<NavScreen> {
   final List<Widget> _screens = [
     HomeScreen(),
     StatisticalScreen(),
-    // RatingsScreen(),
-    ListLessonsScreen(codeUser: 'viet_1',),
+    RatingsScreen(),
     ProFileScreen(),
-    // huong(),
-    // Thuong(),
-    // AccountAdmin(),
-    // AnswerAdmin()
   ];
 
   final List<IconData> _icons = const [
