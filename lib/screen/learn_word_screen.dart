@@ -26,6 +26,7 @@ class ViewScreen extends State<LearnWordScreen> {
   List<dynamic> listAnswer = [];
   int stt = 0;
   int totalHeart = 0;
+  int totalCorrect = 0;
   int showMessage = 0;
   bool canSubmit = false;
   String answerCorrect = "";
@@ -107,6 +108,7 @@ class ViewScreen extends State<LearnWordScreen> {
     setState(() {
       if (check["isTrue"]) {
         showMessage = 1;
+        totalCorrect += 1;
         if(percentWidth == 0.0){
           percentWidth = 1 / dataMain.length;
         }else{
@@ -433,7 +435,7 @@ class ViewScreen extends State<LearnWordScreen> {
           if (showMessage == 3)
             MessageNextTitleScreen(
               onTap: () {
-                Navigator.pop(context, 0);
+                Navigator.pop(context, {"index": 0, "totalCorrect": totalCorrect});
               },
               title: "Học từ vựng!",
             ),

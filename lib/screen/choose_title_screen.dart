@@ -5,8 +5,10 @@ import 'package:project4/controllers/choose_title_controller.dart';
 import 'package:project4/screen/answer_the_question_screen.dart';
 import 'package:project4/screen/combine_sentences_screen.dart';
 import 'package:project4/screen/learn_word_screen.dart';
+import 'package:project4/screen/notification_result_screen.dart';
 
 class ChooseTitleScreen extends StatefulWidget {
+  final String codeUser;
   final String codeLesson;
   final String sttLesson;
   final String title;
@@ -14,7 +16,7 @@ class ChooseTitleScreen extends StatefulWidget {
       {super.key,
       required this.codeLesson,
       required this.sttLesson,
-      required this.title});
+      required this.title, required this.codeUser});
 
   @override
   State<ChooseTitleScreen> createState() => _ChooseTitleScreenState();
@@ -24,6 +26,9 @@ class _ChooseTitleScreenState extends State<ChooseTitleScreen> {
   int totalWord = 0;
   int totalQuestion = 0;
   int totalPuzzle = 0;
+  int totalCorrectW = 10;
+  int totalCorrectQ = 10;
+  int totalCorrectP = 10;
   List<bool> isComplete = [false, false, false];
 
   @override
@@ -51,6 +56,21 @@ class _ChooseTitleScreenState extends State<ChooseTitleScreen> {
       setState(() {
         isComplete[index] = true;
       });
+    }
+  }
+
+  void checkComplete(){
+    if(isComplete[0]){
+      int total = totalCorrectW + totalCorrectQ +totalCorrectP;
+      int pW = (totalCorrectW / totalWord * 100).round().toInt();
+      int pQ = (totalCorrectQ / totalWord * 100).round().toInt();
+      int pP = (totalCorrectP / totalWord * 100).round().toInt();
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) =>
+                NotificationResultScreen(codeUser: widget.codeUser,pass: total,miss: 1,percentW: pW,percentQ: pQ,percentP: pP,)),
+      );
     }
   }
 
@@ -152,8 +172,16 @@ class _ChooseTitleScreenState extends State<ChooseTitleScreen> {
                   MaterialPageRoute(
                       builder: (context) =>
                           LearnWordScreen(codeLesson: widget.codeLesson, UserCode: "")),
-                ).then((index) {
-                  changeStatusItem(index);
+                ).then((result) {
+                  if (result != null) {
+                    int index = result["index"];
+                    int value = result["totalCorrect"];
+                    setState(() {
+                      totalCorrectW = value;
+                    });
+                    changeStatusItem(index);
+                  }
+                  checkComplete();
                 });
               },
               child: Item(

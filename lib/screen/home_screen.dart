@@ -3,6 +3,7 @@ import 'package:project4/controllers/home_controller.dart';
 import 'package:project4/models/account.dart';
 import 'package:project4/screen/choose_title_screen.dart';
 import 'package:project4/screen/choose_topic_screen.dart';
+import 'package:project4/screen/notification_result_screen.dart';
 
 import 'answer_the_question_screen.dart';
 import 'huongtestapi.dart';
@@ -88,10 +89,12 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         body: SingleChildScrollView(
+          // physics: const FixedExtentScrollPhysics(),
           child: Container(
             width: MediaQuery.of(context).size.width,
-            height: 850,
+            height: MediaQuery.of(context).size.height,
             decoration: BoxDecoration(
+              color: Colors.black,
               image: DecorationImage(
                   image: const AssetImage('back1.jpg'),
                   fit: BoxFit.cover,
@@ -187,7 +190,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  ChooseTopicScreen(codeUser: "viet_1")),
+                                                  //const ChooseTopicScreen(codeUser: "viet_1")),
+                                            const NotificationResultScreen(codeUser: "viet_1",percentW: 50,percentQ: 80,percentP: 20,miss: 3,pass: 10,)),
                                         ).then((value) {
                                           chooseTopic(value);
                                         });
@@ -349,6 +353,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               builder: (context) =>
                                                   ChooseTitleScreen(
                                                     codeLesson: lesson['code'],
+                                                    codeUser: "viet_1",
                                                     title: lesson['title'],
                                                     sttLesson:
                                                     'Bài học số ${index + 1}',
