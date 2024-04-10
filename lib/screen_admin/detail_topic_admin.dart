@@ -26,8 +26,8 @@ class _DetailTopicAdmin extends State<DetailTopicAdmin> {
   final TextEditingController _avatarController = TextEditingController();
   final TextEditingController _comboColorController = TextEditingController();
   DateTime _createdTime = DateTime.now();
-  final TextEditingController _updatedByController = TextEditingController();
-  final TextEditingController _updatedTimeController = TextEditingController();
+  DateTime _updatedTimeController = DateTime.now();
+
 
 
   @override
@@ -216,7 +216,7 @@ class _DetailTopicAdmin extends State<DetailTopicAdmin> {
                                               final String createdBy = 'Thuong';
                                               final DateTime createdTime = _createdTime;
 
-                                              await TopicAdmin1.PostTopicAPI(code, name, avatar, comboColor, createdBy, createdTime);
+                                              await TopicAdmin1.AddTopicAPI(code, name, avatar, comboColor, createdBy, createdTime);
                                               Navigator.of(context).pop();
                                             },
                                             child: Text('Thêm', style: TextStyle(
@@ -253,7 +253,6 @@ class _DetailTopicAdmin extends State<DetailTopicAdmin> {
                                           content: SingleChildScrollView(
                                             child: Column(
                                               children: [
-                                                // Thêm các trường dữ liệu vào form
                                                 TextFormField(
                                                   controller: _codeController,
                                                   decoration: InputDecoration(labelText: 'Code'),
@@ -270,14 +269,7 @@ class _DetailTopicAdmin extends State<DetailTopicAdmin> {
                                                   controller: _comboColorController,
                                                   decoration: InputDecoration(labelText: 'ComboColor'),
                                                 ),
-                                                TextFormField(
-                                                  controller: _updatedByController,
-                                                  decoration: InputDecoration(labelText: 'UpdatedBy'),
-                                                ),
-                                                TextFormField(
-                                                  controller: _updatedTimeController,
-                                                  decoration: InputDecoration(labelText: 'UpdatedTime'),
-                                                ),
+
                                               ],
                                             ),
                                           ),
@@ -295,17 +287,15 @@ class _DetailTopicAdmin extends State<DetailTopicAdmin> {
                                                       borderRadius: BorderRadius.circular(10)
                                                   )
                                               ),
-                                              onPressed: () {
+                                              onPressed: () async {
                                                 final String code = _codeController.text;
                                                 final String name = _nameController.text;
                                                 final String avatar = _avatarController.text;
                                                 final String comboColor = _comboColorController.text;
-                                                final String updatedBy = _updatedByController.text;
-                                                final String updatedTime = _updatedTimeController.text;
+                                                final String updatedBy = 'thuong';
+                                                final DateTime updatedTime = _updatedTimeController;
 
-                                                // Thực hiện các hành động cần thiết với dữ liệu đã chỉnh sửa
-
-                                                // Sau khi xử lý xong, đóng AlertDialog
+                                                await TopicAdmin1.UpdateTopicAPI(code, name, avatar, comboColor, updatedBy, updatedTime);
                                                 Navigator.of(context).pop();
                                               },
                                               child: Text('Lưu', style: TextStyle(
@@ -332,10 +322,39 @@ class _DetailTopicAdmin extends State<DetailTopicAdmin> {
                                           borderRadius: BorderRadius.circular(10)
                                       )
                                   ),
-                                  onPressed: (){}, child: Text('Delete',style: TextStyle(
+                                  onPressed: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          title: Text("Xác nhận xóa"),
+                                          content: Text("Bạn có chắc chắn muốn xóa không?"),
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () {
+                                                Navigator.of(context).pop(); // Đóng hộp thoại
+                                              },
+                                              child: Text('Hủy'),
+                                            ),
+                                            TextButton(
+                                              onPressed: () {
+                                                final String code = topic['code'];
+                                                TopicAdmin1.deleteTopicById(code);
+
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: Text('Xóa', style: TextStyle(color: Colors.red)),
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
+                                  },
+                                  child: Text('Delete',style: TextStyle(
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold
-                              ),)
+                              ),
+                              )
                               ),
                             ],
                           ),
