@@ -26,6 +26,7 @@ class ScreenState extends State<AnswerTheQuestionScreen> {
   List<dynamic> listAnswer = [];
   List<dynamic> listQuestion = [];
   int stt = 0;
+  int totalCorrect = 0;
   String question = "";
   String codeQuestion = "";
   String avatar = "question.jpg";
@@ -106,6 +107,7 @@ class ScreenState extends State<AnswerTheQuestionScreen> {
     setState(() {
       if (check["isTrue"]) {
         showMessage = 1;
+        totalCorrect += 1;
         if(percentWidth == 0.0){
           percentWidth = 1 / listQuestion.length;
         }else{
@@ -429,7 +431,7 @@ class ScreenState extends State<AnswerTheQuestionScreen> {
           if (showMessage == 3)
             MessageNextTitleScreen(
               onTap: () {
-                Navigator.pop(context, 1);
+                Navigator.pop(context, {"index": 1, "totalCorrect": totalCorrect});
               },
               title: "Trả lời câu hỏi!",
             ),

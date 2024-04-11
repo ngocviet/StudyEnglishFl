@@ -3,11 +3,6 @@ import 'package:project4/controllers/home_controller.dart';
 import 'package:project4/models/account.dart';
 import 'package:project4/screen/choose_title_screen.dart';
 import 'package:project4/screen/choose_topic_screen.dart';
-import 'package:project4/screen/notification_result_screen.dart';
-
-import 'answer_the_question_screen.dart';
-import 'huongtestapi.dart';
-import 'learn_word_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -190,8 +185,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  //const ChooseTopicScreen(codeUser: "viet_1")),
-                                            const NotificationResultScreen(codeUser: "viet_1",percentW: 50,percentQ: 80,percentP: 20,miss: 3,pass: 10,)),
+                                                  const ChooseTopicScreen(codeUser: "viet_1")),
                                         ).then((value) {
                                           chooseTopic(value);
                                         });

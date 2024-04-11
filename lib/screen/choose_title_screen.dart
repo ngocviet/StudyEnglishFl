@@ -5,6 +5,7 @@ import 'package:project4/controllers/choose_title_controller.dart';
 import 'package:project4/screen/answer_the_question_screen.dart';
 import 'package:project4/screen/combine_sentences_screen.dart';
 import 'package:project4/screen/learn_word_screen.dart';
+import 'package:project4/screen/message/message_out_screen.dart';
 import 'package:project4/screen/notification_result_screen.dart';
 
 class ChooseTitleScreen extends StatefulWidget {
@@ -16,7 +17,8 @@ class ChooseTitleScreen extends StatefulWidget {
       {super.key,
       required this.codeLesson,
       required this.sttLesson,
-      required this.title, required this.codeUser});
+      required this.title,
+      required this.codeUser});
 
   @override
   State<ChooseTitleScreen> createState() => _ChooseTitleScreenState();
@@ -24,11 +26,12 @@ class ChooseTitleScreen extends StatefulWidget {
 
 class _ChooseTitleScreenState extends State<ChooseTitleScreen> {
   int totalWord = 0;
+  int showMessage = 0;
   int totalQuestion = 0;
   int totalPuzzle = 0;
-  int totalCorrectW = 10;
-  int totalCorrectQ = 10;
-  int totalCorrectP = 10;
+  int totalCorrectW = 0;
+  int totalCorrectQ = 0;
+  int totalCorrectP = 0;
   List<bool> isComplete = [false, false, false];
 
   @override
@@ -45,6 +48,9 @@ class _ChooseTitleScreenState extends State<ChooseTitleScreen> {
         totalWord = rs['totalWord'];
         totalQuestion = rs['totalQuestion'];
         totalPuzzle = rs['totalPuzzle'];
+        isComplete[0] = totalWord == 0 ? true : false;
+        isComplete[1] = totalQuestion == 0 ? true : false;
+        isComplete[2] = totalPuzzle == 0 ? true : false;
       });
     } catch (e) {
       print('Error: $e');
@@ -52,25 +58,45 @@ class _ChooseTitleScreenState extends State<ChooseTitleScreen> {
   }
 
   void changeStatusItem(int index) {
-    if(index != null){
+    if (index != null) {
       setState(() {
         isComplete[index] = true;
       });
     }
   }
 
-  void checkComplete(){
-    if(isComplete[0]){
-      int total = totalCorrectW + totalCorrectQ +totalCorrectP;
-      int pW = (totalCorrectW / totalWord * 100).round().toInt();
-      int pQ = (totalCorrectQ / totalWord * 100).round().toInt();
-      int pP = (totalCorrectP / totalWord * 100).round().toInt();
+  void checkComplete() {
+    if (isComplete[0] && isComplete[1] && isComplete[2]) {
+      int total = totalCorrectW + totalCorrectQ + totalCorrectP;
+      int miss = totalWord +
+          totalQuestion +
+          totalPuzzle -
+          totalCorrectW -
+          totalCorrectQ -
+          totalCorrectP;
+      int pW = totalWord == 0
+          ? 0
+          : (totalCorrectW / totalWord * 100).round().toInt();
+      int pQ = totalQuestion == 0
+          ? 0
+          : (totalCorrectQ / totalQuestion * 100).round().toInt();
+      int pP = totalPuzzle == 0
+          ? 0
+          : (totalCorrectP / totalPuzzle * 100).round().toInt();
       Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) =>
-                NotificationResultScreen(codeUser: widget.codeUser,pass: total,miss: 1,percentW: pW,percentQ: pQ,percentP: pP,)),
-      );
+            builder: (context) => NotificationResultScreen(
+                  codeUser: widget.codeUser,
+                  pass: total,
+                  miss: miss,
+                  percentW: pW,
+                  percentQ: pQ,
+                  percentP: pP,
+                )),
+      ).then((result) {
+        Navigator.pop(context);
+      });
     }
   }
 
@@ -82,7 +108,9 @@ class _ChooseTitleScreenState extends State<ChooseTitleScreen> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.pop(context);
+            setState(() {
+              showMessage = 4;
+            });
           },
           color: Colors.white,
         ),
@@ -121,117 +149,156 @@ class _ChooseTitleScreenState extends State<ChooseTitleScreen> {
           ),
         ),
       ),
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: const AssetImage('giaodien2.jpg'),
-            fit: BoxFit.cover,
-            colorFilter: ColorFilter.mode(
-              Colors.black.withOpacity(0.6),
-              BlendMode.darken,
+      body: Stack(
+        children: [
+          Container(
+            width: double.infinity,
+            height: double.infinity,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: const AssetImage('giaodien2.jpg'),
+                fit: BoxFit.cover,
+                colorFilter: ColorFilter.mode(
+                  Colors.black.withOpacity(0.6),
+                  BlendMode.darken,
+                ),
+              ),
+            ),
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            widget.sttLesson,
+                            style: const TextStyle(
+                                color: Colors.amber, fontSize: 20),
+                          )
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 10),
+                            child: Text(
+                              widget.title,
+                              style: const TextStyle(
+                                  color: Colors.white, fontSize: 20),
+                            ),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 50),
+                GestureDetector(
+                  onTap: () {
+                    if (!isComplete[0]) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => LearnWordScreen(
+                                codeLesson: widget.codeLesson, UserCode: "")),
+                      ).then((result) {
+                        if (result != null) {
+                          int index = result["index"];
+                          int value = result["totalCorrect"];
+                          setState(() {
+                            totalCorrectW = value;
+                          });
+                          changeStatusItem(index);
+                        }
+                        checkComplete();
+                      });
+                    }
+                  },
+                  child: Item(
+                    imageUrl: 'abc1.jpg',
+                    title: 'Học từ vựng',
+                    total: totalWord,
+                    isComplete: isComplete[0],
+                  ),
+                ),
+                const SizedBox(height: 50),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => AnswerTheQuestionScreen(
+                              CodeLesson: widget.codeLesson, UserCode: "")),
+                    ).then((result) {
+                      if (result != null) {
+                        int index = result["index"];
+                        int value = result["totalCorrect"];
+                        setState(() {
+                          totalCorrectQ = value;
+                        });
+                        changeStatusItem(index);
+                      }
+                      checkComplete();
+                    });
+                  },
+                  child: Item(
+                    imageUrl: 'hoicham2.png',
+                    title: 'Trả lời câu hỏi',
+                    total: totalQuestion,
+                    isComplete: isComplete[1],
+                  ),
+                ),
+                const SizedBox(height: 50),
+                GestureDetector(
+                  onTap: () {
+                    if (totalPuzzle > 0) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => CombineSentencesScreen()),
+                      ).then((result) {
+                        if (result != null) {
+                          int index = result["index"];
+                          int value = result["totalCorrect"];
+                          setState(() {
+                            totalCorrectP = value;
+                          });
+                          changeStatusItem(index);
+                        }
+                        checkComplete();
+                      });
+                    }
+                  },
+                  child: Item(
+                    imageUrl: 'ghepcau1.jpg',
+                    title: 'Ghép câu có ý nghĩa',
+                    total: totalPuzzle,
+                    isComplete: isComplete[2],
+                  ),
+                ),
+              ],
             ),
           ),
-        ),
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        widget.sttLesson,
-                        style:
-                            const TextStyle(color: Colors.amber, fontSize: 20),
-                      )
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10),
-                        child: Text(
-                          widget.title,
-                          style: const TextStyle(
-                              color: Colors.white, fontSize: 20),
-                        ),
-                      )
-                    ],
-                  ),
-                ],
-              ),
+          if (showMessage == 4)
+            Container(
+              width: double.infinity,
+              height: double.infinity,
+              color: const Color.fromRGBO(59, 59, 59, 0.4),
             ),
-            const SizedBox(height: 50),
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          LearnWordScreen(codeLesson: widget.codeLesson, UserCode: "")),
-                ).then((result) {
-                  if (result != null) {
-                    int index = result["index"];
-                    int value = result["totalCorrect"];
-                    setState(() {
-                      totalCorrectW = value;
-                    });
-                    changeStatusItem(index);
-                  }
-                  checkComplete();
+          if (showMessage == 4)
+            MessageOutScreen(
+              onTapExit: () {
+                Navigator.pop(context);
+              },
+              onTapContinue: () {
+                setState(() {
+                  showMessage = 0;
                 });
               },
-              child: Item(
-                imageUrl: 'abc1.jpg',
-                title: 'Học từ vựng',
-                total: totalWord,
-                isComplete: isComplete[0],
-              ),
             ),
-            const SizedBox(height: 50),
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => AnswerTheQuestionScreen(
-                          CodeLesson: widget.codeLesson, UserCode: "")),
-                ).then((index) {
-                  changeStatusItem(index);
-                });
-              },
-              child: Item(
-                imageUrl: 'hoicham2.png',
-                title: 'Trả lời câu hỏi',
-                total: totalQuestion,
-                isComplete: isComplete[1],
-              ),
-            ),
-            const SizedBox(height: 50),
-            GestureDetector(
-              onTap: () {
-                if (totalPuzzle > 0) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => CombineSentencesScreen()),
-                  ).then((index) {
-                    changeStatusItem(index);
-                  });
-                }
-              },
-              child: Item(
-                imageUrl: 'ghepcau1.jpg',
-                title: 'Ghép câu có ý nghĩa',
-                total: totalPuzzle,
-                isComplete: isComplete[2],
-              ),
-            ),
-          ],
-        ),
+        ],
       ),
     );
   }

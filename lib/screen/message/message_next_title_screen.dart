@@ -55,11 +55,16 @@ class _MessageNextTitleScreenState extends State<MessageNextTitleScreen> {
                   ),
                   const SizedBox(
                       width: 15), // Khoảng cách giữa icon và text
-                  Text('Bạn đã hoàn thành phần ${widget.title}',
+                  const Text('Bạn đã hoàn thành phần ',
+                      style: TextStyle(
+                          color: Color.fromRGBO(210, 226, 236, 1.0),
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold)),
+                  Text(widget.title,
                       style: const TextStyle(
                           color: Color.fromRGBO(19, 157, 243, 1.0),
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold)), // Text
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold)),// Text
                 ],
               ),
             ),

@@ -30,7 +30,6 @@ class _NotificationResultScreenState extends State<NotificationResultScreen> {
     int percent = (widget.pass / (widget.pass + widget.miss) * 100).round().toInt();
     return Scaffold(
       body: SingleChildScrollView(
-        // physics: const FixedExtentScrollPhysics(),
         child: Container(
           padding: const EdgeInsets.all(20),
           width: MediaQuery.of(context).size.width,
@@ -102,7 +101,7 @@ class _NotificationResultScreenState extends State<NotificationResultScreen> {
                         height: 15,
                       ),
                       Text(
-                        'Hãy tiếp tục cố gắng',
+                        'Hãy tiếp tục cố gắng nhé!',
                         style: TextStyle(color: Colors.white, fontSize: 18),
                       ),
                     ],
@@ -138,7 +137,9 @@ class _NotificationResultScreenState extends State<NotificationResultScreen> {
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20)),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
                           child: const Padding(
                             padding: EdgeInsets.all(12),
                             child: Text(
@@ -272,7 +273,7 @@ class Item1 extends StatelessWidget {
             padding: EdgeInsets.only(top: 20, left: 10),
             child: Text(
               title,
-              style: TextStyle(
+              style: const TextStyle(
                   fontSize: 18,
                   color: Colors.white,
                   fontWeight: FontWeight.bold),
@@ -296,7 +297,7 @@ class Item1 extends StatelessWidget {
                             ? const Color.fromRGBO(34, 222, 48, 1.0)
                             : percentWidth > 0.4
                                 ? const Color.fromRGBO(225, 216, 42, 1.0)
-                                : const Color.fromRGBO(217, 75, 46, 1.0),
+                                : const Color.fromRGBO(225, 108, 23, 1.0),
                         borderRadius: BorderRadius.circular(14)),
                   ),
                 ),

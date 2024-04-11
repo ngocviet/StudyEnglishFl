@@ -68,14 +68,15 @@ class _UnSuccessScreenState extends State<UnSuccessScreen> {
                 Text(
                   widget.answer,
                   style: const TextStyle(
-                    color: Color.fromRGBO(243, 10, 10, 1),
+                    color: Color.fromRGBO(18, 243, 10, 1.0),
                     fontSize: 20,
+                    fontWeight: FontWeight.bold
                   ),
                 ),
               ]),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
+              padding: const EdgeInsets.only(left: 20, right: 20, top: 15),
               child: SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(

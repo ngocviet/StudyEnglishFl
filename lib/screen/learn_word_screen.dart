@@ -32,6 +32,7 @@ class ViewScreen extends State<LearnWordScreen> {
   String answerCorrect = "";
   List<dynamic> dataMain = [];
   double percentWidth = 0.0;
+  bool showAnserCorrect = false;
   @override
   void initState() {
     super.initState();
@@ -74,6 +75,7 @@ class ViewScreen extends State<LearnWordScreen> {
         listAnswer = dataMain[stt]['listAnswer'];
         canSubmit = false;
         showMessage = 0;
+        showAnserCorrect = false;
       });
       bool isExists = await doesAssetExist('assets/${dataMain[stt]['avatar']}');
       if (isExists) {
@@ -116,6 +118,7 @@ class ViewScreen extends State<LearnWordScreen> {
         }
       } else {
         answerCorrect = checkCorrect["nameVN"];
+        showAnserCorrect = true;
         showMessage = 2;
         totalHeart--;
       }
@@ -347,11 +350,9 @@ class ViewScreen extends State<LearnWordScreen> {
                                           borderRadius:
                                               BorderRadius.circular(20)),
                                       side: BorderSide(
-                                          color: !answer['isChoose']
-                                              ? const Color.fromRGBO(
-                                                  90, 104, 129, 1.0)
-                                              : const Color.fromRGBO(
-                                                  75, 199, 84, 1.0),
+                                          color: !showAnserCorrect ? !answer['isChoose'] ? const Color.fromRGBO(90, 104, 129, 1.0) : const Color.fromRGBO(75, 199, 84, 1.0) : answer['isTrue'] ? const Color.fromRGBO(
+                                              127, 217, 133, 1.0) : const Color.fromRGBO(
+                                              255, 0, 0, 1.0),
                                           width: 3),
                                     ),
                                     onPressed: () {
@@ -408,30 +409,32 @@ class ViewScreen extends State<LearnWordScreen> {
                   )
                 ],
               ),
-              if (showMessage == 1)
-                SuccessScreen(onTap: () {
-                  next();
-                }),
-              if (showMessage == 2)
-                UnSuccessScreen(
-                    onTap: () {
-                      if(totalHeart > 0){
-                        next();
-                      }else{
-                        setState(() {
-                          showMessage = 5;
-                        });
-                      }
-                    },
-                    answer: answerCorrect),
+
             ]),
           ),
-          if (showMessage == 4 || showMessage == 3 || showMessage == 5)
+          // if (showMessage == 4 || showMessage == 3 || showMessage == 5)
+          if (showMessage != 0)
             Container(
               width: double.infinity,
               height: double.infinity,
               color: const Color.fromRGBO(59, 59, 59, 0.4),
             ),
+          if (showMessage == 1)
+            SuccessScreen(onTap: () {
+              next();
+            }),
+          if (showMessage == 2)
+            UnSuccessScreen(
+                onTap: () {
+                  if(totalHeart > 0){
+                    next();
+                  }else{
+                    setState(() {
+                      showMessage = 5;
+                    });
+                  }
+                },
+                answer: answerCorrect),
           if (showMessage == 3)
             MessageNextTitleScreen(
               onTap: () {
