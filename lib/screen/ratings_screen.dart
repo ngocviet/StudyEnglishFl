@@ -6,7 +6,9 @@ import 'package:flutter/widgets.dart';
 import '../controllers/retings_controller.dart';
 
 class RatingsScreen extends StatefulWidget {
-  const RatingsScreen({Key? key}) : super(key: key);
+  final String codeUser;
+
+  const RatingsScreen({Key? key, required this.codeUser}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -32,8 +34,8 @@ class ViewRating extends State<RatingsScreen> {
 
   void fetchData() async {
     try {
-      final dataRetings = await RetingsController.getRetings();
-      var rankLastMonth = await RetingsController.getRankLastmonth();
+      final dataRetings = await RetingsController.getRetings(widget.codeUser);
+      var rankLastMonth = await RetingsController.getRankLastmonth(widget.codeUser);
       setState(() {
         listRetings = dataRetings["totalScoreByAllUsers"];
         name = dataRetings["totalScoreByUser"]["name"];

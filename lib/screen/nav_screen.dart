@@ -1,17 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:project4/screen/home_screen.dart';
-import 'package:project4/screen/list_vocabulary_screen.dart';
 import 'package:project4/screen/proflie_screen.dart';
 import 'package:project4/screen/ratings_screen.dart';
 import 'package:project4/screen/statistical_screen.dart';
-import 'package:project4/screen/thuong.dart';
-import 'package:project4/screen_admin/answer_admin.dart';
 import 'package:project4/wiget/CustomTabbar.dart';
-
-import '../screen_admin/account_admin.dart';
-import 'detail_lesson_screen.dart';
-import 'huongtestapi.dart';
-import 'list_lessons_screen.dart';
 
 class NavScreen extends StatefulWidget {
   const NavScreen({super.key});
@@ -22,10 +14,10 @@ class NavScreen extends StatefulWidget {
 
 class _NavScreenState extends State<NavScreen> {
   final List<Widget> _screens = [
-    HomeScreen(),
-    StatisticalScreen(),
-    RatingsScreen(),
-    ProFileScreen(),
+    HomeScreen(codeUser: "viet_1",),
+    StatisticalScreen(codeUser: "viet_1",),
+    RatingsScreen(codeUser: "viet_1",),
+    ProFileScreen(codeUser: "viet_1",),
   ];
 
   final List<IconData> _icons = const [
@@ -33,9 +25,6 @@ class _NavScreenState extends State<NavScreen> {
     Icons.airplay_rounded,
     Icons.bar_chart,
     Icons.person,
-    // Icons.add,
-    // Icons.abc,
-    // Icons.abc_outlined
   ];
 
   int _selectedIndex = 0;

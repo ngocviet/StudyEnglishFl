@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:flutter/widgets.dart';
 import 'package:project4/controllers/detail_lesson_controller.dart';
 
 class DetailLessonScreen extends StatefulWidget {
@@ -54,11 +55,11 @@ class ViewDetailLesson extends State<DetailLessonScreen> {
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Expanded(
+              const Expanded(
                 flex: 1,
                 child: SizedBox(
                   width: double.infinity,
-                  child: const Text(
+                  child: Text(
                     "Câu hỏi của bạn",
                     style: TextStyle(
                         fontSize: 22,
@@ -160,7 +161,19 @@ class ViewDetailLesson extends State<DetailLessonScreen> {
                   ),
                 ],
               ),
-              Container(
+              const Padding(
+                padding: EdgeInsets.only(top: 15, bottom: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Cùng nhau ôn lại bài nhé',
+                      style: TextStyle(color: Colors.white, fontSize: 20),
+                    )
+                  ],
+                ),
+              ),
+              SizedBox(
                   width: MediaQuery.of(context).size.width * 1,
                   height: MediaQuery.of(context).size.height * 0.6,
                   child: ListView.builder(
@@ -170,8 +183,8 @@ class ViewDetailLesson extends State<DetailLessonScreen> {
                       return Column(
                         children: [
                           Padding(
-                            padding: EdgeInsets.only(left: 20, right: 20),
-                            child: Container(
+                            padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
+                            child: SizedBox(
                               width: double.infinity,
                               child: ElevatedButton(
                                 onPressed: () {
@@ -179,12 +192,36 @@ class ViewDetailLesson extends State<DetailLessonScreen> {
                                     showAnswers[index] = !showAnswers[index];
                                   });
                                 },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor:
+                                  const Color.fromRGBO(80, 75, 75, 1),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  padding: const EdgeInsets.fromLTRB(20, 10, 10, 10)
+                                ),
                                 child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      bottom: 10, top: 10),
-                                  child: Text(
-                                    item["question"],
-                                    style: TextStyle(fontSize: 15),
+                                  padding: const EdgeInsets.only(bottom: 10, top: 10),
+                                  child: Container(
+                                    width: double.infinity,
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          flex: 1,
+                                          child: Text(
+                                            item["question"],
+                                            style: const TextStyle(fontSize: 20, color: Colors.white),
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            textAlign: TextAlign.left,
+                                          ),
+                                        ),
+                                        Icon(
+                                          showAnswers[index] ? Icons.keyboard_arrow_up_sharp : Icons.keyboard_arrow_down,
+                                          size: 25,
+                                          color: Colors.white,)
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
@@ -193,16 +230,14 @@ class ViewDetailLesson extends State<DetailLessonScreen> {
                           if (showAnswers[index])
                             Container(
                                 width: double.infinity,
-                                height: item["listAnswer"].length * 30 + 20,
-                                margin:
-                                    const EdgeInsets.symmetric(vertical: 10),
-                                padding: const EdgeInsets.all(10),
+                                height: item["listAnswer"].length * 40 + 10,
+                                padding: const EdgeInsets.fromLTRB(8,8,8,0),
                                 child: ListView.builder(
                                   itemCount: item["listAnswer"].length,
                                   itemBuilder: (context, index) {
                                     var item2 = item["listAnswer"][index];
                                     return SizedBox(
-                                        height: 30,
+                                        height: 40,
                                         child: Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
@@ -210,21 +245,25 @@ class ViewDetailLesson extends State<DetailLessonScreen> {
                                               MainAxisAlignment.center,
                                           children: [
                                             Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 20, right: 20),
+                                              padding: const EdgeInsets.only(left: 20, right: 20),
                                               child: Container(
                                                 width: double.infinity,
                                                 decoration: BoxDecoration(
                                                   color: item2["isTrue"]
                                                       ? Colors.green
-                                                      : Colors.grey.shade200,
+                                                      : const Color.fromRGBO(
+                                                      103, 103, 103, 1.0),
                                                   borderRadius:
                                                       BorderRadius.circular(10),
                                                 ),
-                                                child: Text(
-                                                  item2["answer"],
-                                                  style: const TextStyle(
-                                                    fontSize: 18,
+                                                child: Padding(
+                                                  padding: const EdgeInsets.fromLTRB(15, 5, 5, 0),
+                                                  child: Text(
+                                                    "${index + 1}.  ${item2["answer"]}",
+                                                    style: const TextStyle(
+                                                      fontSize: 18,
+                                                      color: Colors.white
+                                                    ),
                                                   ),
                                                 ),
                                               ),

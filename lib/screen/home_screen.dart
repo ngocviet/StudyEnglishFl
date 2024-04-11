@@ -5,7 +5,8 @@ import 'package:project4/screen/choose_title_screen.dart';
 import 'package:project4/screen/choose_topic_screen.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final String codeUser;
+  const HomeScreen({super.key, required this.codeUser});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -16,7 +17,6 @@ class _HomeScreenState extends State<HomeScreen> {
   String totalDay = "0";
   String topic = "";
   String codeTopic = "GD";
-  String codeUser = "viet_1";
   List<dynamic> listLesson = [];
   List<Account> accounts = [];
 
@@ -30,9 +30,9 @@ class _HomeScreenState extends State<HomeScreen> {
     try {
       final data = await HomeController.getDataTopic(codeTopic);
 
-      final data1 = await HomeController.getListLesson(codeUser, codeTopic);
+      final data1 = await HomeController.getListLesson(widget.codeUser, codeTopic);
 
-      final data2 = await HomeController.getDay(codeUser);
+      final data2 = await HomeController.getDay(widget.codeUser);
       setState(() {
         topic = 'Chủ đề ${data['stt']}';
         listLesson = data1;
@@ -185,7 +185,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  const ChooseTopicScreen(codeUser: "viet_1")),
+                                                  ChooseTopicScreen(codeUser: widget.codeUser)),
                                         ).then((value) {
                                           chooseTopic(value);
                                         });
@@ -347,7 +347,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               builder: (context) =>
                                                   ChooseTitleScreen(
                                                     codeLesson: lesson['code'],
-                                                    codeUser: "viet_1",
+                                                    codeUser: widget.codeUser,
                                                     title: lesson['title'],
                                                     sttLesson:
                                                     'Bài học số ${index + 1}',

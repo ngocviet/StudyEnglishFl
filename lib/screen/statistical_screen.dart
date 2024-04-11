@@ -7,7 +7,9 @@ import 'package:project4/screen/list_vocabulary_screen.dart';
 import '../model_views/model_statistical.dart';
 
 class StatisticalScreen extends StatefulWidget {
-  const StatisticalScreen({super.key});
+  final String codeUser;
+
+  const StatisticalScreen({super.key, required this.codeUser});
 
   @override
   State<StatisticalScreen> createState() => _StatisticalScreenState();
@@ -31,7 +33,7 @@ class _StatisticalScreenState extends State<StatisticalScreen> {
 
   void fetchData() async {
     try {
-      final data = await StatisticalController.getInfoData("viet_1");
+      final data = await StatisticalController.getInfoData(widget.codeUser);
 
       setState(() {
         totalWord = data['totalWord'];
@@ -89,7 +91,7 @@ class _StatisticalScreenState extends State<StatisticalScreen> {
                           context,
                           MaterialPageRoute(
                               builder: (context) => ListVocabularyScreen(
-                                    codeUser: "viet_1",
+                                    codeUser: widget.codeUser,
                                   )),
                         );
                       },
@@ -111,8 +113,8 @@ class _StatisticalScreenState extends State<StatisticalScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const ListLessonsScreen(
-                                    codeUser: "viet_1",
+                              builder: (context) => ListLessonsScreen(
+                                    codeUser: widget.codeUser,
                                   )),
                         );
                       },
@@ -170,7 +172,7 @@ class _StatisticalScreenState extends State<StatisticalScreen> {
                                             MaterialPageRoute(
                                                 builder: (context) =>
                                                     ListVocabularyScreen(
-                                                      codeUser: "viet_1",
+                                                      codeUser: widget.codeUser,
                                                     )),
                                           );
                                         },
@@ -180,7 +182,11 @@ class _StatisticalScreenState extends State<StatisticalScreen> {
                                               color: const Color.fromRGBO(
                                                   45, 45, 45, 1.0),
                                               borderRadius:
-                                                  BorderRadius.circular(30)),
+                                                  BorderRadius.circular(30),
+                                              border: const Border(
+                                                  bottom: BorderSide(
+                                                      color: Colors.grey,
+                                                      width: 3))),
                                           child: Center(
                                             child: Text(
                                               '$totalWord từ',
@@ -202,8 +208,8 @@ class _StatisticalScreenState extends State<StatisticalScreen> {
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    const ListLessonsScreen(
-                                                      codeUser: "viet_1",
+                                                    ListLessonsScreen(
+                                                      codeUser: widget.codeUser,
                                                     )),
                                           );
                                         },
@@ -213,7 +219,11 @@ class _StatisticalScreenState extends State<StatisticalScreen> {
                                               color: const Color.fromRGBO(
                                                   45, 45, 45, 1.0),
                                               borderRadius:
-                                                  BorderRadius.circular(30)),
+                                                  BorderRadius.circular(30),
+                                              border: const Border(
+                                                  bottom: BorderSide(
+                                                      color: Colors.grey,
+                                                      width: 3))),
                                           child: Center(
                                             child: Text(
                                               '$totalQuestion câu hỏi',

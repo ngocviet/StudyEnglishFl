@@ -187,7 +187,7 @@ class ViewListLesson extends State<ListLessonsScreen> {
                                   backgroundColor:
                                       const Color.fromRGBO(75, 75, 75, 1),
                                   shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
+                                    borderRadius: BorderRadius.circular(15),
                                   ),
                                 ),
                                 child: Padding(
