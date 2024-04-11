@@ -15,17 +15,19 @@ class RatingsScreen extends StatefulWidget {
 }
 
 class ViewRating extends State<RatingsScreen> {
-  late Offset _offset;
+  // late Offset _offset;
   List<dynamic> listRetings = [];
   int totalscore = 0;
   String name = "";
+  String avatar = "default.jpg";
   int retingsNow = 0;
   int rankLastMonths = 0;
+  String month = "";
   @override
   void initState() {
     super.initState();
     fetchData();
-    _offset = Offset(350, 700);
+    // _offset = Offset(350, 700);
   }
 
   void fetchData() async {
@@ -35,11 +37,13 @@ class ViewRating extends State<RatingsScreen> {
       setState(() {
         listRetings = dataRetings["totalScoreByAllUsers"];
         name = dataRetings["totalScoreByUser"]["name"];
+        avatar = dataRetings["totalScoreByUser"]["avatar"];
         totalscore = dataRetings["totalScoreByUser"]["totalscore"];
         //Vi tri hien tai
         retingsNow = dataRetings["reting"];
         //Vi tri thang truoc
         rankLastMonths = rankLastMonth;
+        month = DateTime.now().month.toString();
       });
     } catch (e) {
       print('Lỗi hhhh: $e');
@@ -61,59 +65,118 @@ class ViewRating extends State<RatingsScreen> {
               padding: const EdgeInsets.only(left: 20, right: 20),
               child: ListView(
                 children: [
-                  Container(
-                    height: 200,
-                    decoration: const BoxDecoration(
-                      color: Colors.grey,
-                      border: Border(
-                        bottom: BorderSide(
-                          color: Colors.white,
-                          width: 1,
-                        ),
-                      ),
-                    ),
-                    child: Column(
+                  SizedBox(
+                    height: 40,
+                    child: Stack(
+                      clipBehavior: Clip.none,
                       children: [
-                       Row(
-                         children: [
-                           Container(
-                             height: 40,
-                             width: 40,
-                             decoration: const BoxDecoration(
-                               image:DecorationImage(
-                                 image: AssetImage('1.png'),
-                                 fit: BoxFit.fill,
-                               )
-                             ),
-                           ),
-                           Text('Vị trí hiện tại $retingsNow'),
-                         ],
-                       ),
-                        Row(
-                          children: [
-                            Container(
-                              height: 40,
-                              width: 40,
-                              decoration: const BoxDecoration(
-                                  image:DecorationImage(
-                                    image: AssetImage('1.png'),
-                                    fit: BoxFit.fill,
-                                  )
-                              ),
+                        const Positioned(
+                          top: 14,
+                          child: Text("Thống kê xếp hạng",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 22
                             ),
-                            Text('Vị trí tháng trước $rankLastMonths'),
-                          ],
+                          ),
+                        ),
+                        Positioned(
+                          top: 0,
+                          right: 0,
+                          child: Container(
+                            height: 60,
+                            width: 60,
+                            decoration: const BoxDecoration(
+                              image:DecorationImage(
+                                image: AssetImage('htv_preview_rev_1.png'),
+                                fit: BoxFit.contain,
+                              )
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 35,),
+                  Container(
+                    padding: const EdgeInsets.only(top: 10,bottom: 10),
+                    decoration: BoxDecoration(
+                        border: const Border(
+                            bottom: BorderSide(
+                                color: Colors.grey,
+                                width: 2
+                            )
+                        ),
+                      color: const Color.fromRGBO(197, 34, 35, 1.0),
+                      borderRadius: BorderRadius.circular(15)
+                    ),
+                    child: Row(
+                      children: [
+                        const SizedBox(width: 10,),
+                        const Text("Leaderboard",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20
+                          ),
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              const SizedBox(height: 10,),
+                              Container(
+                                width: 60,
+                                height: 60,
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: AssetImage(avatar),
+                                    fit: BoxFit.contain
+                                  ),
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    color: Colors.white,
+                                    width: 1
+                                  )
+                                ),
+                              ),
+                              const SizedBox(height: 5,),
+                              Text("$name - $totalscore KN",
+                                style: const TextStyle(
+                                    color: Color.fromRGBO(173, 173, 173, 1.0),
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18
+                                ),
+                              )
+                            ],
+                          ),
                         )
                       ],
                     ),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 40, bottom: 10),
+                    child: Column(
+                      children: [
+                        Text("Bảng xếp hạng tháng $month",
+                          style: const TextStyle(
+                            color: Color.fromRGBO(21, 199, 184, 1.0),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 22
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                   Container(
-                    height: 300,
+                    height: 500,
+                    // color: Colors.red,
                     child: ListView.builder(
                         itemCount: listRetings.length,
                         itemBuilder: (context, index) {
                           var item = listRetings[index];
-                          String avatarImage;
+                          String avatarImage = "";
                           if (index == 0 ) {
                             avatarImage = '1.png';
                           } else if (index == 1) {
@@ -121,29 +184,55 @@ class ViewRating extends State<RatingsScreen> {
                           } else if(index == 2){
                             avatarImage = '3.png';
                           }else{
-                            avatarImage = '';
+                            avatarImage = "";
                           }
                           return Padding(
                             padding: const EdgeInsets.only(top: 20),
                             child: Row(
                               children: [
-                                Container(
-                                  height: 40,
-                                  width: 40,
-                                  decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          image: AssetImage(avatarImage))),
-                                ),
+                                if(avatarImage != "")
+                                  Container(
+                                    height: 50,
+                                    width: 50,
+                                    decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                            image: AssetImage(avatarImage),
+                                          fit: BoxFit.contain
+                                        ),
+                                    ),
+                                  ),
+                                if(avatarImage == "")
+                                  Container(
+                                    height: 50,
+                                    width: 50,
+                                    child: Center(
+                                      child: Stack(
+                                        children: [
+                                          const Icon(Icons.bookmark_rounded,size: 50,color: Color.fromRGBO(
+                                              55, 141, 21, 1.0),),
+                                          Align(
+                                            alignment: Alignment.center,
+                                            child: Text(
+                                              '${index + 1}',
+                                              style: const TextStyle(
+                                                  fontSize: 20, color: Colors.white,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
                                 Padding(
                                   padding: const EdgeInsets.only(left: 4),
                                   child: Container(
-                                    height: 45,
-                                    width: 45,
+                                    height: 50,
+                                    width: 50,
                                     decoration: BoxDecoration(
                                         shape: BoxShape.circle,
                                         image: DecorationImage(
                                           image: AssetImage(item["avartar"]),
-                                          fit: BoxFit.fill,
+                                          fit: BoxFit.cover,
                                         )),
                                   ),
                                 ),
@@ -156,7 +245,7 @@ class ViewRating extends State<RatingsScreen> {
                                       item['name'],
                                       style: const TextStyle(
                                           color: Colors.white,
-                                          fontSize: 19,
+                                          fontSize: 20,
                                           fontWeight: FontWeight.bold),
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
@@ -166,7 +255,7 @@ class ViewRating extends State<RatingsScreen> {
                                 Expanded(
                                   flex: 1,
                                   child: Text(
-                                    item['totalscore'].toString(),
+                                    '${item['totalscore']} KN',
                                     style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 19,
@@ -184,56 +273,56 @@ class ViewRating extends State<RatingsScreen> {
               ),
             ),
           ),
-          Positioned(
-            left: _offset.dx,
-            top: _offset.dy,
-            child: GestureDetector(
-                onPanUpdate: (details) {
-                  setState(() {
-                    _offset += details.delta;
-                  });
-                },
-                child: Column(
-                  children: [
-                    Stack(
-                      clipBehavior: Clip.none,
-                      children: [
-                        Container(
-                          width: 60, // Đường kính của hình tròn
-                          height: 60, // Đường kính của hình tròn
-                          decoration: const BoxDecoration(
-                            shape: BoxShape
-                                .circle, // Đặt hình dạng của container thành hình tròn
-                            color: Color.fromRGBO(255, 77, 245, 1),
-                          ),
-                          child: const Icon(Icons.light_mode,
-                              color: Colors.yellow),
-                        ),
-                        Positioned(
-                          top: 40,
-                          child: Container(
-                            width: 60,
-                            height: 30,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: const Color.fromRGBO(255, 77, 245, 1),
-                              border: Border.all(
-                                  color: Colors.black,
-                                  width: 2 // Màu đen cho viền
-                                  ),
-                            ),
-                            child: const Center(
-                                child: Text(
-                              '2 ngày',
-                              style: TextStyle(color: Colors.white),
-                            )),
-                          ),
-                        )
-                      ],
-                    ),
-                  ],
-                )),
-          ),
+          // Positioned(
+          //   left: _offset.dx,
+          //   top: _offset.dy,
+          //   child: GestureDetector(
+          //       onPanUpdate: (details) {
+          //         setState(() {
+          //           _offset += details.delta;
+          //         });
+          //       },
+          //       child: Column(
+          //         children: [
+          //           Stack(
+          //             clipBehavior: Clip.none,
+          //             children: [
+          //               Container(
+          //                 width: 60, // Đường kính của hình tròn
+          //                 height: 60, // Đường kính của hình tròn
+          //                 decoration: const BoxDecoration(
+          //                   shape: BoxShape
+          //                       .circle, // Đặt hình dạng của container thành hình tròn
+          //                   color: Color.fromRGBO(255, 77, 245, 1),
+          //                 ),
+          //                 child: const Icon(Icons.light_mode,
+          //                     color: Colors.yellow),
+          //               ),
+          //               Positioned(
+          //                 top: 40,
+          //                 child: Container(
+          //                   width: 60,
+          //                   height: 30,
+          //                   decoration: BoxDecoration(
+          //                     borderRadius: BorderRadius.circular(20),
+          //                     color: const Color.fromRGBO(255, 77, 245, 1),
+          //                     border: Border.all(
+          //                         color: Colors.black,
+          //                         width: 2 // Màu đen cho viền
+          //                         ),
+          //                   ),
+          //                   child: const Center(
+          //                       child: Text(
+          //                     '2 ngày',
+          //                     style: TextStyle(color: Colors.white),
+          //                   )),
+          //                 ),
+          //               )
+          //             ],
+          //           ),
+          //         ],
+          //       )),
+          // ),
         ],
       ),
     );

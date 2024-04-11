@@ -71,7 +71,7 @@ class _ListVocabularyScreenState extends State<ListVocabularyScreen> {
               const Text(
                 'Từ vựng của bạn',
                 style: TextStyle(
-                    fontSize: 25,
+                    fontSize: 22,
                     fontWeight: FontWeight.bold,
                     color: Colors.white),
               ),

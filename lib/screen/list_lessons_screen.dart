@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:project4/screen/detail_lesson_screen.dart';
 
 import '../controllers/list_lesson.controller.dart';
 
@@ -50,9 +51,9 @@ class ViewListLesson extends State<ListLessonsScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Text(
-                'Danh sách bài học',
+                'Bài học của bạn',
                 style: TextStyle(
-                    fontSize: 25,
+                    fontSize: 22,
                     fontWeight: FontWeight.bold,
                     color: Colors.white),
               ),
@@ -94,7 +95,7 @@ class ViewListLesson extends State<ListLessonsScreen> {
           ),
           child: Column(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Row(
@@ -128,7 +129,7 @@ class ViewListLesson extends State<ListLessonsScreen> {
                         // Text
                         Text(
                           totalLesson.toString(),
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 80,
                             fontWeight: FontWeight.bold,
                             color: Colors.white, // Màu của chữ
@@ -165,7 +166,7 @@ class ViewListLesson extends State<ListLessonsScreen> {
                   physics: const BouncingScrollPhysics(),
                   itemCount: listLesson.length,
                   itemBuilder: (context, index) {
-                    var lesson = listLesson[index];
+                    dynamic lesson = listLesson[index];
                     return Stack(
                       children: [
                         Align(
@@ -174,11 +175,17 @@ class ViewListLesson extends State<ListLessonsScreen> {
                               padding: const EdgeInsets.only(
                                   right: 20, left: 20, top: 30),
                               child: ElevatedButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                        DetailLessonScreen(lessonCode: lesson["lessonCode"])),
+                                  );
+                                },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor:
                                       const Color.fromRGBO(75, 75, 75, 1),
-                                  // minimumSize: const Size(double.infinity,0),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10),
                                   ),
@@ -189,8 +196,8 @@ class ViewListLesson extends State<ListLessonsScreen> {
                                   child: Row(
                                     children: [
                                       Text(
-                                        "bài ${index + 1}: ", // Nối chuỗi "bài" với số thứ tự
-                                        style: TextStyle(
+                                        "Bài ${index + 1}: ",
+                                        style: const TextStyle(
                                           fontSize: 20,
                                           color: Colors.white,
                                         ),

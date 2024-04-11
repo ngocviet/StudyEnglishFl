@@ -16,7 +16,7 @@ class DetailLessonScreen extends StatefulWidget {
 class ViewDetailLesson extends State<DetailLessonScreen> {
   bool showChild = false;
   String title = "";
-  int total =0;
+  int total = 0;
   int selectedIndex = -1;
   List<dynamic> dataDetailLesson = [];
   List<bool> showAnswers = [];
@@ -28,7 +28,7 @@ class ViewDetailLesson extends State<DetailLessonScreen> {
 
   void fetchData() async {
     try {
-      final detail =await DetailLessonController.getDetailLesson(widget.lessonCode);
+      final detail = await DetailLessonController.getDetailLesson(widget.lessonCode);
       setState(() {
         title = detail["title"];
         total = detail["total"];
@@ -56,12 +56,12 @@ class ViewDetailLesson extends State<DetailLessonScreen> {
             children: [
               Expanded(
                 flex: 1,
-                child: Container(
+                child: SizedBox(
                   width: double.infinity,
-                  child: Text(
-                    title,
-                    style: const TextStyle(
-                        fontSize: 25,
+                  child: const Text(
+                    "Câu hỏi của bạn",
+                    style: TextStyle(
+                        fontSize: 22,
                         fontWeight: FontWeight.bold,
                         color: Colors.white),
                     maxLines: 1,
@@ -163,15 +163,14 @@ class ViewDetailLesson extends State<DetailLessonScreen> {
               Container(
                   width: MediaQuery.of(context).size.width * 1,
                   height: MediaQuery.of(context).size.height * 0.6,
-                  child:
-                  ListView.builder(
+                  child: ListView.builder(
                     itemCount: dataDetailLesson.length,
                     itemBuilder: (context, index) {
                       var item = dataDetailLesson[index];
                       return Column(
                         children: [
                           Padding(
-                            padding: EdgeInsets.only(left:20,right: 20),
+                            padding: EdgeInsets.only(left: 20, right: 20),
                             child: Container(
                               width: double.infinity,
                               child: ElevatedButton(
@@ -181,46 +180,59 @@ class ViewDetailLesson extends State<DetailLessonScreen> {
                                   });
                                 },
                                 child: Padding(
-                                  padding: const EdgeInsets.only(bottom: 10,top: 10),
-                                  child: Text(item["question"],style: TextStyle(fontSize: 15),),
+                                  padding: const EdgeInsets.only(
+                                      bottom: 10, top: 10),
+                                  child: Text(
+                                    item["question"],
+                                    style: TextStyle(fontSize: 15),
+                                  ),
                                 ),
                               ),
                             ),
                           ),
                           if (showAnswers[index])
                             Container(
-                              width: double.infinity,
-                              height: item["listAnswer"].length * 30 + 20,
-                              margin: const EdgeInsets.symmetric(vertical: 10),
-                              padding: const EdgeInsets.all(10),
-                              child: ListView.builder(
-                                itemCount: item["listAnswer"].length,
-                                itemBuilder: (context, index) {
-                                  var item2 = item["listAnswer"][index];
-                                  return SizedBox(
-                                      height: 30,
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.only(left:20,right: 20),
-                                            child: Container(
-                                              width: double.infinity,
-                                              decoration: BoxDecoration(
-                                                color: item2["isTrue"] ? Colors.green : Colors.grey.shade200,
-                                                borderRadius: BorderRadius.circular(10),
+                                width: double.infinity,
+                                height: item["listAnswer"].length * 30 + 20,
+                                margin:
+                                    const EdgeInsets.symmetric(vertical: 10),
+                                padding: const EdgeInsets.all(10),
+                                child: ListView.builder(
+                                  itemCount: item["listAnswer"].length,
+                                  itemBuilder: (context, index) {
+                                    var item2 = item["listAnswer"][index];
+                                    return SizedBox(
+                                        height: 30,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 20, right: 20),
+                                              child: Container(
+                                                width: double.infinity,
+                                                decoration: BoxDecoration(
+                                                  color: item2["isTrue"]
+                                                      ? Colors.green
+                                                      : Colors.grey.shade200,
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                ),
+                                                child: Text(
+                                                  item2["answer"],
+                                                  style: const TextStyle(
+                                                    fontSize: 18,
+                                                  ),
+                                                ),
                                               ),
-                                              child: Text(item2["answer"], style: const TextStyle(
-                                                fontSize: 18,
-                                              ),),
                                             ),
-                                          ),
-                                        ],
-                                      )
-                                  );
-                              },)
-                            ),
+                                          ],
+                                        ));
+                                  },
+                                )),
                         ],
                       );
                     },

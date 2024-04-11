@@ -16,7 +16,7 @@ class ViewProFile extends State<ProFileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        physics: FixedExtentScrollPhysics(),
+        // physics: FixedExtentScrollPhysics(),
         child: Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
@@ -123,9 +123,9 @@ class ViewProFile extends State<ProFileScreen> {
                           Padding(
                             padding: EdgeInsets.only(top: 5, left: 5),
                             child: Text(
-                              '@QagHuog1063',
+                              '.',
                               style: TextStyle(
-                                  color: Color.fromRGBO(159, 159, 159, 1.0),
+                                  color: Color.fromRGBO(2, 33, 47, 1.0),
                                   fontSize: 18),
                             ),
                           ),
