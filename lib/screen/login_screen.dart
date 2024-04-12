@@ -29,7 +29,13 @@ class _LoginPageState extends State<LoginPage> {
             MaterialPageRoute(
                 builder: (context) => NavScreen(
                       codeUser: check["code"],
-                    )));
+                    )),
+        ).then((value) {
+          setState(() {
+            _UserName.text = "";
+            _PassWord.text = "";
+          });
+        });
       } else {
         showDialog(
           context: context,

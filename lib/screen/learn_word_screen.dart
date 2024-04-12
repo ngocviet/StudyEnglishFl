@@ -24,6 +24,7 @@ class LearnWordScreen extends StatefulWidget {
 class ViewScreen extends State<LearnWordScreen> {
   FlutterTts flutterTts = FlutterTts();
   late String nameEN = "";
+  late String nameVN = "";
   late String avatar = "default.jpg";
   List<dynamic> listAnswer = [];
   int stt = 0;
@@ -34,7 +35,6 @@ class ViewScreen extends State<LearnWordScreen> {
   String answerCorrect = "";
   List<dynamic> dataMain = [];
   double percentWidth = 0.0;
-  bool showAnserCorrect = false;
   @override
   void initState() {
     super.initState();
@@ -48,6 +48,7 @@ class ViewScreen extends State<LearnWordScreen> {
         stt = 0;
         dataMain = data;
         nameEN = data[stt]['nameEN'];
+        answerCorrect = data[stt]['nameVN'];
         listAnswer = data[stt]['listAnswer'];
         canSubmit = false;
         showMessage = 0;
@@ -74,10 +75,10 @@ class ViewScreen extends State<LearnWordScreen> {
     if (stt <= listAnswer.length) {
       setState(() {
         nameEN = dataMain[stt]['nameEN'];
+        answerCorrect = dataMain[stt]['nameVN'];
         listAnswer = dataMain[stt]['listAnswer'];
         canSubmit = false;
         showMessage = 0;
-        showAnserCorrect = false;
       });
       bool isExists = await doesAssetExist('assets/${dataMain[stt]['avatar']}');
       if (isExists) {
@@ -108,9 +109,8 @@ class ViewScreen extends State<LearnWordScreen> {
 
   void checkAnswer() {
     dynamic check = listAnswer.firstWhere((e) => e["isChoose"]);
-    dynamic checkCorrect = listAnswer.firstWhere((e) => e["isTrue"]);
     setState(() {
-      if (check["isTrue"]) {
+      if (check["nameVN"] == answerCorrect) {
         showMessage = 1;
         totalCorrect += 1;
         if(percentWidth == 0.0){
@@ -119,8 +119,6 @@ class ViewScreen extends State<LearnWordScreen> {
           percentWidth += 1 / dataMain.length;
         }
       } else {
-        answerCorrect = checkCorrect["nameVN"];
-        showAnserCorrect = true;
         showMessage = 2;
         totalHeart--;
       }
@@ -364,9 +362,8 @@ class ViewScreen extends State<LearnWordScreen> {
                                           borderRadius:
                                               BorderRadius.circular(20)),
                                       side: BorderSide(
-                                          color: !showAnserCorrect ? !answer['isChoose'] ? const Color.fromRGBO(90, 104, 129, 1.0) : const Color.fromRGBO(75, 199, 84, 1.0) : answer['isTrue'] ? const Color.fromRGBO(
-                                              127, 217, 133, 1.0) : const Color.fromRGBO(
-                                              255, 0, 0, 1.0),
+                                          color: !answer['isChoose'] ? const Color.fromRGBO(90, 104, 129, 1.0) : const Color.fromRGBO(
+                                              55, 236, 236, 1.0),
                                           width: 3),
                                     ),
                                     onPressed: () {

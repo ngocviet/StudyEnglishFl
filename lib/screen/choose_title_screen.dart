@@ -219,7 +219,7 @@ class _ChooseTitleScreenState extends State<ChooseTitleScreen> {
                   child: Item(
                     imageUrl: 'abc1.jpg',
                     title: 'Học từ vựng',
-                    total: totalWord,
+                    total: !isComplete[0] ? totalWord : totalCorrectW,
                     isComplete: isComplete[0],
                   ),
                 ),
@@ -246,7 +246,7 @@ class _ChooseTitleScreenState extends State<ChooseTitleScreen> {
                   child: Item(
                     imageUrl: 'hoicham2.png',
                     title: 'Trả lời câu hỏi',
-                    total: totalQuestion,
+                    total: !isComplete[1] ? totalQuestion : totalCorrectQ,
                     isComplete: isComplete[1],
                   ),
                 ),
@@ -274,7 +274,7 @@ class _ChooseTitleScreenState extends State<ChooseTitleScreen> {
                   child: Item(
                     imageUrl: 'ghepcau1.jpg',
                     title: 'Ghép câu có ý nghĩa',
-                    total: totalPuzzle,
+                    total: !isComplete[2] ? totalPuzzle : totalCorrectP,
                     isComplete: isComplete[2],
                   ),
                 ),
