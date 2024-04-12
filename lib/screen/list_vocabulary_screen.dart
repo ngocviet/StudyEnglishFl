@@ -22,7 +22,7 @@ class _ListVocabularyScreenState extends State<ListVocabularyScreen> {
   int wordsBeingStudied= 0;
   int wordsLearned= 0;
   List<dynamic> listWord = [];
-
+  List<bool> showNameVN = [];
   @override
   void initState() {
     super.initState();
@@ -36,6 +36,7 @@ class _ListVocabularyScreenState extends State<ListVocabularyScreen> {
        final data1  = await ListVocabularyScreenController.infoTotalWord(widget.codeUser);
       setState(() {
         listWord = data;
+        showNameVN = List.filled(data.length, false);
         totalNumber = data1['totalNumber'];
         wordsLearned = data1['wordsLearned'];
         wordsBeingStudied = data1['wordsBeingStudied'];
@@ -237,6 +238,19 @@ class _ListVocabularyScreenState extends State<ListVocabularyScreen> {
                                             fontSize: 20, color: Colors.white),
                                       ),
                                     ),
+                                    IconButton(onPressed: () {
+                                      setState(() {
+                                        showNameVN[index] = !showNameVN[index]; // Khi IconButton được nhấn, set showVNWord thành true để hiển thị từ tiếng Việt
+                                      });
+                                    }, icon: const Icon(
+                                      Icons.swap_horiz,
+                                      color: Colors.grey,
+                                      size: 30,
+                                    )),
+                                    if (showNameVN[index])
+                                      Text(word['nameVN'],
+                                        style: const TextStyle(
+                                            fontSize: 20, color: Colors.white),),
                                     const Spacer(),
                                     Stack(
                                         children:[

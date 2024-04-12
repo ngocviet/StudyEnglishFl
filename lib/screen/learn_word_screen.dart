@@ -8,6 +8,7 @@ import 'package:project4/screen/message/message_next_title_screen.dart';
 import 'package:project4/screen/message/message_out_screen.dart';
 import 'package:project4/screen/message/success_screen.dart';
 import 'package:project4/screen/message/un_success_screen.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
 class LearnWordScreen extends StatefulWidget {
   final String UserCode;
@@ -21,6 +22,7 @@ class LearnWordScreen extends StatefulWidget {
 }
 
 class ViewScreen extends State<LearnWordScreen> {
+  FlutterTts flutterTts = FlutterTts();
   late String nameEN = "";
   late String avatar = "default.jpg";
   List<dynamic> listAnswer = [];
@@ -265,6 +267,17 @@ class ViewScreen extends State<LearnWordScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
+                        IconButton(
+                            onPressed: () async {
+                              await flutterTts.setLanguage("en-US");
+                              await flutterTts.setPitch(5);
+                              await flutterTts.speak(nameEN);
+                            },
+                            icon: const Icon(
+                              Icons.volume_up_rounded,
+                              color: Colors.grey,
+                              size: 30,
+                            )),
                         Stack(
                           clipBehavior: Clip.none,
                           children: [
@@ -309,6 +322,7 @@ class ViewScreen extends State<LearnWordScreen> {
                                 ),
                               ),
                             ),
+
                           ],
                         ),
                       ],
