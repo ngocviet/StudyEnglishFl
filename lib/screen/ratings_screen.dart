@@ -41,9 +41,6 @@ class ViewRating extends State<RatingsScreen> {
         name = dataRetings["totalScoreByUser"]["name"];
         avatar = dataRetings["totalScoreByUser"]["avatar"];
         totalscore = dataRetings["totalScoreByUser"]["totalscore"];
-        //Vi tri hien tai
-        retingsNow = dataRetings["reting"];
-        //Vi tri thang truoc
         rankLastMonths = rankLastMonth;
         month = DateTime.now().month.toString();
       });
