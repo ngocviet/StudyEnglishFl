@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:project4/screen/login_screen.dart';
 
 class ProFileScreen extends StatefulWidget {
   final String codeUser;
+  final Function logout;
 
-  const ProFileScreen({super.key, required this.codeUser});
+  const ProFileScreen({super.key, required this.codeUser, required this.logout});
 
   @override
   State<StatefulWidget> createState() {
@@ -15,6 +17,7 @@ class ProFileScreen extends StatefulWidget {
 
 class ViewProFile extends State<ProFileScreen> {
   bool showAction = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -123,9 +126,7 @@ class ViewProFile extends State<ProFileScreen> {
                                         bottom: BorderSide(
                                             color: Color.fromRGBO(
                                                 231, 208, 132, 1.0),
-                                            width: 1
-                                        )
-                                    )),
+                                            width: 1))),
                               )
                             ],
                           ),
@@ -136,8 +137,7 @@ class ViewProFile extends State<ProFileScreen> {
                                 child: Text(
                                   '@quanghuong',
                                   style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 18),
+                                      color: Colors.white, fontSize: 18),
                                 ),
                               ),
                             ],
@@ -145,7 +145,8 @@ class ViewProFile extends State<ProFileScreen> {
                           const Row(
                             children: [
                               Padding(
-                                padding: EdgeInsets.only(top: 5, left: 5, bottom: 20),
+                                padding: EdgeInsets.only(
+                                    top: 5, left: 5, bottom: 20),
                                 child: Text(
                                   'Đã tham gia tháng Mười Hai 2024',
                                   style: TextStyle(
@@ -190,7 +191,8 @@ class ViewProFile extends State<ProFileScreen> {
                                   child: Text(
                                     'Các vị trí đã đạt: ',
                                     style: TextStyle(
-                                        color: Color.fromRGBO(159, 159, 159, 1.0),
+                                        color:
+                                            Color.fromRGBO(159, 159, 159, 1.0),
                                         fontSize: 18),
                                   ),
                                 ),
@@ -237,7 +239,8 @@ class ViewProFile extends State<ProFileScreen> {
                                   child: Text(
                                     'Vị trí hien tai: ',
                                     style: TextStyle(
-                                        color: Color.fromRGBO(159, 159, 159, 1.0),
+                                        color:
+                                            Color.fromRGBO(159, 159, 159, 1.0),
                                         fontSize: 18),
                                   ),
                                 ),
@@ -252,15 +255,21 @@ class ViewProFile extends State<ProFileScreen> {
                                       child: const Center(
                                         child: Stack(
                                           children: [
-                                            Icon(Icons.bookmark_rounded,size: 50,color: Color.fromRGBO(
-                                                55, 141, 21, 1.0),),
+                                            Icon(
+                                              Icons.bookmark_rounded,
+                                              size: 50,
+                                              color: Color.fromRGBO(
+                                                  55, 141, 21, 1.0),
+                                            ),
                                             Align(
                                               alignment: Alignment.center,
                                               child: Text(
                                                 '5',
                                                 style: TextStyle(
-                                                    fontSize: 20, color: Colors.white,
-                                                fontWeight: FontWeight.bold),
+                                                    fontSize: 20,
+                                                    color: Colors.white,
+                                                    fontWeight:
+                                                        FontWeight.bold),
                                               ),
                                             ),
                                           ],
@@ -291,31 +300,34 @@ class ViewProFile extends State<ProFileScreen> {
                             )
                           ],
                         ),
-                        SizedBox(height: 15,),
+                        SizedBox(
+                          height: 15,
+                        ),
                         Row(
                           children: [
                             Expanded(
                               child: Container(
                                   decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    border: Border.all(
-                                      color: Colors.grey,
-                                      width: 1
-                                    )
-                                  ),
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      border: Border.all(
+                                          color: Colors.grey, width: 1)),
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Column(
                                       children: [
                                         Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
                                           children: [
                                             const Icon(
-                                              Icons.local_fire_department_rounded,
+                                              Icons
+                                                  .local_fire_department_rounded,
                                               color: Colors.orangeAccent,
                                               size: 40,
                                             ),
-                                            SizedBox(width: 5,),
+                                            SizedBox(
+                                              width: 5,
+                                            ),
                                             Stack(
                                               children: [
                                                 Text(
@@ -324,9 +336,10 @@ class ViewProFile extends State<ProFileScreen> {
                                                     fontSize: 26,
                                                     fontWeight: FontWeight.bold,
                                                     foreground: Paint()
-                                                      ..style = PaintingStyle.stroke
+                                                      ..style =
+                                                          PaintingStyle.stroke
                                                       ..strokeWidth =
-                                                      6 // Độ dày của border
+                                                          6 // Độ dày của border
                                                       ..color = Colors
                                                           .orangeAccent, // Màu của border
                                                   ),
@@ -336,8 +349,8 @@ class ViewProFile extends State<ProFileScreen> {
                                                   style: TextStyle(
                                                     fontSize: 26,
                                                     fontWeight: FontWeight.bold,
-                                                    color:
-                                                    Colors.white, // Màu của chữ
+                                                    color: Colors
+                                                        .white, // Màu của chữ
                                                   ),
                                                 ),
                                               ],
@@ -345,40 +358,43 @@ class ViewProFile extends State<ProFileScreen> {
                                           ],
                                         ),
                                         const Padding(
-                                          padding: EdgeInsets.only(top:8.0),
+                                          padding: EdgeInsets.only(top: 8.0),
                                           child: Text(
                                             'Ngày streak',
                                             style: TextStyle(
-                                                fontSize: 18, color: Colors.grey),
+                                                fontSize: 18,
+                                                color: Colors.grey),
                                           ),
                                         )
                                       ],
                                     ),
                                   )),
                             ),
-                            SizedBox(width: 15,),
+                            SizedBox(
+                              width: 15,
+                            ),
                             Expanded(
                               child: Container(
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10.0),
                                       border: Border.all(
-                                          color: Colors.grey,
-                                          width: 1
-                                      )
-                                  ),
+                                          color: Colors.grey, width: 1)),
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Column(
                                       children: [
                                         Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
                                           children: [
                                             const Icon(
                                               Icons.bolt_rounded,
                                               color: Colors.orangeAccent,
                                               size: 34,
                                             ),
-                                            SizedBox(width: 5,),
+                                            SizedBox(
+                                              width: 5,
+                                            ),
                                             Stack(
                                               children: [
                                                 Text(
@@ -387,9 +403,10 @@ class ViewProFile extends State<ProFileScreen> {
                                                     fontSize: 26,
                                                     fontWeight: FontWeight.bold,
                                                     foreground: Paint()
-                                                      ..style = PaintingStyle.stroke
+                                                      ..style =
+                                                          PaintingStyle.stroke
                                                       ..strokeWidth =
-                                                      6 // Độ dày của border
+                                                          6 // Độ dày của border
                                                       ..color = Colors
                                                           .orangeAccent, // Màu của border
                                                   ),
@@ -399,8 +416,8 @@ class ViewProFile extends State<ProFileScreen> {
                                                   style: TextStyle(
                                                     fontSize: 26,
                                                     fontWeight: FontWeight.bold,
-                                                    color:
-                                                    Colors.white, // Màu của chữ
+                                                    color: Colors
+                                                        .white, // Màu của chữ
                                                   ),
                                                 ),
                                               ],
@@ -408,11 +425,12 @@ class ViewProFile extends State<ProFileScreen> {
                                           ],
                                         ),
                                         const Padding(
-                                          padding: EdgeInsets.only(top:8.0),
+                                          padding: EdgeInsets.only(top: 8.0),
                                           child: Text(
                                             'Tổng KN',
                                             style: TextStyle(
-                                                fontSize: 18, color: Colors.grey),
+                                                fontSize: 18,
+                                                color: Colors.grey),
                                           ),
                                         )
                                       ],
@@ -421,31 +439,34 @@ class ViewProFile extends State<ProFileScreen> {
                             ),
                           ],
                         ),
-                        SizedBox(height: 20,),
+                        SizedBox(
+                          height: 20,
+                        ),
                         Row(
                           children: [
                             Expanded(
                               child: Container(
                                   decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    border: Border.all(
-                                      color: Colors.grey,
-                                      width: 1
-                                    )
-                                  ),
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      border: Border.all(
+                                          color: Colors.grey, width: 1)),
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Column(
                                       children: [
                                         Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
                                           children: [
                                             const Icon(
-                                              Icons.local_fire_department_rounded,
+                                              Icons
+                                                  .local_fire_department_rounded,
                                               color: Colors.orangeAccent,
                                               size: 40,
                                             ),
-                                            SizedBox(width: 5,),
+                                            SizedBox(
+                                              width: 5,
+                                            ),
                                             Stack(
                                               children: [
                                                 Text(
@@ -454,9 +475,10 @@ class ViewProFile extends State<ProFileScreen> {
                                                     fontSize: 26,
                                                     fontWeight: FontWeight.bold,
                                                     foreground: Paint()
-                                                      ..style = PaintingStyle.stroke
+                                                      ..style =
+                                                          PaintingStyle.stroke
                                                       ..strokeWidth =
-                                                      6 // Độ dày của border
+                                                          6 // Độ dày của border
                                                       ..color = Colors
                                                           .orangeAccent, // Màu của border
                                                   ),
@@ -466,8 +488,8 @@ class ViewProFile extends State<ProFileScreen> {
                                                   style: TextStyle(
                                                     fontSize: 26,
                                                     fontWeight: FontWeight.bold,
-                                                    color:
-                                                    Colors.white, // Màu của chữ
+                                                    color: Colors
+                                                        .white, // Màu của chữ
                                                   ),
                                                 ),
                                               ],
@@ -475,40 +497,43 @@ class ViewProFile extends State<ProFileScreen> {
                                           ],
                                         ),
                                         const Padding(
-                                          padding: EdgeInsets.only(top:8.0),
+                                          padding: EdgeInsets.only(top: 8.0),
                                           child: Text(
                                             'Ngày streak',
                                             style: TextStyle(
-                                                fontSize: 18, color: Colors.grey),
+                                                fontSize: 18,
+                                                color: Colors.grey),
                                           ),
                                         )
                                       ],
                                     ),
                                   )),
                             ),
-                            SizedBox(width: 15,),
+                            SizedBox(
+                              width: 15,
+                            ),
                             Expanded(
                               child: Container(
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10.0),
                                       border: Border.all(
-                                          color: Colors.grey,
-                                          width: 1
-                                      )
-                                  ),
+                                          color: Colors.grey, width: 1)),
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Column(
                                       children: [
                                         Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
                                           children: [
                                             const Icon(
                                               Icons.adjust_rounded,
                                               color: Colors.orangeAccent,
                                               size: 36,
                                             ),
-                                            SizedBox(width: 5,),
+                                            SizedBox(
+                                              width: 5,
+                                            ),
                                             Stack(
                                               children: [
                                                 Text(
@@ -517,9 +542,10 @@ class ViewProFile extends State<ProFileScreen> {
                                                     fontSize: 26,
                                                     fontWeight: FontWeight.bold,
                                                     foreground: Paint()
-                                                      ..style = PaintingStyle.stroke
+                                                      ..style =
+                                                          PaintingStyle.stroke
                                                       ..strokeWidth =
-                                                      6 // Độ dày của border
+                                                          6 // Độ dày của border
                                                       ..color = Colors
                                                           .orangeAccent, // Màu của border
                                                   ),
@@ -529,8 +555,8 @@ class ViewProFile extends State<ProFileScreen> {
                                                   style: TextStyle(
                                                     fontSize: 26,
                                                     fontWeight: FontWeight.bold,
-                                                    color:
-                                                    Colors.white, // Màu của chữ
+                                                    color: Colors
+                                                        .white, // Màu của chữ
                                                   ),
                                                 ),
                                               ],
@@ -538,11 +564,12 @@ class ViewProFile extends State<ProFileScreen> {
                                           ],
                                         ),
                                         const Padding(
-                                          padding: EdgeInsets.only(top:8.0),
+                                          padding: EdgeInsets.only(top: 8.0),
                                           child: Text(
                                             'Tổng KN',
                                             style: TextStyle(
-                                                fontSize: 18, color: Colors.grey),
+                                                fontSize: 18,
+                                                color: Colors.grey),
                                           ),
                                         )
                                       ],
@@ -557,21 +584,34 @@ class ViewProFile extends State<ProFileScreen> {
                 ],
               ),
             ),
-            if(showAction)
+            if (showAction)
               Positioned(
                 top: 50,
                 right: 20,
                 child: Container(
                   width: 150,
                   decoration: BoxDecoration(
-                    color: const Color.fromRGBO(86, 86, 86, 1.0),
-                    borderRadius: BorderRadius.circular(10)
-                  ),
-                  child: const Column(
+                      color: const Color.fromRGBO(86, 86, 86, 1.0),
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Column(
                     children: [
-                      Item(title: "Đổi tên", status: false),
-                      Item(title: "Đổi mật khẩu", status: false),
-                      Item(title: "Đăng xuất", status: true),
+                      Item(
+                        title: "Đổi tên",
+                        status: false,
+                        onTap: () {},
+                      ),
+                      Item(
+                        title: "Đổi mật khẩu",
+                        status: false,
+                        onTap: () {},
+                      ),
+                      Item(
+                        title: "Đăng xuất",
+                        status: true,
+                        onTap: () {
+                          widget.logout();
+                        },
+                      ),
                     ],
                   ),
                 ),
@@ -661,22 +701,34 @@ class _Item1State extends State<Item1> {
 class Item extends StatelessWidget {
   final String title;
   final bool status;
-  const Item({super.key, required this.title, required this.status});
+  final Function onTap;
+  const Item(
+      {super.key,
+      required this.title,
+      required this.status,
+      required this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
-        onPressed: (){},
+        onPressed: () {
+          onTap();
+        },
         style: ElevatedButton.styleFrom(
             backgroundColor: Colors.transparent,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(0),
             ),
-            padding: !status ? EdgeInsets.fromLTRB(0,15,0,0) : EdgeInsets.fromLTRB(0,15,0,15)
+            padding: !status
+                ? EdgeInsets.fromLTRB(0, 15, 0, 0)
+                : EdgeInsets.fromLTRB(0, 15, 0, 15)),
+        child: Text(
+          title,
+          style: TextStyle(
+              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
         ),
-        child: Text(title,style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold, fontSize: 18),),
       ),
     );
   }

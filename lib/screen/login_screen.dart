@@ -18,22 +18,24 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _UserName = TextEditingController();
   final TextEditingController _PassWord = TextEditingController();
 
-  void checkLogin() async{
+  void checkLogin() async {
     if (_formKey.currentState?.validate() ?? false) {
       String userName = _UserName.text;
       String passWord = _PassWord.text;
-      var isTrue =  await Login.getLogin(userName,passWord);
-      if(isTrue == true){
+      var check = await Login.getLogin(userName, passWord);
+      if (check["status"] == true) {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => NavScreen()));
-      }else{
+                builder: (context) => NavScreen(
+                      codeUser: check["code"],
+                    )));
+      } else {
         showDialog(
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              content: Text("Tài khoản hoặc mật khẩu không đúng"),
+              content: const Text("Tài khoản hoặc mật khẩu không đúng"),
               actions: [
                 TextButton(
                   onPressed: () {
@@ -48,6 +50,7 @@ class _LoginPageState extends State<LoginPage> {
       }
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,8 +58,8 @@ class _LoginPageState extends State<LoginPage> {
         key: _formKey,
         child: Container(
           decoration: const BoxDecoration(
-            image: DecorationImage(image: AssetImage("back1.jpg"),
-                fit: BoxFit.fill),
+            image: DecorationImage(
+                image: AssetImage("back1.jpg"), fit: BoxFit.fill),
           ),
           padding: EdgeInsets.all(20),
           child: Column(
@@ -70,8 +73,8 @@ class _LoginPageState extends State<LoginPage> {
               ),
               TextFormField(
                 controller: _UserName,
-                style: TextStyle(
-                    color: Colors.white), // Màu chữ của TextFormField
+                style:
+                    TextStyle(color: Colors.white), // Màu chữ của TextFormField
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter some text';
@@ -115,9 +118,7 @@ class _LoginPageState extends State<LoginPage> {
 
                   return null;
                 },
-
                 obscureText: !_isPasswordVisible,
-
                 decoration: InputDecoration(
                   labelText: 'Password',
                   hintText: 'enter your password',
@@ -145,12 +146,12 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 5,
               ),
               CheckboxListTile(
                 tileColor:
-                Colors.transparent, // Sửa màu nền của CheckboxListTile
+                    Colors.transparent, // Sửa màu nền của CheckboxListTile
                 value: _rememberMe,
                 onChanged: (value) {
                   if (value == null) return;
@@ -168,7 +169,7 @@ class _LoginPageState extends State<LoginPage> {
                 dense: true,
                 contentPadding: const EdgeInsets.all(0),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
               SizedBox(
@@ -178,7 +179,7 @@ class _LoginPageState extends State<LoginPage> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(4),
                     ),
-                    backgroundColor: Color(0xFFC72D32),
+                    backgroundColor: const Color(0xFFC72D32),
                   ),
                   child: const Padding(
                     padding: EdgeInsets.all(10.0),
@@ -191,11 +192,11 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   onPressed: () async {
-                  checkLogin();
+                    checkLogin();
                   },
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 8,
               ),
               SizedBox(
@@ -205,7 +206,7 @@ class _LoginPageState extends State<LoginPage> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(4),
                     ),
-                    backgroundColor: Color(0xFFC72D32),
+                    backgroundColor: const Color(0xFFC72D32),
                   ),
                   child: const Padding(
                     padding: EdgeInsets.all(10.0),
@@ -220,9 +221,7 @@ class _LoginPageState extends State<LoginPage> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                           RegisterPage()),
+                      MaterialPageRoute(builder: (context) => RegisterPage()),
                     );
                   },
                 ),
@@ -243,18 +242,31 @@ class _LoginPageState extends State<LoginPage> {
                   Expanded(
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Color(0xFF3B5998),
+                        color: const Color(0xFF3B5998),
                         borderRadius: BorderRadius.circular(4),
                       ),
                       width: 180,
                       height: 50,
-                      child: Container(
-                        child:
-                        Image.asset('face_icon.jpg', height: 30, width: 30),
+                      child: Stack(
+                        children: [
+                          const Align(
+                              alignment: Alignment.center,
+                              child: Image(
+                                image: AssetImage("face_icon.jpg"),
+                                width: 35,
+                                height: 35,
+                                fit: BoxFit.contain,
+                              )),
+                          Container(
+                            width: double.infinity,
+                            height: double.infinity,
+                            color: const Color.fromRGBO(121, 121, 121, 0.5),
+                          )
+                        ],
                       ),
                     ),
                   ),
-                  SizedBox(width: 20),
+                  const SizedBox(width: 20),
                   Expanded(
                     child: Container(
                       decoration: BoxDecoration(
@@ -263,9 +275,22 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       width: 180,
                       height: 50,
-                      child: Container(
-                        child:
-                        Image.asset('google_icon.jpg', height: 30, width: 30),
+                      child: Stack(
+                        children: [
+                          const Align(
+                              alignment: Alignment.center,
+                              child: Image(
+                                image: AssetImage("google_icon.jpg"),
+                                width: 35,
+                                height: 35,
+                                fit: BoxFit.contain,
+                              )),
+                          Container(
+                            width: double.infinity,
+                            height: double.infinity,
+                            color: const Color.fromRGBO(121, 121, 121, 0.5),
+                          )
+                        ],
                       ),
                     ),
                   ),

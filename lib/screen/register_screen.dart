@@ -222,18 +222,31 @@ class _LoginPageState extends State<RegisterPage> {
                   Expanded(
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Color(0xFF3B5998),
+                        color: const Color(0xFF3B5998),
                         borderRadius: BorderRadius.circular(4),
                       ),
                       width: 180,
                       height: 50,
-                      child: Container(
-                        child:
-                            Image.asset('face_icon.jpg', height: 30, width: 30),
+                      child: Stack(
+                        children: [
+                          const Align(
+                              alignment: Alignment.center,
+                              child: Image(
+                                image: AssetImage("face_icon.jpg"),
+                                width: 35,
+                                height: 35,
+                                fit: BoxFit.contain,
+                              )),
+                          Container(
+                            width: double.infinity,
+                            height: double.infinity,
+                            color: const Color.fromRGBO(121, 121, 121, 0.5),
+                          )
+                        ],
                       ),
                     ),
                   ),
-                  SizedBox(width: 20),
+                  const SizedBox(width: 20),
                   Expanded(
                     child: Container(
                       decoration: BoxDecoration(
@@ -242,9 +255,22 @@ class _LoginPageState extends State<RegisterPage> {
                       ),
                       width: 180,
                       height: 50,
-                      child: Container(
-                        child:
-                            Image.asset('google_icon.jpg', height: 30, width: 30),
+                      child: Stack(
+                        children: [
+                          const Align(
+                              alignment: Alignment.center,
+                              child: Image(
+                                image: AssetImage("google_icon.jpg"),
+                                width: 35,
+                                height: 35,
+                                fit: BoxFit.contain,
+                              )),
+                          Container(
+                            width: double.infinity,
+                            height: double.infinity,
+                            color: const Color.fromRGBO(121, 121, 121, 0.5),
+                          )
+                        ],
                       ),
                     ),
                   ),

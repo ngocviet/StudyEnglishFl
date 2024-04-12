@@ -56,6 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          leading: SizedBox(width: 1,),
           title: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -68,6 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       fit: BoxFit.contain),
                 ),
               ),
+              const SizedBox(width: 60,)
             ],
           ),
           flexibleSpace: Container(

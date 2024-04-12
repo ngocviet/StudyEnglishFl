@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-
+import 'package:project4/screen/first_screen.dart';
 import 'screen/nav_screen.dart';
-import 'screen/nav_screen_admin.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,7 +9,6 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -20,8 +18,9 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      // home: const NavScreenAdmin(),
-      home: const NavScreen(),
+      // home: const NavScreen(codeUser: "huong_2"),
+      // home: const NavScreen(codeUser: "viet_1"),
+      home: const FirstScreen(),
     );
   }
 }

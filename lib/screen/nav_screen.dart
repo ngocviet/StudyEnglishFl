@@ -6,19 +6,16 @@ import 'package:project4/screen/statistical_screen.dart';
 import 'package:project4/wiget/CustomTabbar.dart';
 
 class NavScreen extends StatefulWidget {
-  const NavScreen({super.key});
+  final String codeUser;
+  const NavScreen({super.key, required this.codeUser});
 
   @override
   State<NavScreen> createState() => _NavScreenState();
 }
 
 class _NavScreenState extends State<NavScreen> {
-  final List<Widget> _screens = [
-    HomeScreen(codeUser: "viet_1",),
-    StatisticalScreen(codeUser: "viet_1",),
-    RatingsScreen(codeUser: "viet_1",),
-    ProFileScreen(codeUser: "viet_1",),
-  ];
+  String code = "viet_1";
+  late final List<Widget> _screens;
 
   final List<IconData> _icons = const [
     Icons.home,
@@ -26,6 +23,28 @@ class _NavScreenState extends State<NavScreen> {
     Icons.bar_chart,
     Icons.person,
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    _screens = [
+      HomeScreen(
+        codeUser: widget.codeUser,
+      ),
+      StatisticalScreen(
+        codeUser: widget.codeUser,
+      ),
+      RatingsScreen(
+        codeUser: widget.codeUser,
+      ),
+      ProFileScreen(
+        codeUser: widget.codeUser,
+        logout: () {
+          Navigator.pop(context);
+        },
+      ),
+    ];
+  }
 
   int _selectedIndex = 0;
 
