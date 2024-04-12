@@ -3,11 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:project4/screen/login_screen.dart';
 
+import '../controllers/home_controller.dart';
+import '../controllers/profile_controller.dart';
+
 class ProFileScreen extends StatefulWidget {
   final String codeUser;
   final Function logout;
 
-  const ProFileScreen({super.key, required this.codeUser, required this.logout});
+  const ProFileScreen(
+      {super.key, required this.codeUser, required this.logout});
 
   @override
   State<StatefulWidget> createState() {
@@ -16,7 +20,139 @@ class ProFileScreen extends StatefulWidget {
 }
 
 class ViewProFile extends State<ProFileScreen> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool showAction = false;
+  int userPosition = 0;
+  int totalscore = 0;
+  String totalDay = "0";
+  String name="";
+  String username="";
+  String pass="";
+  String avatar="cartoon.jpg";
+  String createtime="";
+  bool ShowName = true;
+  final TextEditingController _Name = TextEditingController();
+  final TextEditingController _Pass = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+    // _offset = Offset(350, 700);
+  }
+
+  void fetchData() async {
+    try {
+      final datauser = await ProFileController.getUser(widget.codeUser);
+      final data2 = await HomeController.getDay(widget.codeUser);
+      setState(() {
+        name = datauser["dataUser"]["name"];
+        username = datauser["dataUser"]["userName"];
+        pass = datauser["dataUser"]["pass"];
+        avatar = datauser["dataUser"]["avatar"];
+        createtime = datauser["dataUser"]["createdtime"];
+        userPosition = datauser["userPosition"];
+        totalscore = datauser["totalscore"];
+        totalDay = data2['totalDay'];
+      });
+    } catch (e) {
+      print('Lỗi hhhh: $e');
+    }
+  }
+  void Save() async {
+    String Name = _Name.text;
+    dynamic result = await ProFileController.editName(widget.codeUser, Name);
+    if (result["status"] == true) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            content: Text(result["title"]),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  setState(() {
+                    ShowName = true;
+                    name = Name;
+                  });
+                  Navigator.of(context).pop(); // Đóng dialog
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            content: Text(result["title"]),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  setState(() {
+                    ShowName = true;
+                  });
+                  Navigator.of(context).pop(); // Đóng dialog
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }
+  void SavePass() async {
+    if (_formKey.currentState?.validate() ?? false) {
+      String Pass = _Pass.text;
+      dynamic result = await ProFileController.editPass(widget.codeUser, Pass);
+      if (result["status"] == true) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              content: Text(result["title"]),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    setState(() {
+                      ShowName = true;
+                    });
+                    Navigator.of(context).pop(); // Đóng dialog
+                  },
+                  child: Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+      } else {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              content: Text(result["title"]),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    setState(() {
+                      ShowName = true;
+                    });
+                    Navigator.of(context).pop(); // Đóng dialog
+                  },
+                  child: Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+      }
+    }
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,9 +213,9 @@ class ViewProFile extends State<ProFileScreen> {
                           child: Container(
                             height: 150,
                             width: 150,
-                            decoration: const BoxDecoration(
+                            decoration: BoxDecoration(
                                 image: DecorationImage(
-                                  image: AssetImage('avatar.jpg'),
+                                  image: AssetImage(avatar),
                                   fit: BoxFit.cover,
                                 ),
                                 shape: BoxShape.circle),
@@ -104,51 +240,99 @@ class ViewProFile extends State<ProFileScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Padding(
-                                padding: EdgeInsets.only(top: 10, left: 5),
-                                child: Text(
-                                  'Hướng',
-                                  style: TextStyle(
+                              if (ShowName == false)
+                                Expanded(
+                                  flex: 2,
+                                  child: Padding(
+                                    padding: EdgeInsets.only(top: 10, left: 5, right: 10),
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: TextFormField(
+                                            decoration: InputDecoration(
+                                              labelText: name,
+                                              hintText: name,
+                                              errorStyle: TextStyle(color: Colors.white),
+                                              prefixIcon: const Icon(
+                                                Icons.person,
+                                                color: Colors.white,
+                                              ),
+                                              labelStyle: TextStyle(color: Colors.white),
+                                              hintStyle: const TextStyle(color: Colors.white54),
+                                              border: OutlineInputBorder(
+                                                borderSide: const BorderSide(
+                                                  color: Colors.white,
+                                                ), // Màu sắc của đường viền
+                                                borderRadius: BorderRadius.circular(8),
+                                              ),
+                                            ),
+                                            style: TextStyle(color: Colors.white),
+                                            controller: _Name,
+                                            // Đặt controller nếu cần thiết
+                                            // controller: nameController,
+                                          ),
+                                        ),
+                                        const SizedBox(width: 10), // Khoảng cách giữa TextFormField và nút button
+                                        ElevatedButton(
+                                          onPressed: () {
+                                           Save();
+                                          },
+                                          child: Text("Lưu"),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                )
+                              else
+                                Padding(
+                                  padding: EdgeInsets.only(top: 10, left: 5),
+                                  child: Text(
+                                    name,
+                                    style: const TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 24),
+                                      fontSize: 24,
+                                    ),
+                                  ),
                                 ),
-                              ),
                               Container(
                                 width: 50,
                                 height: 40,
                                 decoration: BoxDecoration(
-                                    image: const DecorationImage(
-                                        image: AssetImage("vietnam.jpg"),
-                                        fit: BoxFit.cover),
-                                    borderRadius: BorderRadius.circular(10),
-                                    border: const Border(
-                                        bottom: BorderSide(
-                                            color: Color.fromRGBO(
-                                                231, 208, 132, 1.0),
-                                            width: 1))),
-                              )
+                                  image: const DecorationImage(
+                                    image: AssetImage("vietnam.jpg"),
+                                    fit: BoxFit.cover,
+                                  ),
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: const Border(
+                                    bottom: BorderSide(
+                                      color: Color.fromRGBO(231, 208, 132, 1.0),
+                                      width: 1,
+                                    ),
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
-                          const Row(
+                          Row(
                             children: [
                               Padding(
                                 padding: EdgeInsets.only(top: 5, left: 5),
                                 child: Text(
-                                  '@quanghuong',
-                                  style: TextStyle(
+                                 "@$username",
+                                  style: const TextStyle(
                                       color: Colors.white, fontSize: 18),
                                 ),
                               ),
                             ],
                           ),
-                          const Row(
+                          Row(
                             children: [
                               Padding(
-                                padding: EdgeInsets.only(
+                                padding: const EdgeInsets.only(
                                     top: 5, left: 5, bottom: 20),
                                 child: Text(
-                                  'Đã tham gia tháng Mười Hai 2024',
+                                  'Đã tham gia $createtime',
                                   style: TextStyle(
                                       color: Color.fromRGBO(159, 159, 159, 1.0),
                                       fontSize: 18),
@@ -237,7 +421,7 @@ class ViewProFile extends State<ProFileScreen> {
                                 child: Padding(
                                   padding: EdgeInsets.only(right: 20),
                                   child: Text(
-                                    'Vị trí hien tai: ',
+                                    'Vị trí hiện tại: ',
                                     style: TextStyle(
                                         color:
                                             Color.fromRGBO(159, 159, 159, 1.0),
@@ -252,26 +436,35 @@ class ViewProFile extends State<ProFileScreen> {
                                     Container(
                                       height: 50,
                                       width: 50,
-                                      child: const Center(
+                                      child:  Center(
                                         child: Stack(
                                           children: [
-                                            Icon(
+                                            if(userPosition != 0)
+                                            const Icon(
                                               Icons.bookmark_rounded,
                                               size: 50,
                                               color: Color.fromRGBO(
                                                   55, 141, 21, 1.0),
                                             ),
+                                            if(userPosition != 0)
                                             Align(
                                               alignment: Alignment.center,
                                               child: Text(
-                                                '5',
-                                                style: TextStyle(
+                                                userPosition.toString(),
+                                                style: const TextStyle(
                                                     fontSize: 20,
                                                     color: Colors.white,
                                                     fontWeight:
                                                         FontWeight.bold),
                                               ),
                                             ),
+                                            if(userPosition == 0)
+                                              const Text("...",
+                                                style: TextStyle(
+                                                    fontSize: 20,
+                                                    color: Colors.white,
+                                                    fontWeight:
+                                                    FontWeight.bold),)
                                           ],
                                         ),
                                       ),
@@ -300,7 +493,7 @@ class ViewProFile extends State<ProFileScreen> {
                             )
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 15,
                         ),
                         Row(
@@ -325,13 +518,13 @@ class ViewProFile extends State<ProFileScreen> {
                                               color: Colors.orangeAccent,
                                               size: 40,
                                             ),
-                                            SizedBox(
+                                            const SizedBox(
                                               width: 5,
                                             ),
                                             Stack(
                                               children: [
                                                 Text(
-                                                  '1',
+                                                  totalDay,
                                                   style: TextStyle(
                                                     fontSize: 26,
                                                     fontWeight: FontWeight.bold,
@@ -344,9 +537,9 @@ class ViewProFile extends State<ProFileScreen> {
                                                           .orangeAccent, // Màu của border
                                                   ),
                                                 ),
-                                                const Text(
-                                                  '1',
-                                                  style: TextStyle(
+                                                 Text(
+                                                   totalDay,
+                                                  style: const TextStyle(
                                                     fontSize: 26,
                                                     fontWeight: FontWeight.bold,
                                                     color: Colors
@@ -370,7 +563,7 @@ class ViewProFile extends State<ProFileScreen> {
                                     ),
                                   )),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 15,
                             ),
                             Expanded(
@@ -392,13 +585,13 @@ class ViewProFile extends State<ProFileScreen> {
                                               color: Colors.orangeAccent,
                                               size: 34,
                                             ),
-                                            SizedBox(
+                                            const SizedBox(
                                               width: 5,
                                             ),
                                             Stack(
                                               children: [
                                                 Text(
-                                                  '1000',
+                                                  totalscore.toString(),
                                                   style: TextStyle(
                                                     fontSize: 26,
                                                     fontWeight: FontWeight.bold,
@@ -411,9 +604,9 @@ class ViewProFile extends State<ProFileScreen> {
                                                           .orangeAccent, // Màu của border
                                                   ),
                                                 ),
-                                                const Text(
-                                                  '1000',
-                                                  style: TextStyle(
+                                                 Text(
+                                                  totalscore.toString(),
+                                                  style: const TextStyle(
                                                     fontSize: 26,
                                                     fontWeight: FontWeight.bold,
                                                     color: Colors
@@ -442,142 +635,142 @@ class ViewProFile extends State<ProFileScreen> {
                         SizedBox(
                           height: 20,
                         ),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10.0),
-                                      border: Border.all(
-                                          color: Colors.grey, width: 1)),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            const Icon(
-                                              Icons
-                                                  .local_fire_department_rounded,
-                                              color: Colors.orangeAccent,
-                                              size: 40,
-                                            ),
-                                            SizedBox(
-                                              width: 5,
-                                            ),
-                                            Stack(
-                                              children: [
-                                                Text(
-                                                  '1',
-                                                  style: TextStyle(
-                                                    fontSize: 26,
-                                                    fontWeight: FontWeight.bold,
-                                                    foreground: Paint()
-                                                      ..style =
-                                                          PaintingStyle.stroke
-                                                      ..strokeWidth =
-                                                          6 // Độ dày của border
-                                                      ..color = Colors
-                                                          .orangeAccent, // Màu của border
-                                                  ),
-                                                ),
-                                                const Text(
-                                                  '1',
-                                                  style: TextStyle(
-                                                    fontSize: 26,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors
-                                                        .white, // Màu của chữ
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                        const Padding(
-                                          padding: EdgeInsets.only(top: 8.0),
-                                          child: Text(
-                                            'Ngày streak',
-                                            style: TextStyle(
-                                                fontSize: 18,
-                                                color: Colors.grey),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  )),
-                            ),
-                            SizedBox(
-                              width: 15,
-                            ),
-                            Expanded(
-                              child: Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10.0),
-                                      border: Border.all(
-                                          color: Colors.grey, width: 1)),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            const Icon(
-                                              Icons.adjust_rounded,
-                                              color: Colors.orangeAccent,
-                                              size: 36,
-                                            ),
-                                            SizedBox(
-                                              width: 5,
-                                            ),
-                                            Stack(
-                                              children: [
-                                                Text(
-                                                  '1000',
-                                                  style: TextStyle(
-                                                    fontSize: 26,
-                                                    fontWeight: FontWeight.bold,
-                                                    foreground: Paint()
-                                                      ..style =
-                                                          PaintingStyle.stroke
-                                                      ..strokeWidth =
-                                                          6 // Độ dày của border
-                                                      ..color = Colors
-                                                          .orangeAccent, // Màu của border
-                                                  ),
-                                                ),
-                                                const Text(
-                                                  '1000',
-                                                  style: TextStyle(
-                                                    fontSize: 26,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors
-                                                        .white, // Màu của chữ
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                        const Padding(
-                                          padding: EdgeInsets.only(top: 8.0),
-                                          child: Text(
-                                            'Tổng KN',
-                                            style: TextStyle(
-                                                fontSize: 18,
-                                                color: Colors.grey),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  )),
-                            ),
-                          ],
-                        )
+                        // Row(
+                        //   children: [
+                        //     Expanded(
+                        //       child: Container(
+                        //           decoration: BoxDecoration(
+                        //               borderRadius: BorderRadius.circular(10.0),
+                        //               border: Border.all(
+                        //                   color: Colors.grey, width: 1)),
+                        //           child: Padding(
+                        //             padding: const EdgeInsets.all(8.0),
+                        //             child: Column(
+                        //               children: [
+                        //                 Row(
+                        //                   mainAxisAlignment:
+                        //                       MainAxisAlignment.center,
+                        //                   children: [
+                        //                     const Icon(
+                        //                       Icons
+                        //                           .local_fire_department_rounded,
+                        //                       color: Colors.orangeAccent,
+                        //                       size: 40,
+                        //                     ),
+                        //                     SizedBox(
+                        //                       width: 5,
+                        //                     ),
+                        //                     Stack(
+                        //                       children: [
+                        //                         Text(
+                        //                           totalDay,
+                        //                           style: TextStyle(
+                        //                             fontSize: 26,
+                        //                             fontWeight: FontWeight.bold,
+                        //                             foreground: Paint()
+                        //                               ..style =
+                        //                                   PaintingStyle.stroke
+                        //                               ..strokeWidth =
+                        //                                   6 // Độ dày của border
+                        //                               ..color = Colors
+                        //                                   .orangeAccent, // Màu của border
+                        //                           ),
+                        //                         ),
+                        //                         Text(
+                        //                           totalDay,
+                        //                           style: const TextStyle(
+                        //                             fontSize: 26,
+                        //                             fontWeight: FontWeight.bold,
+                        //                             color: Colors
+                        //                                 .white, // Màu của chữ
+                        //                           ),
+                        //                         ),
+                        //                       ],
+                        //                     ),
+                        //                   ],
+                        //                 ),
+                        //                 const Padding(
+                        //                   padding: EdgeInsets.only(top: 8.0),
+                        //                   child: Text(
+                        //                     'Ngày streak',
+                        //                     style: TextStyle(
+                        //                         fontSize: 18,
+                        //                         color: Colors.grey),
+                        //                   ),
+                        //                 )
+                        //               ],
+                        //             ),
+                        //           )),
+                        //     ),
+                        //     SizedBox(
+                        //       width: 15,
+                        //     ),
+                        //     // Expanded(
+                        //     //   child: Container(
+                        //     //       decoration: BoxDecoration(
+                        //     //           borderRadius: BorderRadius.circular(10.0),
+                        //     //           border: Border.all(
+                        //     //               color: Colors.grey, width: 1)),
+                        //     //       child: Padding(
+                        //     //         padding: const EdgeInsets.all(8.0),
+                        //     //         child: Column(
+                        //     //           children: [
+                        //     //             Row(
+                        //     //               mainAxisAlignment:
+                        //     //                   MainAxisAlignment.center,
+                        //     //               children: [
+                        //     //                 const Icon(
+                        //     //                   Icons.adjust_rounded,
+                        //     //                   color: Colors.orangeAccent,
+                        //     //                   size: 36,
+                        //     //                 ),
+                        //     //                 SizedBox(
+                        //     //                   width: 5,
+                        //     //                 ),
+                        //     //                 Stack(
+                        //     //                   children: [
+                        //     //                     Text(
+                        //     //                       '1000',
+                        //     //                       style: TextStyle(
+                        //     //                         fontSize: 26,
+                        //     //                         fontWeight: FontWeight.bold,
+                        //     //                         foreground: Paint()
+                        //     //                           ..style =
+                        //     //                               PaintingStyle.stroke
+                        //     //                           ..strokeWidth =
+                        //     //                               6 // Độ dày của border
+                        //     //                           ..color = Colors
+                        //     //                               .orangeAccent, // Màu của border
+                        //     //                       ),
+                        //     //                     ),
+                        //     //                     const Text(
+                        //     //                       '1000',
+                        //     //                       style: TextStyle(
+                        //     //                         fontSize: 26,
+                        //     //                         fontWeight: FontWeight.bold,
+                        //     //                         color: Colors
+                        //     //                             .white, // Màu của chữ
+                        //     //                       ),
+                        //     //                     ),
+                        //     //                   ],
+                        //     //                 ),
+                        //     //               ],
+                        //     //             ),
+                        //     //             const Padding(
+                        //     //               padding: EdgeInsets.only(top: 8.0),
+                        //     //               child: Text(
+                        //     //                 'Tổng KN',
+                        //     //                 style: TextStyle(
+                        //     //                     fontSize: 18,
+                        //     //                     color: Colors.grey),
+                        //     //               ),
+                        //     //             )
+                        //     //           ],
+                        //     //         ),
+                        //     //       )),
+                        //     // ),
+                        //   ],
+                        // )
                       ],
                     ),
                   )
@@ -598,13 +791,73 @@ class ViewProFile extends State<ProFileScreen> {
                       Item(
                         title: "Đổi tên",
                         status: false,
-                        onTap: () {},
+                        onTap: () {
+                          setState(() {
+                            ShowName = false;
+                            showAction = !showAction;
+                          });
+                        },
                       ),
                       Item(
                         title: "Đổi mật khẩu",
                         status: false,
-                        onTap: () {},
+                        onTap: () {
+                          setState(() {
+                            showAction = !showAction;
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  backgroundColor: Color.fromRGBO(2, 33, 47, 1.0),
+                                  content: Form(
+                                    key: _formKey,
+                                    child: TextFormField(
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Please enter some text';
+                                        }
+                                        if (value.length < 6) {
+                                          return 'Password must be at least 6 characters';
+                                        }
+                                        return null;
+                                      },
+                                    decoration: InputDecoration(
+                                    labelText: "PassWord",
+                                    hintText: "PassWord",
+                                    errorStyle: TextStyle(color: Colors.white),
+                                    prefixIcon: const Icon(
+                                      Icons.person,
+                                      color: Colors.white,
+                                    ),
+                                    labelStyle: TextStyle(color: Colors.white),
+                                    hintStyle: const TextStyle(color: Colors.white54),
+                                    border: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                        color: Colors.white,
+                                      ), // Màu sắc của đường viền
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                                                    ),
+                                                                    style: TextStyle(color: Colors.white),
+                                                                    controller: _Pass,
+                                                                    ),
+                                  ), // Hiển thị dữ liệu "quang huong"
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                         SavePass();
+                                         Navigator.of(context).pop(); // Đóng dialog
+                                      },
+                                      child: Text('OK'),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          });
+                        },
                       ),
+
                       Item(
                         title: "Đăng xuất",
                         status: true,
