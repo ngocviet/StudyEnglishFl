@@ -11,10 +11,10 @@ import '../controllers/answer_the_question_controller.dart';
 import '../models/answer.dart';
 
 class AnswerTheQuestionScreen extends StatefulWidget {
-  final String UserCode;
+  final String codeUser;
   final String CodeLesson;
   AnswerTheQuestionScreen(
-      {super.key, required this.CodeLesson, required this.UserCode});
+      {super.key, required this.CodeLesson, required this.codeUser});
 
   @override
   State<StatefulWidget> createState() {
@@ -47,9 +47,9 @@ class ScreenState extends State<AnswerTheQuestionScreen> {
   void fetchData() async {
     try {
       final dataQuestion = await AnswerTheQuestionController.getDataQuestion(
-          widget.CodeLesson, widget.UserCode);
+          widget.CodeLesson, widget.codeUser);
       final dataAnswer = await AnswerTheQuestionController.getDataAnswer(
-          widget.CodeLesson, widget.UserCode);
+          widget.CodeLesson, widget.codeUser);
       setState(() {
         stt = 0;
         listAnswer = dataAnswer;
@@ -61,7 +61,7 @@ class ScreenState extends State<AnswerTheQuestionScreen> {
         answerCorrect = answer.firstWhere((e) => e["isTrue"])["name"];
 
         showMessage = 0;
-        totalHeart = 5;
+        totalHeart = 3;
         canSubmit = false;
         percentWidth = 0.0;
 

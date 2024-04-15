@@ -11,9 +11,9 @@ import 'package:project4/screen/message/un_success_screen.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
 class LearnWordScreen extends StatefulWidget {
-  final String UserCode;
+  final String codeUser;
   final String codeLesson;
-  LearnWordScreen({super.key, required this.codeLesson, required this.UserCode});
+  LearnWordScreen({super.key, required this.codeLesson, required this.codeUser});
 
   @override
   State<StatefulWidget> createState() {
@@ -53,7 +53,7 @@ class ViewScreen extends State<LearnWordScreen> {
         canSubmit = false;
         showMessage = 0;
         percentWidth = 0.0;
-        totalHeart = 5;
+        totalHeart = 3;
       });
       bool isExists = await doesAssetExist('assets/${data[stt]['avatar']}');
       if (isExists) {
@@ -72,7 +72,7 @@ class ViewScreen extends State<LearnWordScreen> {
 
   void next() async {
     stt++;
-    if (stt <= listAnswer.length) {
+    if (stt < dataMain.length) {
       setState(() {
         nameEN = dataMain[stt]['nameEN'];
         answerCorrect = dataMain[stt]['nameVN'];
@@ -265,17 +265,6 @@ class ViewScreen extends State<LearnWordScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        IconButton(
-                            onPressed: () async {
-                              await flutterTts.setLanguage("en-US");
-                              await flutterTts.setPitch(5);
-                              await flutterTts.speak(nameEN);
-                            },
-                            icon: const Icon(
-                              Icons.volume_up_rounded,
-                              color: Colors.grey,
-                              size: 30,
-                            )),
                         Stack(
                           clipBehavior: Clip.none,
                           children: [
@@ -320,8 +309,21 @@ class ViewScreen extends State<LearnWordScreen> {
                                 ),
                               ),
                             ),
-
                           ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(15, 0, 0, 12),
+                          child: IconButton(
+                              onPressed: () async {
+                                await flutterTts.setLanguage("en-US");
+                                await flutterTts.setPitch(5);
+                                await flutterTts.speak(nameEN);
+                              },
+                              icon: const Icon(
+                                Icons.volume_up_rounded,
+                                color: Colors.grey,
+                                size: 30,
+                              )),
                         ),
                       ],
                     ),

@@ -202,7 +202,8 @@ class _ChooseTitleScreenState extends State<ChooseTitleScreen> {
                         context,
                         MaterialPageRoute(
                             builder: (context) => LearnWordScreen(
-                                codeLesson: widget.codeLesson, UserCode: "")),
+                                codeLesson: widget.codeLesson,
+                                codeUser: widget.codeUser)),
                       ).then((result) {
                         if (result != null) {
                           int index = result["index"];
@@ -226,22 +227,25 @@ class _ChooseTitleScreenState extends State<ChooseTitleScreen> {
                 const SizedBox(height: 50),
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => AnswerTheQuestionScreen(
-                              CodeLesson: widget.codeLesson, UserCode: "")),
-                    ).then((result) {
-                      if (result != null) {
-                        int index = result["index"];
-                        int value = result["totalCorrect"];
-                        setState(() {
-                          totalCorrectQ = value;
-                        });
-                        changeStatusItem(index);
-                      }
-                      checkComplete();
-                    });
+                    if (!isComplete[1]) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => AnswerTheQuestionScreen(
+                                CodeLesson: widget.codeLesson,
+                                codeUser: widget.codeUser)),
+                      ).then((result) {
+                        if (result != null) {
+                          int index = result["index"];
+                          int value = result["totalCorrect"];
+                          setState(() {
+                            totalCorrectQ = value;
+                          });
+                          changeStatusItem(index);
+                        }
+                        checkComplete();
+                      });
+                    }
                   },
                   child: Item(
                     imageUrl: 'hoicham2.png',
@@ -253,11 +257,12 @@ class _ChooseTitleScreenState extends State<ChooseTitleScreen> {
                 const SizedBox(height: 50),
                 GestureDetector(
                   onTap: () {
-                    if (totalPuzzle > 0) {
+                    if (!isComplete[2]) {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => CombineSentencesScreen()),
+                            builder: (context) => CombineSentencesScreen(
+                                codeLesson: widget.codeLesson,codeUser: widget.codeUser,)),
                       ).then((result) {
                         if (result != null) {
                           int index = result["index"];

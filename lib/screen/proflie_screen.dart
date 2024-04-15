@@ -33,6 +33,7 @@ class ViewProFile extends State<ProFileScreen> {
   bool ShowName = true;
   final TextEditingController _Name = TextEditingController();
   final TextEditingController _Pass = TextEditingController();
+  List<dynamic> listCups = [];
 
   @override
   void initState() {
@@ -44,8 +45,10 @@ class ViewProFile extends State<ProFileScreen> {
   void fetchData() async {
     try {
       final datauser = await ProFileController.getUser(widget.codeUser);
+      final datacups = await ProFileController.getCups(widget.codeUser);
       final data2 = await HomeController.getDay(widget.codeUser);
       setState(() {
+        listCups = datacups;
         name = datauser["dataUser"]["name"];
         username = datauser["dataUser"]["userName"];
         pass = datauser["dataUser"]["pass"];
@@ -373,46 +376,38 @@ class ViewProFile extends State<ProFileScreen> {
                                 child: Padding(
                                   padding: EdgeInsets.only(right: 20),
                                   child: Text(
-                                    'Các vị trí đã đạt: ',
+                                    'Thành tựu: ',
                                     style: TextStyle(
-                                        color:
-                                            Color.fromRGBO(159, 159, 159, 1.0),
-                                        fontSize: 18),
+                                      color: Color.fromRGBO(159, 159, 159, 1.0),
+                                      fontSize: 18,
+                                    ),
                                   ),
                                 ),
                               ),
-                              Expanded(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      height: 50,
-                                      width: 50,
-                                      decoration: const BoxDecoration(
-                                          image: DecorationImage(
-                                              image: AssetImage('1.png'))),
+                              if (listCups.length > 0)
+                                Expanded(
+                                  flex: 1,
+                                  child: Container(
+                                    height: 50,
+                                    child: ListView.builder(
+                                      scrollDirection: Axis.horizontal,
+                                      itemCount: listCups.length,
+                                      itemBuilder: (context, index) {
+                                        return Container(
+                                          height: 50,
+                                          width: 50,
+                                          decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                                  image: AssetImage('${listCups[index]["position"]}.png'))),
+                                        );
+                                      },
                                     ),
-                                    Container(
-                                      height: 50,
-                                      width: 50,
-                                      decoration: const BoxDecoration(
-                                          image: DecorationImage(
-                                              image: AssetImage('2.png'))),
-                                    ),
-                                    Container(
-                                      height: 50,
-                                      width: 50,
-                                      decoration: const BoxDecoration(
-                                          image: DecorationImage(
-                                              image: AssetImage('3.png'))),
-                                    ),
-                                  ],
+                                  ),
                                 ),
-                              ),
                             ],
                           ),
                           const SizedBox(
-                            height: 20,
+                            height: 25,
                           ),
                           Row(
                             children: [
@@ -439,14 +434,14 @@ class ViewProFile extends State<ProFileScreen> {
                                       child:  Center(
                                         child: Stack(
                                           children: [
-                                            if(userPosition != 0)
+                                            if(userPosition > 3)
                                             const Icon(
                                               Icons.bookmark_rounded,
                                               size: 50,
                                               color: Color.fromRGBO(
                                                   55, 141, 21, 1.0),
                                             ),
-                                            if(userPosition != 0)
+                                            if(userPosition > 3)
                                             Align(
                                               alignment: Alignment.center,
                                               child: Text(
@@ -457,6 +452,30 @@ class ViewProFile extends State<ProFileScreen> {
                                                     fontWeight:
                                                         FontWeight.bold),
                                               ),
+                                            ),
+                                            if(userPosition == 1)
+                                            Container(
+                                              height: 50,
+                                              width: 50,
+                                              decoration: const BoxDecoration(
+                                                  image: DecorationImage(
+                                                      image: AssetImage('1.png'))),
+                                            ),
+                                            if(userPosition == 2)
+                                            Container(
+                                              height: 50,
+                                              width: 50,
+                                              decoration: const BoxDecoration(
+                                                  image: DecorationImage(
+                                                      image: AssetImage('2.png'))),
+                                            ),
+                                            if(userPosition == 3)
+                                            Container(
+                                              height: 50,
+                                              width: 50,
+                                              decoration: const BoxDecoration(
+                                                  image: DecorationImage(
+                                                      image: AssetImage('3.png'))),
                                             ),
                                             if(userPosition == 0)
                                               const Text("...",
