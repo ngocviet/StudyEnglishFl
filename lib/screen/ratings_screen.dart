@@ -138,7 +138,7 @@ class ViewRating extends State<RatingsScreen> {
                                 height: 5,
                               ),
                               Text(
-                                "$name - $totalscore KN",
+                                "$name / $totalscore KN",
                                 style: const TextStyle(
                                     color: Color.fromRGBO(173, 173, 173, 1.0),
                                     fontWeight: FontWeight.bold,

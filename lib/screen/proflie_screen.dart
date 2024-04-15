@@ -25,11 +25,11 @@ class ViewProFile extends State<ProFileScreen> {
   int userPosition = 0;
   int totalscore = 0;
   String totalDay = "0";
-  String name="";
-  String username="";
-  String pass="";
-  String avatar="cartoon.jpg";
-  String createtime="";
+  String name = "";
+  String username = "";
+  String pass = "";
+  String avatar = "cartoon.jpg";
+  String createtime = "";
   bool ShowName = true;
   final TextEditingController _Name = TextEditingController();
   final TextEditingController _Pass = TextEditingController();
@@ -62,6 +62,7 @@ class ViewProFile extends State<ProFileScreen> {
       print('Lỗi hhhh: $e');
     }
   }
+
   void Save() async {
     String Name = _Name.text;
     dynamic result = await ProFileController.editName(widget.codeUser, Name);
@@ -108,6 +109,7 @@ class ViewProFile extends State<ProFileScreen> {
       );
     }
   }
+
   void SavePass() async {
     if (_formKey.currentState?.validate() ?? false) {
       String Pass = _Pass.text;
@@ -154,7 +156,6 @@ class ViewProFile extends State<ProFileScreen> {
         );
       }
     }
-
   }
 
   @override
@@ -242,53 +243,85 @@ class ViewProFile extends State<ProFileScreen> {
                         children: [
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               if (ShowName == false)
                                 Expanded(
                                   flex: 2,
                                   child: Padding(
-                                    padding: EdgeInsets.only(top: 10, left: 5, right: 10),
-                                    child: Row(
-                                      children: [
-                                        Expanded(
-                                          child: TextFormField(
-                                            decoration: InputDecoration(
-                                              labelText: name,
-                                              hintText: name,
-                                              errorStyle: TextStyle(color: Colors.white),
-                                              prefixIcon: const Icon(
-                                                Icons.person,
-                                                color: Colors.white,
-                                              ),
-                                              labelStyle: TextStyle(color: Colors.white),
-                                              hintStyle: const TextStyle(color: Colors.white54),
-                                              border: OutlineInputBorder(
-                                                borderSide: const BorderSide(
+                                    padding: const EdgeInsets.only(
+                                        top: 10, left: 5, right: 10),
+                                    child: Container(
+                                      height: 40,
+                                      child: Stack(
+                                        children: [
+                                          Expanded(
+                                            child: TextFormField(
+                                              decoration: InputDecoration(
+                                                labelText: name,
+                                                hintText: name,
+                                                errorStyle: const TextStyle(
+                                                    color: Colors.white),
+                                                prefixIcon: const Icon(
+                                                  Icons.person,
                                                   color: Colors.white,
-                                                ), // Màu sắc của đường viền
-                                                borderRadius: BorderRadius.circular(8),
+                                                ),
+                                                labelStyle: const TextStyle(
+                                                    color: Colors.white),
+                                                hintStyle: const TextStyle(
+                                                    color: Colors.white54),
+                                                border: OutlineInputBorder(
+                                                  borderSide: const BorderSide(
+                                                    color: Colors.white,
+                                                  ), // Màu sắc của đường viền
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                ),
+                                              ),
+                                              style: const TextStyle(
+                                                  color: Colors.white),
+                                              controller: _Name,
+                                              // Đặt controller nếu cần thiết
+                                              // controller: nameController,
+                                            ),
+                                          ),
+                                          Align(
+                                            alignment: Alignment.centerRight,
+                                            child: SizedBox(
+                                              height: 40,
+                                              child: ElevatedButton(
+                                                onPressed: () {
+                                                  Save();
+                                                },
+                                                style: ElevatedButton.styleFrom(
+                                                  backgroundColor:
+                                                      const Color.fromRGBO(
+                                                          67, 203, 47, 1.0),
+                                                  shape: const RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.only(
+                                                              topRight: Radius
+                                                                  .circular(8),
+                                                              bottomRight:
+                                                                  Radius
+                                                                      .circular(
+                                                                          8))
+                                                  ),
+                                                  padding: EdgeInsets.fromLTRB(5, 5, 5, 5)
+                                                ),
+                                                child: const Text("Lưu",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
                                               ),
                                             ),
-                                            style: TextStyle(color: Colors.white),
-                                            controller: _Name,
-                                            // Đặt controller nếu cần thiết
-                                            // controller: nameController,
                                           ),
-                                        ),
-                                        const SizedBox(width: 10), // Khoảng cách giữa TextFormField và nút button
-                                        ElevatedButton(
-                                          onPressed: () {
-                                           Save();
-                                          },
-                                          child: Text("Lưu"),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 )
                               else
                                 Padding(
-                                  padding: EdgeInsets.only(top: 10, left: 5),
+                                  padding:
+                                      const EdgeInsets.only(top: 10, left: 5),
                                   child: Text(
                                     name,
                                     style: const TextStyle(
@@ -298,6 +331,9 @@ class ViewProFile extends State<ProFileScreen> {
                                     ),
                                   ),
                                 ),
+                              SizedBox(
+                                width: 10,
+                              ),
                               Container(
                                 width: 50,
                                 height: 40,
@@ -322,7 +358,7 @@ class ViewProFile extends State<ProFileScreen> {
                               Padding(
                                 padding: EdgeInsets.only(top: 5, left: 5),
                                 child: Text(
-                                 "@$username",
+                                  "@$username",
                                   style: const TextStyle(
                                       color: Colors.white, fontSize: 18),
                                 ),
@@ -371,6 +407,9 @@ class ViewProFile extends State<ProFileScreen> {
                           ),
                           Row(
                             children: [
+                              SizedBox(
+                                width: 15,
+                              ),
                               const SizedBox(
                                 width: 170,
                                 child: Padding(
@@ -398,7 +437,8 @@ class ViewProFile extends State<ProFileScreen> {
                                           width: 50,
                                           decoration: BoxDecoration(
                                               image: DecorationImage(
-                                                  image: AssetImage('${listCups[index]["position"]}.png'))),
+                                                  image: AssetImage(
+                                                      '${listCups[index]["position"]}.png'))),
                                         );
                                       },
                                     ),
@@ -411,6 +451,9 @@ class ViewProFile extends State<ProFileScreen> {
                           ),
                           Row(
                             children: [
+                              SizedBox(
+                                width: 15,
+                              ),
                               const SizedBox(
                                 width: 170,
                                 child: Padding(
@@ -426,64 +469,69 @@ class ViewProFile extends State<ProFileScreen> {
                               ),
                               Expanded(
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     Container(
                                       height: 50,
                                       width: 50,
-                                      child:  Center(
+                                      child: Center(
                                         child: Stack(
                                           children: [
-                                            if(userPosition > 3)
-                                            const Icon(
-                                              Icons.bookmark_rounded,
-                                              size: 50,
-                                              color: Color.fromRGBO(
-                                                  55, 141, 21, 1.0),
-                                            ),
-                                            if(userPosition > 3)
-                                            Align(
-                                              alignment: Alignment.center,
-                                              child: Text(
-                                                userPosition.toString(),
-                                                style: const TextStyle(
-                                                    fontSize: 20,
-                                                    color: Colors.white,
-                                                    fontWeight:
-                                                        FontWeight.bold),
+                                            if (userPosition > 3)
+                                              const Icon(
+                                                Icons.bookmark_rounded,
+                                                size: 50,
+                                                color: Color.fromRGBO(
+                                                    55, 141, 21, 1.0),
                                               ),
-                                            ),
-                                            if(userPosition == 1)
-                                            Container(
-                                              height: 50,
-                                              width: 50,
-                                              decoration: const BoxDecoration(
-                                                  image: DecorationImage(
-                                                      image: AssetImage('1.png'))),
-                                            ),
-                                            if(userPosition == 2)
-                                            Container(
-                                              height: 50,
-                                              width: 50,
-                                              decoration: const BoxDecoration(
-                                                  image: DecorationImage(
-                                                      image: AssetImage('2.png'))),
-                                            ),
-                                            if(userPosition == 3)
-                                            Container(
-                                              height: 50,
-                                              width: 50,
-                                              decoration: const BoxDecoration(
-                                                  image: DecorationImage(
-                                                      image: AssetImage('3.png'))),
-                                            ),
-                                            if(userPosition == 0)
-                                              const Text("...",
+                                            if (userPosition > 3)
+                                              Align(
+                                                alignment: Alignment.center,
+                                                child: Text(
+                                                  userPosition.toString(),
+                                                  style: const TextStyle(
+                                                      fontSize: 20,
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                              ),
+                                            if (userPosition == 1)
+                                              Container(
+                                                height: 50,
+                                                width: 50,
+                                                decoration: const BoxDecoration(
+                                                    image: DecorationImage(
+                                                        image: AssetImage(
+                                                            '1.png'))),
+                                              ),
+                                            if (userPosition == 2)
+                                              Container(
+                                                height: 50,
+                                                width: 50,
+                                                decoration: const BoxDecoration(
+                                                    image: DecorationImage(
+                                                        image: AssetImage(
+                                                            '2.png'))),
+                                              ),
+                                            if (userPosition == 3)
+                                              Container(
+                                                height: 50,
+                                                width: 50,
+                                                decoration: const BoxDecoration(
+                                                    image: DecorationImage(
+                                                        image: AssetImage(
+                                                            '3.png'))),
+                                              ),
+                                            if (userPosition == 0)
+                                              const Text(
+                                                "...",
                                                 style: TextStyle(
                                                     fontSize: 20,
                                                     color: Colors.white,
                                                     fontWeight:
-                                                    FontWeight.bold),)
+                                                        FontWeight.bold),
+                                              )
                                           ],
                                         ),
                                       ),
@@ -556,8 +604,8 @@ class ViewProFile extends State<ProFileScreen> {
                                                           .orangeAccent, // Màu của border
                                                   ),
                                                 ),
-                                                 Text(
-                                                   totalDay,
+                                                Text(
+                                                  totalDay,
                                                   style: const TextStyle(
                                                     fontSize: 26,
                                                     fontWeight: FontWeight.bold,
@@ -623,7 +671,7 @@ class ViewProFile extends State<ProFileScreen> {
                                                           .orangeAccent, // Màu của border
                                                   ),
                                                 ),
-                                                 Text(
+                                                Text(
                                                   totalscore.toString(),
                                                   style: const TextStyle(
                                                     fontSize: 26,
@@ -827,7 +875,8 @@ class ViewProFile extends State<ProFileScreen> {
                               context: context,
                               builder: (BuildContext context) {
                                 return AlertDialog(
-                                  backgroundColor: Color.fromRGBO(2, 33, 47, 1.0),
+                                  backgroundColor:
+                                      Color.fromRGBO(2, 33, 47, 1.0),
                                   content: Form(
                                     key: _formKey,
                                     child: TextFormField(
@@ -840,32 +889,37 @@ class ViewProFile extends State<ProFileScreen> {
                                         }
                                         return null;
                                       },
-                                    decoration: InputDecoration(
-                                    labelText: "PassWord",
-                                    hintText: "PassWord",
-                                    errorStyle: TextStyle(color: Colors.white),
-                                    prefixIcon: const Icon(
-                                      Icons.person,
-                                      color: Colors.white,
+                                      decoration: InputDecoration(
+                                        labelText: "PassWord",
+                                        hintText: "PassWord",
+                                        errorStyle:
+                                            TextStyle(color: Colors.white),
+                                        prefixIcon: const Icon(
+                                          Icons.person,
+                                          color: Colors.white,
+                                        ),
+                                        labelStyle:
+                                            TextStyle(color: Colors.white),
+                                        hintStyle: const TextStyle(
+                                            color: Colors.white54),
+                                        border: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                            color: Colors.white,
+                                          ), // Màu sắc của đường viền
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                      ),
+                                      style: TextStyle(color: Colors.white),
+                                      controller: _Pass,
                                     ),
-                                    labelStyle: TextStyle(color: Colors.white),
-                                    hintStyle: const TextStyle(color: Colors.white54),
-                                    border: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: Colors.white,
-                                      ), // Màu sắc của đường viền
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                                                    ),
-                                                                    style: TextStyle(color: Colors.white),
-                                                                    controller: _Pass,
-                                                                    ),
                                   ), // Hiển thị dữ liệu "quang huong"
                                   actions: [
                                     TextButton(
                                       onPressed: () {
-                                         SavePass();
-                                         Navigator.of(context).pop(); // Đóng dialog
+                                        SavePass();
+                                        Navigator.of(context)
+                                            .pop(); // Đóng dialog
                                       },
                                       child: Text('OK'),
                                     ),
@@ -876,7 +930,6 @@ class ViewProFile extends State<ProFileScreen> {
                           });
                         },
                       ),
-
                       Item(
                         title: "Đăng xuất",
                         status: true,
