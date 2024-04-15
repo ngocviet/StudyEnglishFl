@@ -14,7 +14,6 @@ class NavScreen extends StatefulWidget {
 }
 
 class _NavScreenState extends State<NavScreen> {
-  String code = "viet_1";
   late final List<Widget> _screens;
 
   final List<IconData> _icons = const [

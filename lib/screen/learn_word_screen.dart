@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:project4/controllers/answer_the_question_controller.dart';
 import 'package:project4/controllers/learn_word_controller.dart';
 import 'package:project4/screen/message/game_over_screen.dart';
 import 'package:project4/screen/message/message_next_title_screen.dart';
@@ -25,6 +26,7 @@ class ViewScreen extends State<LearnWordScreen> {
   FlutterTts flutterTts = FlutterTts();
   late String nameEN = "";
   late String nameVN = "";
+  late String code = "";
   late String avatar = "default.jpg";
   List<dynamic> listAnswer = [];
   int stt = 0;
@@ -48,6 +50,7 @@ class ViewScreen extends State<LearnWordScreen> {
         stt = 0;
         dataMain = data;
         nameEN = data[stt]['nameEN'];
+        code = data[stt]['code'];
         answerCorrect = data[stt]['nameVN'];
         listAnswer = data[stt]['listAnswer'];
         canSubmit = false;
@@ -76,6 +79,7 @@ class ViewScreen extends State<LearnWordScreen> {
       setState(() {
         nameEN = dataMain[stt]['nameEN'];
         answerCorrect = dataMain[stt]['nameVN'];
+        code = dataMain[stt]['code'];
         listAnswer = dataMain[stt]['listAnswer'];
         canSubmit = false;
         showMessage = 0;
@@ -107,8 +111,11 @@ class ViewScreen extends State<LearnWordScreen> {
     });
   }
 
-  void checkAnswer() {
+  void checkAnswer() async {
     dynamic check = listAnswer.firstWhere((e) => e["isChoose"]);
+
+    await AnswerTheQuestionController.addHistory(widget.codeLesson, check["nameVN"] == answerCorrect, widget.codeUser, "", code);
+
     setState(() {
       if (check["nameVN"] == answerCorrect) {
         showMessage = 1;
@@ -281,50 +288,53 @@ class ViewScreen extends State<LearnWordScreen> {
                             Positioned(
                               top: 14,
                               left: 40,
-                              child: Container(
-                                padding: const EdgeInsets.only(
-                                    top: 3, bottom: 2, right: 20),
-                                decoration: const BoxDecoration(
-                                    color: Color.fromRGBO(2, 33, 47, 1.0),
-                                    border: Border(
-                                      bottom: BorderSide(
-                                        color: Color.fromRGBO(82, 79, 79, 1.0),
-                                        width: 5,
+                              child: Row(
+                                children: [
+                                  Container(
+                                    padding: const EdgeInsets.only(
+                                        top: 3, bottom: 2, right: 20),
+                                    decoration: const BoxDecoration(
+                                        color: Color.fromRGBO(2, 33, 47, 1.0),
+                                        border: Border(
+                                          bottom: BorderSide(
+                                            color: Color.fromRGBO(82, 79, 79, 1.0),
+                                            width: 5,
+                                          ),
+                                          top: BorderSide(
+                                            color: Color.fromRGBO(79, 79, 79, 1.0),
+                                            width: 5,
+                                          ),
+                                          right: BorderSide(
+                                            color: Color.fromRGBO(79, 79, 79, 1.0),
+                                            width: 5,
+                                          ),
+                                        )),
+                                    child: Text(
+                                      nameEN,
+                                      style: const TextStyle(
+                                        fontSize: 22,
+                                        color: Colors.white,
                                       ),
-                                      top: BorderSide(
-                                        color: Color.fromRGBO(79, 79, 79, 1.0),
-                                        width: 5,
-                                      ),
-                                      right: BorderSide(
-                                        color: Color.fromRGBO(79, 79, 79, 1.0),
-                                        width: 5,
-                                      ),
-                                    )),
-                                child: Text(
-                                  nameEN,
-                                  style: const TextStyle(
-                                    fontSize: 22,
-                                    color: Colors.white,
+                                    ),
                                   ),
-                                ),
+                                  IconButton(
+                                      onPressed: () async {
+                                        await flutterTts.setLanguage("en-US");
+                                        await flutterTts.setPitch(5);
+                                        await flutterTts.speak(nameEN);
+                                      },
+                                      icon: const Icon(
+                                        Icons.volume_up_rounded,
+                                        color: Colors.grey,
+                                        size: 30,
+                                      )),
+                                ],
                               ),
                             ),
+
                           ],
                         ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(15, 0, 0, 12),
-                          child: IconButton(
-                              onPressed: () async {
-                                await flutterTts.setLanguage("en-US");
-                                await flutterTts.setPitch(5);
-                                await flutterTts.speak(nameEN);
-                              },
-                              icon: const Icon(
-                                Icons.volume_up_rounded,
-                                color: Colors.grey,
-                                size: 30,
-                              )),
-                        ),
+
                       ],
                     ),
                   ),

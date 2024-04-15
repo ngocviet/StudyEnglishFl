@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:project4/controllers/answer_the_question_controller.dart';
 import 'package:project4/model_views/model_combine_sentences.dart';
 import 'package:project4/controllers/combine_sentences_controller.dart';
 import 'package:project4/models/word.dart';
@@ -29,6 +30,7 @@ class _CombineSentencesScreenState extends State<CombineSentencesScreen> {
   int canSubmit = 0;
   double percentWidth = 0.0;
   String nameQuestion = "";
+  String code = "";
   String answerCorrect = "";
   List<dynamic> listData = [];
   List<dynamic> listAnswer = [];
@@ -48,6 +50,7 @@ class _CombineSentencesScreenState extends State<CombineSentencesScreen> {
         listData = rp;
         listAnswer = rp[stt]["listAnswer"];
         nameQuestion = rp[stt]["description"];
+        code = rp[stt]["code"];
         answerCorrect = rp[stt]["name"];
         totalHeart = 3;
         percentWidth = 0.0;
@@ -65,6 +68,7 @@ class _CombineSentencesScreenState extends State<CombineSentencesScreen> {
       setState(() {
         listAnswer = listData[stt]["listAnswer"];
         nameQuestion = listData[stt]["description"];
+        code = listData[stt]["code"];
         answerCorrect = listData[stt]["name"];
         canSubmit = 0;
         showMessage = 0;
@@ -77,8 +81,10 @@ class _CombineSentencesScreenState extends State<CombineSentencesScreen> {
     }
   }
 
-  void checkAnswer() {
+  void checkAnswer() async{
     var check = newWord.map((e) => e["nameEn"]).join(" ");
+
+    await AnswerTheQuestionController.addHistory(widget.codeLesson, check == answerCorrect, widget.codeUser, code, "");
 
     setState(() {
       if (check == answerCorrect) {

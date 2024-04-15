@@ -101,9 +101,10 @@ class ScreenState extends State<AnswerTheQuestionScreen> {
     });
   }
 
-  void checkAnswer() {
+  void checkAnswer() async {
     dynamic check = answer.firstWhere((e) => e["isChoose"]);
     dynamic checkCorrect = answer.firstWhere((e) => e["isTrue"]);
+    await AnswerTheQuestionController.addHistory(widget.CodeLesson, check["isTrue"], widget.codeUser, codeQuestion, "");
     setState(() {
       if (check["isTrue"]) {
         showMessage = 1;

@@ -316,15 +316,21 @@ class _ListVocabularyScreenState extends State<ListVocabularyScreen> {
                       child: Padding(
                         padding: const EdgeInsets.only(bottom: 30),
                         child: ElevatedButton(
-                            onPressed: (){},
+                            onPressed: (){
+                              null;
+                            },
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color.fromRGBO(66, 125,
-                                  173,
+                              // backgroundColor: const Color.fromRGBO(66, 125,
+                              //     173,
+                              //     1.0)
+                              backgroundColor: const Color.fromRGBO(93, 93,
+                                  93,
                                   1.0)
                             ),
                             child: const Padding(
                               padding: EdgeInsets.all(20),
-                              child: Text('Học ngay', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),),
+                              child: Text('Học ngay', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color.fromRGBO(
+                                  161, 161, 161, 1.0)),),
                             )
                         ),
                       ),

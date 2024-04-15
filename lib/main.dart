@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project4/screen/first_screen.dart';
+import 'package:project4/screen/nav_screen_admin.dart';
 import 'screen/nav_screen.dart';
 
 void main() {
@@ -18,9 +19,9 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      // home: const NavScreen(codeUser: "huong_2"),
       // home: const NavScreen(codeUser: "viet_1"),
-      home: const FirstScreen(),
+      home: const NavScreenAdmin(codeUser: "admin"),
+      // home: const FirstScreen(),
     );
   }
 }

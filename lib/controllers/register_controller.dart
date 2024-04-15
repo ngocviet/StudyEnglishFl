@@ -10,7 +10,8 @@ class RegisterController{
       body: jsonEncode(<String, dynamic>{
         "UserName": UserName,
         "PassWord":PassWord,
-        "Name":Name
+        "Name":Name,
+        "IsAdmin": false,
       }),
     );
     if (response.statusCode == 200) {

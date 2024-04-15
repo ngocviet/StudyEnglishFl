@@ -2,28 +2,28 @@ import 'package:flutter/material.dart';
 
 import 'package:project4/wiget/CustomTabbar.dart';
 import '../screen_admin/home_admin.dart';
-import '../screen_admin/testadmin.dart';
-import 'huongtestapi.dart';
 
 class NavScreenAdmin extends StatefulWidget {
-  const NavScreenAdmin({super.key});
+  final String codeUser;
+  const NavScreenAdmin({super.key, required this.codeUser});
 
   @override
   State<NavScreenAdmin> createState() => _NavScreenState();
 }
 
 class _NavScreenState extends State<NavScreenAdmin> {
-  final List<Widget> _screens = [
-    HomeAdmin(code: 'viet_1',),
-    TestAdmin(code: 'viet_1'),
-
-
-  ];
+  late final List<Widget> _screens;
 
   final List<IconData> _icons = const [
     Icons.home,
-    Icons.abc
   ];
+  @override
+  void initState() {
+    super.initState();
+    _screens = [
+      HomeAdmin(code: widget.codeUser,),
+    ];
+  }
 
   int _selectedIndex = 0;
 

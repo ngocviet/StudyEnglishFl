@@ -25,7 +25,7 @@ class AnswerTheQuestionController{
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(<String, dynamic>{
-        'UserCode': "1",
+        'UserCode': "",
         'CodeLesson' : codeLesson,
       }),
     );
@@ -35,17 +35,18 @@ class AnswerTheQuestionController{
       throw Exception('Failed to load data');
     }
   }
-  static Future<void> addHistory(String codeLesson, bool IsCorrect, String UsetCode, String codeQuestion) async {
+  static Future<void> addHistory(String codeLesson, bool IsCorrect, String codeUser, String codeQuestion, String codeWord) async {
     await http.post(
       Uri.parse('http://localhost:7183/api/AnswerTheQuestion/AddHistory'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(<String, dynamic>{
-        'UserCode': "viet_1",
+        'UserCode': codeUser,
         'CodeLesson' : codeLesson,
         'IsCorrect' : IsCorrect,
         'CodeQuestion' : codeQuestion,
+        'CodeWord' : codeWord,
       }),
     );
   }
