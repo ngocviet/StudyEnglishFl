@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:project4/screen_admin/account_admin.dart';
-import 'package:project4/screen_admin/lesson1_admin.dart';
+import 'package:project4/screen_admin/detail_lesson_admin.dart';
 import 'package:project4/screen_admin/lesson_admin.dart';
 import 'package:project4/screen_admin/statistical_admin.dart';
 import 'package:project4/screen_admin/topic_admin.dart';

@@ -5,15 +5,15 @@ import 'package:project4/controllers/lesson_admin_controller.dart';
 import '../controllers/account_admin_controller.dart';
 import '../controllers/question_answers_admin_controller.dart';
 
-class Lesson1Admin extends StatefulWidget {
+class detailLessonAdmin extends StatefulWidget {
   final String code;
-  const Lesson1Admin({Key? key, required this.code}) : super(key: key);
+  const detailLessonAdmin({Key? key, required this.code}) : super(key: key);
 
   @override
   _Lesson1AdminState createState() => _Lesson1AdminState();
 }
 
-class _Lesson1AdminState extends State<Lesson1Admin> {
+class _Lesson1AdminState extends State<detailLessonAdmin> {
   bool showQuestions1 = true;
   bool showQuestions2 = false;
 
@@ -65,8 +65,8 @@ class _Lesson1AdminState extends State<Lesson1Admin> {
 
                       children: [
                         Container(
-                          padding: EdgeInsets.all(10),
-                          child: Text('Lesson Manager',style: TextStyle(
+                          padding: const EdgeInsets.all(10),
+                          child: const Text('Lesson Manager',style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold
                           ),),
@@ -79,7 +79,8 @@ class _Lesson1AdminState extends State<Lesson1Admin> {
               )
           )
       ),
-      body: Padding(
+      body:
+      Padding(
         padding: const EdgeInsets.all(10.0),
         child: Column(
           children: [
@@ -93,7 +94,7 @@ class _Lesson1AdminState extends State<Lesson1Admin> {
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         backgroundColor: wordButtonColor1,
-                        shape: RoundedRectangleBorder(
+                        shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(10), // Chỉnh sửa góc trên bên trái
                             bottomLeft: Radius.circular(10),
@@ -111,7 +112,7 @@ class _Lesson1AdminState extends State<Lesson1Admin> {
                     child: Container(
                       height: 40,
                       child:
-                      Center(
+                      const Center(
                         child: Text(
                           'Word',
                           style: TextStyle(
@@ -127,7 +128,7 @@ class _Lesson1AdminState extends State<Lesson1Admin> {
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor:  wordButtonColor,
-                      shape: RoundedRectangleBorder(
+                      shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.only(
                           topRight: Radius.circular(10), // Chỉnh sửa góc trên bên trái
                           bottomRight: Radius.circular(10),
@@ -146,7 +147,7 @@ class _Lesson1AdminState extends State<Lesson1Admin> {
                     child: Container(
                       height: 40,
                       child:
-                      Center(
+                      const Center(
                         child: Text(
                           'Question',
                           style: TextStyle(
@@ -166,7 +167,7 @@ class _Lesson1AdminState extends State<Lesson1Admin> {
                 itemBuilder: (context, index) {
                   var word = showQuestions1 ? words[index] : questions[index];
                   final bool isShowingAnswers = showAnswers[word['questionCode']] ?? false;
-                  if(showQuestions1)
+                  if(showQuestions1) {
                     return  ElevatedButton(
                       style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(
@@ -192,7 +193,7 @@ class _Lesson1AdminState extends State<Lesson1Admin> {
                       ),
 
                     );
-                  else{
+                  } else{
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
