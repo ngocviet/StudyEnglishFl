@@ -21,8 +21,8 @@ class TopicAdmin1{
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(<String, dynamic>{
-        'Name':name,
-        'Avatar': "cartoon.jpg",
+        'Name': name,
+        'Avatar': avatar,
         'ComboColor': comboColor,
       }),
     );

@@ -203,8 +203,8 @@ class _AccountAdminState extends State<AccountAdmin> {
                                 ),
                               ),
                             ),
-                            SizedBox(
-                              height: 30,
+                            const SizedBox(
+                              height: 20,
                             ),
                             TextFormField(
                               controller: _nameController,
@@ -229,8 +229,8 @@ class _AccountAdminState extends State<AccountAdmin> {
                                 ),
                               ),
                             ),
-                            SizedBox(
-                              height: 30,
+                            const SizedBox(
+                              height: 20,
                             ),
                             TextFormField(
                               controller: _passwordController,
@@ -270,7 +270,7 @@ class _AccountAdminState extends State<AccountAdmin> {
                               ),
                             ),
                             const SizedBox(
-                              height: 5,
+                              height: 15,
                             ),
                             SizedBox(
                               width: double.infinity,
@@ -327,6 +327,7 @@ class _AccountAdminState extends State<AccountAdmin> {
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Container(
                               height: 80,

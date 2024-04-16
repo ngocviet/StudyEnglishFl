@@ -43,7 +43,7 @@ class ViewRating extends State<RatingsScreen> {
         month = DateTime.now().month.toString();
       });
     } catch (e) {
-      print('Lỗi hhhh: $e');
+      print('Lỗi RatingsScreen: $e');
     }
   }
 
@@ -109,7 +109,7 @@ class ViewRating extends State<RatingsScreen> {
                           width: 10,
                         ),
                         const Text(
-                          "Leaderboard",
+                          "Dẫn đầu tháng trước",
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -138,7 +138,7 @@ class ViewRating extends State<RatingsScreen> {
                                 height: 5,
                               ),
                               Text(
-                                "$name / $totalscore KN",
+                                "$name   $totalscore KN",
                                 style: const TextStyle(
                                     color: Color.fromRGBO(173, 173, 173, 1.0),
                                     fontWeight: FontWeight.bold,
