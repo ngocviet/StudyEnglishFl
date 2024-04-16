@@ -175,173 +175,132 @@ class _AccountAdminState extends State<AccountAdmin> {
                   if (showFormAdd)
                     Form(
                       key: _formKey,
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Container(
-                                  width: double.infinity,
-                                  height: 40,
-                                  child: TextFormField(
-                                    controller: _userNameController,
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'Please enter some text';
-                                      }
-                                      return null;
-                                    },
-                                    style: TextStyle(color: Colors.black),
-                                    decoration: InputDecoration(
-                                      labelText: 'Username',
-                                      hintText: 'abc',
-                                      errorStyle: TextStyle(color: Colors.black),
-                                      prefixIcon: const Icon(
-                                        Icons.person,
-                                        color: Colors.black,
-                                      ),
-                                      labelStyle: TextStyle(color: Colors.black),
-                                      hintStyle: TextStyle(color: Colors.black45),
-                                      border: OutlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.black),
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                    ),
-                                  ),
+                      child:
+                      Container(
+                        // padding: EdgeInsets.all(20),
+                        child: Column(
+                          children: [
+                            TextFormField(
+                              controller: _userNameController,
+                              style:
+                              TextStyle(color: Colors.black), // Màu chữ của TextFormField
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter some text';
+                                }
+                                return null;
+                              },
+                              decoration: InputDecoration(
+                                labelText: 'UserName',
+                                hintText: 'UserName',
+                                errorStyle: const TextStyle(color: Colors.black),
+                                labelStyle: const TextStyle(color: Colors.black),
+                                hintStyle: const TextStyle(color: Colors.black),
+                                border: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                      color: Colors.white), // Màu sắc của đường viền
+                                  borderRadius: BorderRadius.circular(8),
                                 ),
                               ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Container(
-                                  width: double.infinity,
-                                  height: 40,
-                                  child: TextFormField(
-                                    controller: _nameController,
-                                    validator: (value) {
-                                      // add email validation
-                                      if (value == null || value.isEmpty) {
-                                        return 'Please enter some text';
-                                      }
-                                      return null;
-                                    },
-                                    style: TextStyle(color: Colors.black),
-                                    decoration: InputDecoration(
-                                      labelText: 'Name',
-                                      hintText: 'abc@gmail.com',
-                                      errorStyle: TextStyle(color: Colors.black),
-                                      prefixIcon: const Icon(
-                                        Icons.adobe_rounded,
-                                        color: Colors.black87,
-                                      ),
-                                      labelStyle: TextStyle(color: Colors.black),
-                                      hintStyle:
-                                          const TextStyle(color: Colors.black45),
-                                      border: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                            color: Colors
-                                                .black), // Màu sắc của đường viền
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                    ),
-                                  ),
+                            ),
+                            SizedBox(
+                              height: 30,
+                            ),
+                            TextFormField(
+                              controller: _nameController,
+                              style:
+                              TextStyle(color: Colors.black), // Màu chữ của TextFormField
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter some text';
+                                }
+                                return null;
+                              },
+                              decoration: InputDecoration(
+                                labelText: 'Name',
+                                hintText: 'Huong',
+                                errorStyle: const TextStyle(color: Colors.black),
+                                labelStyle: const TextStyle(color: Colors.black),
+                                hintStyle: const TextStyle(color: Colors.black),
+                                border: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                      color: Colors.white), // Màu sắc của đường viền
+                                  borderRadius: BorderRadius.circular(8),
                                 ),
                               ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Container(
-                                  width: double.infinity,
-                                  height: 40,
-                                  child: TextFormField(
-                                    controller: _passwordController,
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'Please enter some text';
-                                      }
-
-                                      if (value.length < 6) {
-                                        return 'Password must be at least 6 characters';
-                                      }
-                                      return null;
-                                    },
-                                    obscureText: !_isPasswordVisible,
-                                    style: TextStyle(color: Colors.black),
-                                    decoration: InputDecoration(
-                                      labelText: 'Password',
-                                      hintText: 'enter your password',
-                                      errorStyle: TextStyle(color: Colors.black),
-                                      prefixIcon: const Icon(
-                                        Icons.lock_outlined,
-                                        color: Colors.black87,
-                                      ),
-                                      suffixIcon: IconButton(
-                                        icon: Icon(
-                                          _isPasswordVisible
-                                              ? Icons.visibility_off
-                                              : Icons.visibility,
-                                          color: Colors.black87,
-                                        ),
-                                        onPressed: () {
-                                          setState(() {
-                                            _isPasswordVisible =
-                                                !_isPasswordVisible;
-                                          });
-                                        },
-                                      ),
-                                      labelStyle: TextStyle(color: Colors.black),
-                                      hintStyle: TextStyle(color: Colors.black45),
-                                      border: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                            color: Colors
-                                                .black), // Màu sắc của đường viền
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                    ),
+                            ),
+                            SizedBox(
+                              height: 30,
+                            ),
+                            TextFormField(
+                              controller: _passwordController,
+                              style: TextStyle(color: Colors.black),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter some text';
+                                }
+                                return null;
+                              },
+                              obscureText: !_isPasswordVisible,
+                              decoration: InputDecoration(
+                                labelText: 'Password',
+                                hintText: 'enter your password',
+                                errorStyle: TextStyle(color: Colors.black),
+                                labelStyle: TextStyle(color: Colors.black),
+                                hintStyle: TextStyle(color: Colors.black),
+                                prefixIcon: Icon(Icons.lock_outlined),
+                                suffixIcon: IconButton(
+                                  icon: Icon(
+                                    _isPasswordVisible
+                                        ? Icons.visibility_off
+                                        : Icons.visibility,
+                                    color: Colors.white70,
                                   ),
+                                  onPressed: () {
+                                    setState(() {
+                                      _isPasswordVisible = !_isPasswordVisible;
+                                    });
+                                  },
+                                ),
+                                border: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Colors.white), // Màu sắc của đường viền
+                                  borderRadius: BorderRadius.circular(8),
                                 ),
                               ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Container(
-                                width: 100,
-                                height: 40,
-                                child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.green,
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(8)),
-                                    ),
-                                    onPressed: () {
-                                      checkData();
-                                    },
-                                    child: const Text(
-                                      'Submit',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold),
-                                    )),
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            SizedBox(
+                              width: double.infinity,
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(4),
+                                  ),
+                                  backgroundColor: Colors.green,
+                                ),
+                                child: const Padding(
+                                  padding: EdgeInsets.all(10.0),
+                                  child: Text(
+                                    'Sumbit',
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white),
+                                  ),
+                                ),
+                                onPressed: () async {
+                                 checkData();
+                                },
                               ),
-                            ],
-                          )
-                        ],
+                            ),
+                            const SizedBox(
+                              height: 8,
+                            ),
+                          ],
+                        ),
                       ),
                     )
                 ],

@@ -216,7 +216,7 @@ class _DetailTopicAdmin extends State<DetailTopicAdmin> {
                                               final String createdBy = 'Thuong';
                                               final DateTime createdTime = _createdTime;
 
-                                              await TopicAdmin1.AddTopicAPI(code, name, avatar, comboColor, createdBy, createdTime);
+                                              await TopicAdmin1.AddTopicAPI(code, name, avatar);
                                               Navigator.of(context).pop();
                                             },
                                             child: Text('Thêm', style: TextStyle(

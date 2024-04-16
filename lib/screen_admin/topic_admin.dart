@@ -6,7 +6,6 @@ import 'package:project4/controllers/topic_admin.dart';
 import '../controllers/account_admin_controller.dart';
 import '../controllers/choose_topic_controller.dart';
 import 'detail_topic_admin.dart';
-
 class TopicAdmin extends StatefulWidget {
   const TopicAdmin({super.key});
 
@@ -18,9 +17,10 @@ class _TopicAdminState extends State<TopicAdmin> {
   List<dynamic> topics = [];
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController _userNameController = TextEditingController();
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+  late TextEditingController _nameController = TextEditingController();
+  late TextEditingController _descriptionController = TextEditingController();
+  late TextEditingController _avatarController = TextEditingController();
+  late TextEditingController _comboColorController = TextEditingController();
   bool _isPasswordVisible = false;
   bool showFormAdd = false;
 
@@ -34,7 +34,6 @@ class _TopicAdminState extends State<TopicAdmin> {
       final data1 = await TopicAdmin1.getTopic();
 
       setState(() {
-        // accounts = data ;
         topics = data1;
       });
     } catch (e) {
@@ -43,7 +42,7 @@ class _TopicAdminState extends State<TopicAdmin> {
   }
   void deleteItem(String code) async {
     try {
-      dynamic check = await AccountController.deleteItem(code, "topic");
+      dynamic check = await AccountController.deleteItem(code, "topic" );
       if(check["status"]){
         fetchData();
       }
@@ -70,18 +69,19 @@ class _TopicAdminState extends State<TopicAdmin> {
 
   void checkData() async {
     if (_formKey.currentState?.validate() ?? false) {
-      String UserName = _userNameController.text;
-      String PassWord = _passwordController.text;
-      String Name = _nameController.text;
-      dynamic dataregister = await RegisterController.getRegister(UserName, PassWord, Name);
-      if (dataregister["status"] == true) {
+      String name = _nameController.text;
+      String comboColor = _comboColorController.text;
+      String description  = _descriptionController.text;
+      String avatar  = _avatarController.text;
+      dynamic data = await TopicAdmin1.AddTopicAPI(name, avatar, comboColor);
+      if (data["status"] == true) {
         fetchData();
       }
       showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            content: Text(dataregister["title"]),
+            content: Text(data["title"]),
             actions: [
               TextButton(
                 onPressed: () {
@@ -172,173 +172,159 @@ class _TopicAdminState extends State<TopicAdmin> {
                   if (showFormAdd)
                     Form(
                       key: _formKey,
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Container(
-                                  width: double.infinity,
-                                  height: 40,
-                                  child: TextFormField(
-                                    controller: _userNameController,
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'Please enter some text';
-                                      }
-                                      return null;
-                                    },
-                                    style: TextStyle(color: Colors.black),
-                                    decoration: InputDecoration(
-                                      labelText: 'Username',
-                                      hintText: 'abc',
-                                      errorStyle: TextStyle(color: Colors.black),
-                                      prefixIcon: const Icon(
-                                        Icons.person,
-                                        color: Colors.black,
-                                      ),
-                                      labelStyle: TextStyle(color: Colors.black),
-                                      hintStyle: TextStyle(color: Colors.black45),
-                                      border: OutlineInputBorder(
-                                        borderSide:
-                                        BorderSide(color: Colors.black),
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                    ),
-                                  ),
+                      child:Container(
+                        // padding: EdgeInsets.all(20),
+                        child: Column(
+                          children: [
+                            TextFormField(
+                              controller: _nameController,
+                              style:
+                              TextStyle(color: Colors.black), // Màu chữ của TextFormField
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter some text';
+                                }
+                                return null;
+                              },
+                              decoration: InputDecoration(
+                                labelText: 'NameToPic',
+                                hintText: 'abc',
+                                errorStyle: const TextStyle(color: Colors.black),
+                                labelStyle: const TextStyle(color: Colors.black),
+                                hintStyle: const TextStyle(color: Colors.black),
+                                border: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                      color: Colors.white), // Màu sắc của đường viền
+                                  borderRadius: BorderRadius.circular(8),
                                 ),
                               ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Container(
-                                  width: double.infinity,
-                                  height: 40,
-                                  child: TextFormField(
-                                    controller: _nameController,
-                                    validator: (value) {
-                                      // add email validation
-                                      if (value == null || value.isEmpty) {
-                                        return 'Please enter some text';
-                                      }
-                                      return null;
-                                    },
-                                    style: TextStyle(color: Colors.black),
-                                    decoration: InputDecoration(
-                                      labelText: 'Name',
-                                      hintText: 'abc@gmail.com',
-                                      errorStyle: TextStyle(color: Colors.black),
-                                      prefixIcon: const Icon(
-                                        Icons.adobe_rounded,
-                                        color: Colors.black87,
-                                      ),
-                                      labelStyle: TextStyle(color: Colors.black),
-                                      hintStyle:
-                                      const TextStyle(color: Colors.black45),
-                                      border: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                            color: Colors
-                                                .black), // Màu sắc của đường viền
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                    ),
-                                  ),
+                            ),
+                            SizedBox(
+                              height: 30,
+                            ),
+                            TextFormField(
+                              controller: _comboColorController,
+                              style:
+                              TextStyle(color: Colors.black), // Màu chữ của TextFormField
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter some text';
+                                }
+                                return null;
+                              },
+                              decoration: InputDecoration(
+                                labelText: 'ComboColor',
+                                hintText: '444-444-444',
+                                errorStyle: const TextStyle(color: Colors.black),
+                                labelStyle: const TextStyle(color: Colors.black),
+                                hintStyle: const TextStyle(color: Colors.black),
+                                border: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                      color: Colors.white), // Màu sắc của đường viền
+                                  borderRadius: BorderRadius.circular(8),
                                 ),
                               ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Container(
-                                  width: double.infinity,
-                                  height: 40,
-                                  child: TextFormField(
-                                    controller: _passwordController,
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'Please enter some text';
-                                      }
-
-                                      if (value.length < 6) {
-                                        return 'Password must be at least 6 characters';
-                                      }
-                                      return null;
-                                    },
-                                    obscureText: !_isPasswordVisible,
-                                    style: TextStyle(color: Colors.black),
-                                    decoration: InputDecoration(
-                                      labelText: 'Password',
-                                      hintText: 'enter your password',
-                                      errorStyle: TextStyle(color: Colors.black),
-                                      prefixIcon: const Icon(
-                                        Icons.lock_outlined,
-                                        color: Colors.black87,
-                                      ),
-                                      suffixIcon: IconButton(
-                                        icon: Icon(
-                                          _isPasswordVisible
-                                              ? Icons.visibility_off
-                                              : Icons.visibility,
-                                          color: Colors.black87,
-                                        ),
-                                        onPressed: () {
-                                          setState(() {
-                                            _isPasswordVisible =
-                                            !_isPasswordVisible;
-                                          });
-                                        },
-                                      ),
-                                      labelStyle: TextStyle(color: Colors.black),
-                                      hintStyle: TextStyle(color: Colors.black45),
-                                      border: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                            color: Colors
-                                                .black), // Màu sắc của đường viền
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                    ),
-                                  ),
+                            ),
+                            SizedBox(
+                              height: 30,
+                            ),
+                            TextFormField(
+                              controller: _avatarController,
+                              style: TextStyle(color: Colors.black),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter some text';
+                                }
+                                return null;
+                              },
+                              obscureText: !_isPasswordVisible,
+                              decoration: InputDecoration(
+                                labelText: 'avatar',
+                                hintText: 'enter your avatar',
+                                errorStyle: TextStyle(color: Colors.black),
+                                labelStyle: TextStyle(color: Colors.black),
+                                hintStyle: TextStyle(color: Colors.black),
+                                border: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Colors.white), // Màu sắc của đường viền
+                                  borderRadius: BorderRadius.circular(8),
                                 ),
                               ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Container(
-                                width: 100,
-                                height: 40,
-                                child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.green,
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(8)),
-                                    ),
-                                    onPressed: () {
-                                      checkData();
-                                    },
-                                    child: const Text(
-                                      'Submit',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold),
-                                    )),
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            SizedBox(
+                              width: double.infinity,
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(4),
+                                  ),
+                                  backgroundColor: Colors.green,
+                                ),
+                                child: const Padding(
+                                  padding: EdgeInsets.all(10.0),
+                                  child: Text(
+                                    'Sumbit',
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white),
+                                  ),
+                                ),
+                                onPressed: () async {
+                                  if (_formKey.currentState?.validate() ?? false) {
+                                    String name = _nameController.text;
+                                    String comboColor = _comboColorController.text;
+                                    String avatar = _avatarController.text;
+                                     dynamic check = await TopicAdmin1.AddTopicAPI(name, avatar, comboColor);
+                                     if(check["status"] == true){
+                                       showDialog(
+                                         context: context,
+                                         builder: (BuildContext context) {
+                                           return AlertDialog(
+                                             content: Text(check["title"]),
+                                             actions: [
+                                               TextButton(
+                                                 onPressed: () {
+                                                   fetchData();
+                                                   showFormAdd = !showFormAdd;
+                                                   Navigator.pop(context);
+                                                 },
+                                                 child: Text('OK'),
+                                               ),
+                                             ],
+                                           );
+                                         },
+                                       );
+                                     }else{
+                                       showDialog(
+                                         context: context,
+                                         builder: (BuildContext context) {
+                                           return AlertDialog(
+                                             content: Text(check["title"]),
+                                             actions: [
+                                               TextButton(
+                                                 onPressed: () {
+                                                   Navigator.pop(context);
+                                                 },
+                                                 child: Text('OK'),
+                                               ),
+                                             ],
+                                           );
+                                         },
+                                       );
+                                     }
+                                  }
+                                },
                               ),
-                            ],
-                          )
-                        ],
+                            ),
+                            const SizedBox(
+                              height: 8,
+                            ),
+                          ],
+                        ),
                       ),
                     )
                 ],
