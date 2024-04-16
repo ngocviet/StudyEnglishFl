@@ -1,8 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:project4/controllers/lesson_admin_controller.dart';
 
 import '../controllers/account_admin_controller.dart';
+import '../controllers/detail_lesson_controller.dart';
 import '../controllers/question_answers_admin_controller.dart';
 
 class detailLessonAdmin extends StatefulWidget {
@@ -16,17 +18,18 @@ class detailLessonAdmin extends StatefulWidget {
 class _Lesson1AdminState extends State<detailLessonAdmin> {
   bool showQuestions1 = true;
   bool showQuestions2 = false;
-
   Map<String, bool> showAnswers = {};
   List<dynamic> questions = [];
-
   Color wordButtonColor = Colors.black;
   Color wordButtonColor1 = Colors.blue;
-
-
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  bool _isPasswordVisible = false;
+  bool showFormAdd = false;
+  String avatar="";
   List<dynamic> words = [];
-  List<dynamic> accounts = [];
-
+  late TextEditingController _nameVnController = TextEditingController();
+  late TextEditingController _nameEnController = TextEditingController();
+  late TextEditingController _countController = TextEditingController();
   @override
   void initState() {
     super.initState();
@@ -35,21 +38,65 @@ class _Lesson1AdminState extends State<detailLessonAdmin> {
 
   void fetchData() async{
     try {
-      final word = await LessonAdminController.GetWord();
+       final word = await DetailLessonController.listWord(widget.code);
 
-      final acc = await AccountController.getAccountId(widget.code);
+      // final acc = await AccountController.getAccountId(widget.code);
 
       final data1 = await QuestionAnswersAdminController.getQuestion();
       setState(() {
         words = word;
-        accounts = acc;
+        // accounts = acc;
         questions = data1;
       });
     } catch (e) {
-      print('Error: $e');
+      print('Error hhhh: $e');
     }
   }
-
+  void checkdata() async{
+    if (_formKey.currentState?.validate() ?? false) {
+      String nameVn = _nameVnController.text;
+      String nameEn = _nameEnController.text;
+      String count = _countController.text;
+      dynamic check = await DetailLessonController.addWord(widget.code, avatar, nameEn, nameVn, count);
+      if(check["status"] == false){
+        fetchData();
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              content: Text(check["title"]),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    showFormAdd = !showFormAdd;
+                    Navigator.pop(context);
+                  },
+                  child: Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+      }else{
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              content: Text(check["title"]),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+      }
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -158,7 +205,165 @@ class _Lesson1AdminState extends State<detailLessonAdmin> {
                     ),
                   ),
                 ),
+
               ],
+            ),
+            SizedBox(height: 30,),
+            Padding(
+              padding: const EdgeInsets.only(left: 15, right: 15),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        width: 75,
+                        height: 30,
+                        child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.green,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8)),
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                showFormAdd = !showFormAdd;
+
+                              });
+                            },
+                            child: const Text(
+                              'Add',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                            )),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  if (showFormAdd)
+                    Form(
+                      key: _formKey,
+                      child:Container(
+                        // padding: EdgeInsets.all(20),
+                        child: Column(
+                          children: [
+                            const SizedBox(
+                              height: 30,
+                            ),
+                            TextFormField(
+                              controller: _nameEnController,
+                              style:
+                              TextStyle(color: Colors.black), // Màu chữ của TextFormField
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter some text';
+                                }
+                                return null;
+                              },
+                              decoration: InputDecoration(
+                                labelText: 'English',
+                                hintText: 'abc',
+                                errorStyle: const TextStyle(color: Colors.black),
+                                labelStyle: const TextStyle(color: Colors.black),
+                                hintStyle: const TextStyle(color: Colors.black),
+                                border: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                      color: Colors.white), // Màu sắc của đường viền
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 30,
+                            ),
+                            TextFormField(
+                               controller: _nameVnController,
+                              style:
+                              TextStyle(color: Colors.black), // Màu chữ của TextFormField
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter some text';
+                                }
+                                return null;
+                              },
+                              decoration: InputDecoration(
+                                labelText: 'Tiếng Việt',
+                                hintText: 'abc',
+                                errorStyle: const TextStyle(color: Colors.black),
+                                labelStyle: const TextStyle(color: Colors.black),
+                                hintStyle: const TextStyle(color: Colors.black),
+                                border: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                      color: Colors.white), // Màu sắc của đường viền
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 30,
+                            ),
+                            TextFormField(
+                              controller: _countController,
+                              style: TextStyle(color: Colors.black), // Màu chữ của TextFormField
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter some text';
+                                }
+                                return null;
+                              },
+                              inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9]'))], // Chỉ chấp nhận ký tự số
+                              keyboardType: TextInputType.number, // Hiển thị bàn phím số
+                              decoration: InputDecoration(
+                                labelText: 'Count',
+                                hintText: '123', // Gợi ý nhập số
+                                errorStyle: const TextStyle(color: Colors.black),
+                                labelStyle: const TextStyle(color: Colors.black),
+                                hintStyle: const TextStyle(color: Colors.black),
+                                border: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                      color: Colors.white), // Màu sắc của đường viền
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            SizedBox(
+                              width: double.infinity,
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(4),
+                                  ),
+                                  backgroundColor: Colors.green,
+                                ),
+                                child: const Padding(
+                                  padding: EdgeInsets.all(10.0),
+                                  child: Text(
+                                    'Sumbit',
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white),
+                                  ),
+                                ),
+                                onPressed: () async {
+                                  checkdata();
+                                },
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 8,
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
+                ],
+              ),
             ),
             SizedBox(height: 20),
             Expanded(
@@ -176,19 +381,62 @@ class _Lesson1AdminState extends State<detailLessonAdmin> {
                       ),
                       onPressed: () {
                       },
-                      child: Container(
-                        alignment: Alignment.center,
-                        width: MediaQuery.of(context).size.width * 0.6,
-                        child: Column(
-                          children: [
-                            SizedBox(height: 10,),
-                            Text(
-                              '${word['nameEN']}: ${word['nameVN']} ',
-                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,color: Colors.black),
-                              softWrap: true,
-                            ),
-                            SizedBox(height: 10,)
-                          ],
+                      child:
+                      Container(
+                        color: Colors.white,
+                        padding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 10, right: 10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              const Divider(
+                                thickness: 1,
+                                color: Colors.grey,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    height: 80,
+                                    width: 80,
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        image: DecorationImage(
+                                            image: AssetImage(word['avatar']),
+                                            fit: BoxFit.cover
+                                        )),
+                                  ),
+                                  const SizedBox(
+                                    width: 25,
+                                  ),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "English: ${word['nameEn']}",
+                                          style: const TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        const SizedBox(
+                                          height: 15,
+                                        ),
+                                        Text(
+                                          'Việt Nam: ${word['nameVn']}',
+                                          style: const TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
                         ),
                       ),
 
