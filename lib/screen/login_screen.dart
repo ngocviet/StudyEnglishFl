@@ -3,6 +3,7 @@ import 'package:project4/screen/nav_screen.dart';
 import 'package:project4/screen/register_screen.dart';
 import '../controllers/login_controller.dart';
 import 'home_screen.dart';
+import 'nav_screen_admin.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key});
@@ -24,18 +25,33 @@ class _LoginPageState extends State<LoginPage> {
       String passWord = _PassWord.text;
       var check = await Login.getLogin(userName, passWord);
       if (check["status"] == true) {
-        Navigator.push(
+        if(check["isadmin"] == true){
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => NavScreenAdmin(
+                  codeUser: check["code"],
+                )),
+          ).then((value) {
+            setState(() {
+              _UserName.text = "";
+              _PassWord.text = "";
+            });
+          });
+        }else{
+          Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (context) => NavScreen(
-                      codeUser: check["code"],
-                    )),
-        ).then((value) {
-          setState(() {
-            _UserName.text = "";
-            _PassWord.text = "";
+                  codeUser: check["code"],
+                )),
+          ).then((value) {
+            setState(() {
+              _UserName.text = "";
+              _PassWord.text = "";
+            });
           });
-        });
+        }
       } else {
         showDialog(
           context: context,
