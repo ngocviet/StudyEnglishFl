@@ -71,7 +71,7 @@ class _Lesson1AdminState extends State<detailLessonAdmin> {
         _countController.text = "";
         avatar = "";
         indexTitle = 0;
-        for(dynamic item in questions){
+        for (dynamic item in questions) {
           indexTitle += item["order"] == 1 ? 1 : 0;
         }
       });
@@ -117,7 +117,8 @@ class _Lesson1AdminState extends State<detailLessonAdmin> {
       avatar = check["name"];
     });
   }
-  void addNewCombineSentence() async{
+
+  void addNewCombineSentence() async {
     if (_formKeyP.currentState?.validate() ?? false) {
       String sentences = _nameEnController.text;
       String decription = _nameVnController.text;
@@ -145,14 +146,79 @@ class _Lesson1AdminState extends State<detailLessonAdmin> {
         },
       );
     }
+  }
+
+  void addNewQuestion() async {
+    if (_formKeyP.currentState?.validate() ?? false) {
+      List<String> answerfalse = [];
+      String question = _nameEnController.text;
+      String answerCorrect = _answerCorrectController.text;
+      String answerDetail1 = _answerDetail1Controller.text;
+      String answerDetail = _answerDetailController.text;
+      answerfalse.add(answerCorrect);
+      answerfalse.add(answerDetail1);
+      answerfalse.add(answerDetail);
+      dynamic check = await DetailLessonController.addQuestion(
+          widget.code, question, avatar, answerfalse);
+      if (check["status"] == false) {
+        fetchData();
+        _nameEnController.text = "";
+        _answerCorrectController.text = "";
+        _answerDetail1Controller.text = "";
+        _answerDetailController.text = "";
+        avatar = "";
+        // showFormAdd = false;
+        // CodeTopic = null;
+      } showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            content: Text(check["title"]),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    }
 
   }
-  void addNewQuestion() async {
-  }
+
   // Future<bool> checkAvatar(String avatar) async {
   //   bool isExists = await doesAssetExist('assets/$avatar');
   //   return isExists;
   // }
+  void deleteItem(String code) async {
+    try {
+      dynamic check = await AccountController.deleteItem(code, "word");
+      if (check["status"]) {
+        fetchData();
+      }
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            content: Text(check["title"]),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -282,33 +348,41 @@ class _Lesson1AdminState extends State<detailLessonAdmin> {
                     child: Column(
                       children: [
                         if (showListQord)
-                        ButtonAdd(title: 'Add',onTap: (){
-                          setState(() {
-                            showFormAddW = !showFormAddW;
-                            showFormAddQ = false;
-                            showFormAddP = false;
-                          });
-                        }),
-                        if (!showListQord)
-                        Row(
-                          children: [
-                            ButtonAdd(title: 'Add Qestion',onTap: (){
-                              setState(() {
-                                  showFormAddQ = !showFormAddQ;
-                                  showFormAddW = false;
+                          ButtonAdd(
+                              title: 'Add',
+                              onTap: () {
+                                setState(() {
+                                  showFormAddW = !showFormAddW;
+                                  showFormAddQ = false;
                                   showFormAddP = false;
-                              });
-                            }),
-                            const SizedBox(width: 15,),
-                            ButtonAdd(title: 'Add Sentences',onTap: (){
-                              setState(() {
-                                showFormAddP = !showFormAddP;
-                                showFormAddQ = false;
-                                showFormAddW = false;
-                              });
-                            }),
-                          ],
-                        ),
+                                });
+                              }),
+                        if (!showListQord)
+                          Row(
+                            children: [
+                              ButtonAdd(
+                                  title: 'Add Qestion',
+                                  onTap: () {
+                                    setState(() {
+                                      showFormAddQ = !showFormAddQ;
+                                      showFormAddW = false;
+                                      showFormAddP = false;
+                                    });
+                                  }),
+                              const SizedBox(
+                                width: 15,
+                              ),
+                              ButtonAdd(
+                                  title: 'Add Sentences',
+                                  onTap: () {
+                                    setState(() {
+                                      showFormAddP = !showFormAddP;
+                                      showFormAddQ = false;
+                                      showFormAddW = false;
+                                    });
+                                  }),
+                            ],
+                          ),
                         if (showFormAddW)
                           Form(
                             key: _formKeyW,
@@ -318,11 +392,17 @@ class _Lesson1AdminState extends State<detailLessonAdmin> {
                                 const SizedBox(
                                   height: 20,
                                 ),
-                                UserText(controller: _nameEnController, labelText: "English", hintText: "abc"),
+                                UserText(
+                                    controller: _nameEnController,
+                                    labelText: "English",
+                                    hintText: "abc"),
                                 const SizedBox(
                                   height: 20,
                                 ),
-                                UserText(controller: _nameVnController, labelText: "Vietnamese", hintText: "abc"),
+                                UserText(
+                                    controller: _nameVnController,
+                                    labelText: "Vietnamese",
+                                    hintText: "abc"),
                                 const SizedBox(
                                   height: 20,
                                 ),
@@ -444,19 +524,32 @@ class _Lesson1AdminState extends State<detailLessonAdmin> {
                                 const SizedBox(
                                   height: 20,
                                 ),
-                                UserText(controller: _nameEnController, labelText: "Question", hintText: "abc"),
+                                UserText(
+                                    controller: _nameEnController,
+                                    labelText: "Question",
+                                    hintText: "abc"),
                                 const SizedBox(
                                   height: 20,
                                 ),
-                                UserText(controller: _answerCorrectController, labelText: "Answer correct", hintText: "abc",),
+                                UserText(
+                                  controller: _answerCorrectController,
+                                  labelText: "Answer correct",
+                                  hintText: "abc",
+                                ),
                                 const SizedBox(
                                   height: 20,
                                 ),
-                                UserText(controller: _answerDetailController, labelText: "Answer detail", hintText: "abc"),
+                                UserText(
+                                    controller: _answerDetailController,
+                                    labelText: "Answer detail",
+                                    hintText: "abc"),
                                 const SizedBox(
                                   height: 20,
                                 ),
-                                UserText(controller: _answerDetail1Controller, labelText: "Answer detail", hintText: "abc"),
+                                UserText(
+                                    controller: _answerDetail1Controller,
+                                    labelText: "Answer detail",
+                                    hintText: "abc"),
                                 const SizedBox(
                                   height: 15,
                                 ),
@@ -541,11 +634,17 @@ class _Lesson1AdminState extends State<detailLessonAdmin> {
                                 const SizedBox(
                                   height: 20,
                                 ),
-                                UserText(controller: _nameEnController, labelText: "Sentences", hintText: "abc"),
+                                UserText(
+                                    controller: _nameEnController,
+                                    labelText: "Sentences",
+                                    hintText: "abc"),
                                 const SizedBox(
                                   height: 20,
                                 ),
-                                UserText(controller: _nameVnController, labelText: "Description", hintText: "abc"),
+                                UserText(
+                                    controller: _nameVnController,
+                                    labelText: "Description",
+                                    hintText: "abc"),
                                 const SizedBox(
                                   height: 20,
                                 ),
@@ -588,11 +687,10 @@ class _Lesson1AdminState extends State<detailLessonAdmin> {
                         ? words.length * 150
                         : questions.length * 200,
                     child: ListView.builder(
-                      itemCount:
-                      showListQord ? words.length : questions.length,
+                      itemCount: showListQord ? words.length : questions.length,
                       itemBuilder: (context, index) {
                         var item =
-                        showListQord ? words[index] : questions[index];
+                            showListQord ? words[index] : questions[index];
                         final bool isShowingAnswers =
                             showAnswers[item['questionCode']] ?? false;
                         if (showListQord) {
@@ -690,7 +788,7 @@ class _Lesson1AdminState extends State<detailLessonAdmin> {
                                                       BorderRadius.circular(
                                                           10))),
                                           onPressed: () {
-                                            // deleteItem(topic["code"]);
+                                            deleteItem(item['code']);
                                           },
                                           child: const Text(
                                             'Delete',
@@ -708,35 +806,39 @@ class _Lesson1AdminState extends State<detailLessonAdmin> {
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              if(index == 0)
-                              Container(
-                                padding: const EdgeInsets.fromLTRB(5, 10, 0, 10),
-                                width: double.infinity,
-                                decoration: const BoxDecoration(
-                                    border: Border(
-                                        top: BorderSide(
-                                            color: Colors.grey,
-                                            width: 1
-                                        )
-                                    )
+                              if (index == 0)
+                                Container(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(5, 10, 0, 10),
+                                  width: double.infinity,
+                                  decoration: const BoxDecoration(
+                                      border: Border(
+                                          top: BorderSide(
+                                              color: Colors.grey, width: 1))),
+                                  child: const Text(
+                                    'Answer the question: ',
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold),
+                                  ),
                                 ),
-                                child: const Text('Answer the question: ', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
-                              ),
                               if (indexTitle == index)
                                 Padding(
                                   padding: const EdgeInsets.only(top: 8.0),
                                   child: Container(
-                                    padding: const EdgeInsets.fromLTRB(5, 10, 0, 10),
+                                    padding:
+                                        const EdgeInsets.fromLTRB(5, 10, 0, 10),
                                     width: double.infinity,
                                     decoration: const BoxDecoration(
-                                      border: Border(
-                                        top: BorderSide(
-                                          color: Colors.blue,
-                                          width: 2
-                                        )
-                                      )
+                                        border: Border(
+                                            top: BorderSide(
+                                                color: Colors.blue, width: 2))),
+                                    child: const Text(
+                                      'Combine sentences: ',
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold),
                                     ),
-                                    child: const Text('Combine sentences: ', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
                                   ),
                                 ),
                               Padding(
@@ -752,7 +854,8 @@ class _Lesson1AdminState extends State<detailLessonAdmin> {
                                     ),
                                     onPressed: () {
                                       setState(() {
-                                        showAnswers[item['questionCode']] = !isShowingAnswers;
+                                        showAnswers[item['questionCode']] =
+                                            !isShowingAnswers;
                                       });
                                     },
                                     child: Row(
@@ -987,8 +1090,7 @@ class _ButtonAddState extends State<ButtonAdd> {
               child: Text(
                 widget.title,
                 style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold),
+                    color: Colors.white, fontWeight: FontWeight.bold),
               )),
         ),
       ],
@@ -1000,7 +1102,11 @@ class UserText extends StatefulWidget {
   final TextEditingController controller;
   final String labelText;
   final String hintText;
-  const UserText({super.key, required this.controller, required this.labelText, required this.hintText});
+  const UserText(
+      {super.key,
+      required this.controller,
+      required this.labelText,
+      required this.hintText});
 
   @override
   State<UserText> createState() => _UserTextState();
@@ -1011,9 +1117,7 @@ class _UserTextState extends State<UserText> {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: widget.controller,
-      style: const TextStyle(
-          color: Colors
-              .black), // Màu chữ của TextFormField
+      style: const TextStyle(color: Colors.black), // Màu chữ của TextFormField
       validator: (value) {
         if (value == null || value.isEmpty) {
           return 'Please enter some text';
@@ -1023,23 +1127,17 @@ class _UserTextState extends State<UserText> {
       decoration: InputDecoration(
         labelText: widget.labelText,
         hintText: widget.hintText,
-        errorStyle:
-        const TextStyle(color: Colors.black),
-        labelStyle:
-        const TextStyle(color: Colors.black),
-        hintStyle:
-        const TextStyle(color: Colors.black),
+        errorStyle: const TextStyle(color: Colors.black),
+        labelStyle: const TextStyle(color: Colors.black),
+        hintStyle: const TextStyle(color: Colors.black),
         border: OutlineInputBorder(
-          borderSide: const BorderSide(
-              color: Colors
-                  .white),
+          borderSide: const BorderSide(color: Colors.white),
           borderRadius: BorderRadius.circular(8),
         ),
       ),
     );
   }
 }
-
 
 Future<bool> doesAssetExist(String assetName) async {
   try {

@@ -72,4 +72,39 @@ class DetailLessonController{
       throw Exception(' 1Failed to load data');
     }
   }
+  static Future<dynamic> addQuestion(String LessonCode,String question, String avatar, List<String> ListAnser) async {
+    final response = await http.post(
+      Uri.parse('http://localhost:7183/api/Question_admin/addQuestion'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, dynamic>{
+        'LessonCode':LessonCode,
+        "Question":question,
+        "Avatar":avatar,
+        "ListAnswer" : ListAnser,
+      }),
+    );
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      throw Exception(' 1Failed to load data');
+    }
+  }
+  static Future<dynamic> deleteWord(String code) async{
+    final response = await http.post(
+      Uri.parse('http://localhost:7183/api/WordAdmin/deleteWord'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, dynamic>{
+        'code': code,
+      }),
+    );
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      throw Exception('Failed to load data deleteItem');
+    }
+  }
 }
