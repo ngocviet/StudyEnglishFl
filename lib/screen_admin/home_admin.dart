@@ -49,62 +49,51 @@ class _HomeAdminState extends State<HomeAdmin> {
     return Scaffold(
       backgroundColor: Colors.lightBlue[100]!.withOpacity(0.3),
       appBar: AppBar(
+        leading: SizedBox(width: 1,),
         backgroundColor: Colors.blue,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
             bottom: Radius.circular(30),
           ),
         ),
-        title: Stack(
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      padding: EdgeInsets.all(10),
-                      child: Text(
-                        'Home Manager - $name',
-                        style: const TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    SizedBox(
+            Container(
+              padding: EdgeInsets.all(10),
+              child: Text(
+                'Home Manager - $name',
+                style: const TextStyle(
+                    fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+            ),
+            SizedBox(
+              width: 50,
+              height: 50,
+              //padding: EdgeInsets.only(top: 10),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        showAction = !showAction;
+                      });
+                    },
+                    child: Container(
                       width: 50,
                       height: 50,
-                      //padding: EdgeInsets.only(top: 10),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                showAction = !showAction;
-                              });
-                            },
-                            child: Container(
-                              width: 50,
-                              height: 50,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(50),
-                                image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image: AssetImage('${avatar}'),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(50),
+                        image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: AssetImage('${avatar}'),
+                        ),
                       ),
                     ),
-                  ],
-                ),
-                // Container(
-                //   alignment: Alignment.topLeft,
-                //   child: Text('Find your information!!!'),
-                // )
-              ],
+                  ),
+                ],
+              ),
             ),
           ],
         ),

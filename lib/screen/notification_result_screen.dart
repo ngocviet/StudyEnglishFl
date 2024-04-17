@@ -231,7 +231,7 @@ class Item extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(
-                    Icons.close,
+                    status ? Icons.check : Icons.close,
                     size: 22,
                     color: status ? Colors.green : Colors.red,
                   ),

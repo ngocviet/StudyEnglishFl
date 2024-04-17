@@ -164,9 +164,8 @@ class ViewRating extends State<RatingsScreen> {
                       ],
                     ),
                   ),
-                  Container(
+                  SizedBox(
                     height: 500,
-                    // color: Colors.red,
                     child: ListView.builder(
                         itemCount: listRetings.length,
                         itemBuilder: (context, index) {
@@ -184,7 +183,7 @@ class ViewRating extends State<RatingsScreen> {
                           return Padding(
                             padding: const EdgeInsets.only(top: 10),
                             child: Container(
-                              padding: EdgeInsets.fromLTRB(0, 10, 5, 10),
+                              padding: const EdgeInsets.fromLTRB(0, 10, 5, 10),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
                                 color: item["isUser"]
@@ -204,7 +203,7 @@ class ViewRating extends State<RatingsScreen> {
                                       ),
                                     ),
                                   if (avatarImage == "")
-                                    Container(
+                                    SizedBox(
                                       height: 50,
                                       width: 50,
                                       child: Center(
@@ -246,22 +245,17 @@ class ViewRating extends State<RatingsScreen> {
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.only(left: 15),
-                                    child: SizedBox(
-                                      width:
-                                          MediaQuery.of(context).size.width / 2,
-                                      child: Text(
-                                        item['name'],
-                                        style: const TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold),
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
+                                    child: Text(
+                                      item['name'],
+                                      style: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
                                     ),
                                   ),
                                   Expanded(
-                                    flex: 1,
                                     child: Text(
                                       '${item['totalscore']} KN',
                                       style: const TextStyle(
@@ -269,6 +263,7 @@ class ViewRating extends State<RatingsScreen> {
                                         fontSize: 19,
                                         color: Colors.white,
                                       ),
+                                      maxLines: 1,
                                       textAlign: TextAlign.right,
                                     ),
                                   ),

@@ -19,9 +19,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      // home: const NavScreen(codeUser: "viet_1"),
-      home: const NavScreenAdmin(codeUser: "admin"),
-      // home: const FirstScreen(),
+      home: const FirstScreen(),
     );
   }
 }

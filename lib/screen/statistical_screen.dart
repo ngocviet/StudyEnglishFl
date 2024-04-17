@@ -54,19 +54,21 @@ class _StatisticalScreenState extends State<StatisticalScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: const SizedBox(width: 0,),
         title: const Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Padding(
               padding: EdgeInsets.only(top: 15.0),
               child: Text(
                 'Thống kê học tập',
                 style: TextStyle(
-                    fontSize: 28,
+                    fontSize: 24,
                     fontWeight: FontWeight.bold,
                     color: Colors.white),
               ),
             ),
+            SizedBox(width: 40,),
           ],
         ),
         flexibleSpace: Container(
