@@ -149,7 +149,7 @@ class _Lesson1AdminState extends State<detailLessonAdmin> {
   }
 
   void addNewQuestion() async {
-    if (_formKeyP.currentState?.validate() ?? false) {
+    if (_formKeyQ.currentState?.validate() ?? false) {
       List<String> answerfalse = [];
       String question = _nameEnController.text;
       String answerCorrect = _answerCorrectController.text;
@@ -162,13 +162,9 @@ class _Lesson1AdminState extends State<detailLessonAdmin> {
           widget.code, question, avatar, answerfalse);
       if (check["status"] == false) {
         fetchData();
-        _nameEnController.text = "";
         _answerCorrectController.text = "";
         _answerDetail1Controller.text = "";
         _answerDetailController.text = "";
-        avatar = "";
-        // showFormAdd = false;
-        // CodeTopic = null;
       } showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -186,7 +182,6 @@ class _Lesson1AdminState extends State<detailLessonAdmin> {
         },
       );
     }
-
   }
 
   // Future<bool> checkAvatar(String avatar) async {
@@ -614,7 +609,7 @@ class _Lesson1AdminState extends State<detailLessonAdmin> {
                                             color: Colors.white),
                                       ),
                                     ),
-                                    onPressed: () async {
+                                    onPressed: () {
                                       addNewQuestion();
                                     },
                                   ),

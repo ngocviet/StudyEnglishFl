@@ -356,7 +356,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   )
                                               // LearnWordScreen()
                                               ),
-                                        );
+                                        ).then((result) {
+                                          fetchData();
+                                        });
                                       },
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor: Colors.white,
