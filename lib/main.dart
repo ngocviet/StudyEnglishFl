@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project4/screen/first_screen.dart';
 import 'package:project4/screen/nav_screen_admin.dart';
+import 'package:project4/screen_admin/home_admin.dart';
 import 'screen/nav_screen.dart';
 
 void main() {
@@ -20,6 +21,7 @@ class MyApp extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       home: const FirstScreen(),
+      // home: const HomeAdmin(code: "admin"),
     );
   }
 }

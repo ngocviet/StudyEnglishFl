@@ -64,7 +64,7 @@ class ViewProFile extends State<ProFileScreen> {
         canSubmit = false;
       });
     } catch (e) {
-      print('Lỗi hhhh: $e');
+      print('Lỗi fetchData-profile-screen_Admin: $e');
     }
   }
 
@@ -464,6 +464,14 @@ class ViewProFile extends State<ProFileScreen> {
                                   ),
                                 ),
                               ),
+                            if(listCups.length == 0)
+                              const Text(
+                                "...",
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              )
                           ],
                         ),
                         const SizedBox(

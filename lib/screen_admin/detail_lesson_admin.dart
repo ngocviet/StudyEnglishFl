@@ -679,7 +679,7 @@ class _Lesson1AdminState extends State<detailLessonAdmin> {
                   const SizedBox(height: 20),
                   SizedBox(
                     height: showListQord
-                        ? words.length * 150
+                        ? words.length * 115
                         : questions.length * 200,
                     child: ListView.builder(
                       itemCount: showListQord ? words.length : questions.length,

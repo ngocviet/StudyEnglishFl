@@ -108,7 +108,7 @@ class _TopicAdminState extends State<TopicAdmin> {
   void submitAdd() async{
     if (_formKey.currentState?.validate() ?? false) {
       String name = _nameController.text;
-      String comboColor = _comboColorController.text;
+      // String comboColor = _comboColorController.text;
       dynamic check = await TopicAdmin1.AddTopicAPI(name, avatar, comboColor);
       if(check["status"] == true){
         showDialog(
@@ -165,7 +165,7 @@ class _TopicAdminState extends State<TopicAdmin> {
   void renderColor(String value){
     var check = value.split('-');
     bool isAllInt = check.every((element) => int.tryParse(element) != null);
-    print(isAllInt);
+    // print(isAllInt);
     if(check.length == 3 && isAllInt){
       setState(() {
         comboColor = value;

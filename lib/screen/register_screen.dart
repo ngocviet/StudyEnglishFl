@@ -180,6 +180,32 @@ class _LoginPageState extends State<RegisterPage> {
               ),
               const SizedBox(
                 height: 20,
+              ),SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    backgroundColor: const Color(0xFFC72D32),
+                  ),
+                  child: const Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: Text(
+                      'Sign in',
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
+                    ),
+                  ),
+                  onPressed: () async {
+                    Navigator.pop(context);
+                  },
+                ),
+              ),
+              const SizedBox(
+                height: 8,
               ),
               SizedBox(
                 width: double.infinity,
