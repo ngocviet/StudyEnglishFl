@@ -33,7 +33,7 @@ class FirstScreen extends StatelessWidget {
                 Image(image: AssetImage('htv_preview_rev_1.png')),
                 SizedBox(height: 20,),
                 Text(
-                  "Chào mừng bạn đến với ứng dụng học tiếng anh của chúng tôi.",
+                  "Chào mừng bạn đến với nền tảng học tiếng anh của chúng tôi.",
                   style: TextStyle(color: Colors.white),
                 ),
               ],
