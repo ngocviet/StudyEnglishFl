@@ -22,6 +22,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: const FirstScreen(),
       // home: const HomeAdmin(code: "admin"),
+      // home: const HomeAdmin(code: "admin"),
     );
   }
 }
